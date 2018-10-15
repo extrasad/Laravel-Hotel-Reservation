@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHabitacionTable extends Migration
+class CreateTurnoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateHabitacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('habitaciones', function (Blueprint $table) {
+        Schema::create('turnos', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('estado', array('Ocupada', 'Disponible', 'En limpieza'));
-            $table->float('costo');
-            $table->string('habitacion');
+            $table->date('fecha');
+            $table->time('hora_entrada');
+            $table->time('hora_salida');
+            $table->integer('empleado')->unsigned();
+            $table->foreign('empleado')
+            ->references('id')->on('empleados')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateHabitacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('habitaciones');
+        Schema::dropIfExists('turnos');
     }
 }

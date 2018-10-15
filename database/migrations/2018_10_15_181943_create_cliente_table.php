@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListaNegraTable extends Migration
+class CreateClienteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class CreateListaNegraTable extends Migration
      */
     public function up()
     {
-        Schema::create('listas_negras', function (Blueprint $table) {
+        Schema::create('clientes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('ci', 11);
+            $table->unique('ci');
+            $table->string('nombre');
+            $table->date('fecha');
+            $table->string('observacion');
+            $table->enum('estado', array('Advertencia', 'Solicitado'));
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateListaNegraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('listas_negras');
+        Schema::dropIfExists('clientes');
     }
 }

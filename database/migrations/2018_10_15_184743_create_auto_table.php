@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFacturaTable extends Migration
+class CreateAutoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,15 @@ class CreateFacturaTable extends Migration
      */
     public function up()
     {
-        Schema::create('facturas', function (Blueprint $table) {
+        Schema::create('autos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('placa', 11);
+            $table->unique('placa');
+            $table->string('modelo');
+            $table->string('color');
+            $table->date('fecha');
+            $table->string('observacion');
+            $table->enum('estado', array('Advertencia', 'Solicitado'));
             $table->timestamps();
         });
     }
@@ -26,6 +33,6 @@ class CreateFacturaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facturas');
+        Schema::dropIfExists('autos');
     }
 }
