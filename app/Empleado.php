@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Turno;
+
 use Illuminate\Database\Eloquent\Model;
 
-class Emmpleado extends Model
+class Empleado extends Model
 {
     //
     /**
@@ -15,4 +17,7 @@ class Emmpleado extends Model
     protected $fillable = [
         'ci', 'nombre'
     ];
+    public function turnos(){
+    	return $this->belongsToMany(Turno::class);
+    }
 }

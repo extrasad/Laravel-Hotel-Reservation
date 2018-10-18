@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Reservacion;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Habitacion extends Model
@@ -14,4 +16,8 @@ class Habitacion extends Model
     protected $fillable = [
         'estado', 'costo', 'habitacion'
     ];
+    public function reservaciones()
+    {
+        return $this->hasMany(Reservacion::class);
+    }
 }

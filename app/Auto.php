@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Reservacion;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Auto extends Model
@@ -15,4 +17,8 @@ class Auto extends Model
     protected $fillable = [
         'placa', 'modelo', 'color', 'observacion', 'estado', 'fecha'
     ];
+    public function reservaciones()
+    {
+        return $this->hasMany(Reservacion::class);
+    }
 }

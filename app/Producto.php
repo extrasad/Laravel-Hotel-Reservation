@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Consumo;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
@@ -15,4 +17,7 @@ class Producto extends Model
     protected $fillable = [
         'descripcion', 'costo'
     ];
+    public function consumo(){
+    	return $this->belongsToMany(Consumo::class);
+    }
 }
