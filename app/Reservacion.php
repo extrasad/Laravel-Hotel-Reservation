@@ -8,6 +8,8 @@ use App\Auto;
 
 use App\Cliente;
 
+use App\Consumo;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Reservacion extends Model
@@ -24,5 +26,9 @@ class Reservacion extends Model
     }
     public function clientes(){
     	return $this->belongsTo(Cliente::class);
+    }
+    public function consumo()
+    {
+        return $this->belongsTo(Consumo::class);
     }
 }

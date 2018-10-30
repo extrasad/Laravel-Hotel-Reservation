@@ -13,11 +13,12 @@ class CreateHabitacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('habitaciones', function (Blueprint $table) {
+        Schema::create('habitacions', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('estado', array('Ocupada', 'Disponible', 'En limpieza'));
             $table->float('costo');
             $table->string('habitacion');
+            $table->string('observacion')->nullable();
             $table->timestamps();
         });
     }

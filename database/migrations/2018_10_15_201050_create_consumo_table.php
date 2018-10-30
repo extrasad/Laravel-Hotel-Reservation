@@ -21,11 +21,9 @@ class CreateConsumoTable extends Migration
             ->onDelete('cascade');
             $table->integer('reservacion')->unsigned();
             $table->foreign('reservacion')
-            ->references('id')->on('reservaciones')
+            ->references('id')->on('reservacions')
             ->onDelete('cascade');
             $table->float('costo');
-            $table->date('fecha');
-            $table->time('hora');
             $table->enum('estado', array('Pendiente por pagar', 'Cancelado'));
             $table->timestamps();
         });

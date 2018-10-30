@@ -14,7 +14,7 @@ class Cliente extends Model
      * @var array
      */
     protected $fillable = [
-        'ci', 'nombre', 'fecha', 'observacion', 'estado'
+        'ci', 'nombre', 'observacion', 'estado'
     ];
     public function reservaciones()
     {

@@ -4,6 +4,8 @@ namespace App;
 
 use App\Producto;
 
+use App\Reservacion;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Consumo extends Model
@@ -15,9 +17,13 @@ class Consumo extends Model
      * @var array
      */
     protected $fillable = [
-        'costo', 'hora', 'fecha', 'estado'
+        'costo', 'estado'
     ];
     public function producto(){
     	return $this->belongsToMany(Producto::class);
+    }
+    public function reservacion()
+    {
+        return $this->hasOne(Reservacion::class);
     }
 }

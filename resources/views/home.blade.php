@@ -8,13 +8,6 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                @if(Auth::user()->hasRole('Admin Root'))
-                <div>Acceso como Administrador Root</div>
-                @elseif(Auth::user()->hasRole('Admin Recepcionista'))
-                <div>Acceso como Administrador Recepcionista</div>
-                @elseif(Auth::user()->hasRole('Admin Hotel'))
-                <div>Acceso como Administrador Hotel</div>
-                @endif
                 You are logged in!
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Role;
+use Spatie\Permission\Models\Role;
 
 class RoleTableSeeder extends Seeder
 {
@@ -13,19 +13,213 @@ class RoleTableSeeder extends Seeder
     public function run()
     {
         //    public function run()
-        $role = new Role();
-        $role->name = 'Admin Root';
-        $role->description = 'Administrador total de la aplicación.';
-        $role->save();
+        $role_admin_root = Role::create(['name' => 'Admin Root']);
+        $role_admin_hotel = Role::create(['name' => 'Admin Hotel']);
+        $role_recepcionista = Role::create(['name' => 'Recepcionista']);
 
-        $role = new Role();
-        $role->name = 'Admin Recepcionista';
-        $role->description = 'Administrador recepcionista.';
-        $role->save();
+        $permissions_root = [
 
-        $role = new Role();
-        $role->name = 'Admin Hotel';
-        $role->description = 'Administrador Hotel.';
-        $role->save();
+            'role-list',
+ 
+            'role-create',
+ 
+            'role-edit',
+ 
+            'role-delete',
+ 
+            'auto-list',
+ 
+            'auto-create',
+ 
+            'auto-edit',
+ 
+            'auto-delete',
+ 
+            'habitacion-list',
+ 
+            'habitacion-create',
+ 
+            'habitacion-edit',
+ 
+            'habitacion-delete',
+ 
+            'cliente-list',
+ 
+            'cliente-create',
+ 
+            'cliente-edit',
+ 
+            'cliente-delete',
+ 
+            'reservacion-list',
+ 
+            'reservacion-create',
+ 
+            'reservacion-edit',
+ 
+            'reservacion-delete',
+ 
+            'producto-list',
+ 
+            'producto-create',
+ 
+            'producto-edit',
+ 
+            'producto-delete',
+ 
+            'consumo-list',
+ 
+            'consumo-create',
+ 
+            'consumo-edit',
+ 
+            'consumo-delete',
+ 
+            'empleado-list',
+ 
+            'empleado-create',
+ 
+            'empleado-edit',
+ 
+            'empleado-delete',
+ 
+            'turno-list',
+ 
+            'turno-create',
+ 
+            'turno-edit',
+ 
+            'turno-delete',
+ 
+         ];
+
+         $permissions_recepcionista = [
+ 
+            'auto-list',
+ 
+            'auto-create',
+ 
+            'auto-edit',
+ 
+            'auto-delete',
+ 
+            'habitacion-list',
+ 
+            'habitacion-create',
+ 
+            'habitacion-edit',
+ 
+            'habitacion-delete',
+ 
+            'cliente-list',
+ 
+            'cliente-create',
+ 
+            'cliente-edit',
+ 
+            'cliente-delete',
+ 
+            'reservacion-list',
+ 
+            'reservacion-create',
+ 
+            'reservacion-edit',
+ 
+            'reservacion-delete',
+ 
+            'producto-list',
+ 
+            'producto-create',
+ 
+            'producto-edit',
+ 
+            'producto-delete',
+ 
+            'consumo-list',
+ 
+            'consumo-create',
+ 
+            'consumo-edit',
+ 
+            'consumo-delete',
+ 
+         ];
+
+         $permissions_hotel = [
+ 
+            'auto-list',
+ 
+            'auto-create',
+ 
+            'auto-edit',
+ 
+            'auto-delete',
+ 
+            'habitacion-list',
+ 
+            'habitacion-create',
+ 
+            'habitacion-edit',
+ 
+            'habitacion-delete',
+ 
+            'cliente-list',
+ 
+            'cliente-create',
+ 
+            'cliente-edit',
+ 
+            'cliente-delete',
+ 
+            'reservacion-list',
+ 
+            'reservacion-create',
+ 
+            'reservacion-edit',
+ 
+            'reservacion-delete',
+ 
+            'producto-list',
+ 
+            'producto-create',
+ 
+            'producto-edit',
+ 
+            'producto-delete',
+ 
+            'consumo-list',
+ 
+            'consumo-create',
+ 
+            'consumo-edit',
+ 
+            'consumo-delete',
+ 
+            'empleado-list',
+ 
+            'empleado-create',
+ 
+            'empleado-edit',
+ 
+            'empleado-delete',
+ 
+            'turno-list',
+ 
+            'turno-create',
+ 
+            'turno-edit',
+ 
+            'turno-delete',
+ 
+         ];
+        foreach ($permissions_root as $permission) {
+            $role_admin_root->givePermissionTo($permission);
+       }
+       foreach ($permissions_recepcionista as $permission) {
+            $role_recepcionista->givePermissionTo($permission);
+       }
+       foreach ($permissions_hotel as $permission) {
+            $role_admin_hotel->givePermissionTo($permission);
+       }  
     }
 }

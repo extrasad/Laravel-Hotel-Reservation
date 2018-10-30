@@ -13,11 +13,11 @@ class CreateReservacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservaciones', function (Blueprint $table) {
+        Schema::create('reservacions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('habitacion')->unsigned();
             $table->foreign('habitacion')
-            ->references('id')->on('habitaciones')
+            ->references('id')->on('habitacions')
             ->onDelete('cascade');
             $table->integer('placa')->unsigned();
             $table->foreign('placa')
@@ -36,8 +36,8 @@ class CreateReservacionTable extends Migration
             $table->date('fecha_salida');
             $table->time('hora_entrada');
             $table->time('hora_salida');
-            $table->string('observacion');
-            $table->enum('estado', array('Advertencia', 'Solicitado'));
+            $table->string('observacion')->nullable();
+            $table->enum('estado', array('Advertencia', 'Solicitado', 'Sin Problemas'));
             $table->timestamps();
         });
     }

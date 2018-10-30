@@ -20,3 +20,32 @@ Auth::routes();
 Route::auth();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::resource('roles','RoleController');
+
+    Route::resource('users','UserController');
+
+    Route::resource('autos','AutoController');
+
+    Route::resource('clientes','ClienteController');
+
+    Route::resource('consumos','ConsumoController');
+
+    Route::resource('empleados','EmpleadoController');
+
+    Route::resource('habitaciones','HabitacionController');
+
+    Route::resource('productos','ProductoController');
+
+    #Route::resource('reservaciones','ReservacionController');
+
+
+});

@@ -15,7 +15,7 @@ class Auto extends Model
      * @var array
      */
     protected $fillable = [
-        'placa', 'modelo', 'color', 'observacion', 'estado', 'fecha'
+        'placa', 'modelo', 'color', 'observacion', 'estado'
     ];
     public function reservaciones()
     {
