@@ -42,31 +42,22 @@
 
             <div class="form-group">
 
-                <strong>Hora:</strong>
-
-                {{ $consumo->created_at->format('H:i:s')}}
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
                 <strong>Estado:</strong>
 
                 {{ $consumo->estado }}
 
             </div>
 
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
 
             <div class="form-group">
 
-                <strong>Fecha:</strong>
+                <strong>Productos:</strong>
 
-                {{ $consumo->created_at->format('d/m/Y') }}
+                @foreach($consumo->producto as $producto)
+                    {{ $producto }}
+                @endforeach
 
             </div>
 

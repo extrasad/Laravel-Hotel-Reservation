@@ -78,6 +78,18 @@
 
 		    </div>
 
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="form-group">
+
+                    <strong>Turnos:</strong>
+
+                    {!! Form::select('turnos[]', $turnos,$turnosEmpleados, array('class' => 'form-control','multiple')) !!}
+
+                </div>
+
+            </div>
+
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
 		            <button type="submit" class="btn btn-primary">Enviar</button>

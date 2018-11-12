@@ -15,15 +15,8 @@ class CreateConsumoTable extends Migration
     {
         Schema::create('consumos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('producto')->unsigned();
-            $table->foreign('producto')
-            ->references('id')->on('productos')
-            ->onDelete('cascade');
-            $table->integer('reservacion')->unsigned();
-            $table->foreign('reservacion')
-            ->references('id')->on('reservacions')
-            ->onDelete('cascade');
             $table->float('costo');
+            $table->integer('reservacion_id')->nullable();
             $table->enum('estado', array('Pendiente por pagar', 'Cancelado'));
             $table->timestamps();
         });

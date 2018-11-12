@@ -45,7 +45,7 @@
     @endif
 
 
-    <form action="{{ route('habitaciones.update',$habitacion->id) }}" method="POST">
+    <form action="{{ route('habitaciones.update', $habitacion->id) }}" method="POST">
 
     	@csrf
 
@@ -58,21 +58,21 @@
 
 		        <div class="form-group">
 
-		            <strong>Costo:</strong>
+		            <strong>Habitacion:</strong>
 
-		            <input type="number" step="any" name="costo" class="form-control" placeholder="Costo">
+		            <input type="text" name="habitacion" value="{{ $habitacion->habitacion }}" class="form-control" placeholder="Habitacion">
 
 		        </div>
 
 		    </div>
 
-		    <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
 
 		        <div class="form-group">
 
-		            <strong>Habitacion:</strong>
+		            <strong>Tipo de Habitación:</strong>
 
-		            <input type="text" name="habitacion" class="form-control" placeholder="Habitacion">
+		            <input type="text" name="tipo" value="{{ $habitacion->tipo }}" class="form-control" placeholder="Tipo de Habitacion">
 
 		        </div>
 
@@ -84,7 +84,19 @@
 
 		            <strong>Observación:</strong>
 
-		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación"></textarea>
+		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación">{{ $habitacion->observacion }}</textarea>
+
+		        </div>
+
+		    </div>
+
+		    <div class="col-xs-12 col-sm-12 col-md-12">
+
+		        <div class="form-group">
+
+		            <strong>Caracteristicas:</strong>
+
+		            <textarea class="form-control" style="height:150px" name="caracteristicas" placeholder="Caracteristicas">{{ $habitacion->caracteristicas }}</textarea>
 
 		        </div>
 
@@ -96,7 +108,19 @@
 
                     <strong>Estado:</strong>
 
-                    {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza']); !!}
+                    {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza'], array('default' => $habitacion->estado)); !!}
+
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="form-group">
+
+                    <strong>Tipo de habitacion:</strong>
+
+                    {!! Form::select('tipo',$habitacion->tipo, $tipo); !!}
 
                 </div>
 

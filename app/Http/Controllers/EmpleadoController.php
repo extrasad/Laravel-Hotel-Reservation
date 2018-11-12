@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 
 use App\Empleado;
 
+use App\Turno;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -81,9 +83,9 @@ class EmpleadoController extends Controller
 
     {
 
-        $permission = Permission::get();
+        $turnos = Turno::pluck('id','id')->all();
 
-        return view('empleados.create',compact('permission'));
+        return view('empleados.create',compact('turnos'));
 
     }
 
@@ -108,7 +110,9 @@ class EmpleadoController extends Controller
 
             'ci' => 'required|unique:empleados,ci',
 
-            'nombre' => 'required'
+            'nombre' => 'required',
+
+            'turnos' => 'required'
 
         ]);
 
@@ -121,7 +125,11 @@ class EmpleadoController extends Controller
             'nombre' => $request->input('nombre')
             
             ]);
-
+        
+        
+        $empleado_find = Empleado::find($empleado->id);
+        $empleado_find->turnos()->attach($request->input('turnos'));
+        $empleado_find->save();
 
         return redirect()->route('empleados.index')
 
@@ -165,8 +173,11 @@ class EmpleadoController extends Controller
     public function edit(Empleado $empleado)
 
     {
+        $turnos = Turno::pluck('id','id')->all();
 
-        return view('empleados.edit',compact('empleado'));
+        $turnosEmpleados = $empleado->turnos->pluck('id','id')->all();
+
+        return view('empleados.edit',compact('empleado', 'turnos', 'turnosEmpleados'));
 
     }
 
@@ -193,13 +204,21 @@ class EmpleadoController extends Controller
 
             'ci' => 'required|unique:empleados,ci,'.$empleado->id,
 
-            'nombre' => 'required'
+            'nombre' => 'required',
+
+            'turnos' => 'required'
 
         ]);
 
 
-        $empleado->update($request->all());
+        $empleado->update([
+            'ci' => $request->input('ci'),
+            'nombre' => $request->input('nombre')
+        ]);
 
+        DB::table('empleados_turnos')->where('empleado_id',$empleado->id)->delete();
+        $empleado->turnos()->attach($request->input('turnos'));
+        $empleado->save();
 
         return redirect()->route('empleados.index')
 
@@ -225,6 +244,7 @@ class EmpleadoController extends Controller
     {
 
         $empleado->delete();
+        DB::table('empleados_turnos')->where('empleados_id',$empleado->id)->delete();
 
 
         return redirect()->route('empleados.index')

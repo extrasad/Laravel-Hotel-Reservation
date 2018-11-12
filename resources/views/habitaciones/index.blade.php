@@ -51,6 +51,10 @@
 
             <th>Observación</th>
 
+            <th>Caracteristicas</th>
+
+            <th>Tipo de habitacion</th>
+
             <th>Estado</th>
 
             <th width="280px">Acción</th>
@@ -68,6 +72,10 @@
             <th>{{ $habitacion->habitacion }}</th>
 
             <th>{{ $habitacion->observacion }}</th>
+
+            <th>{{ $habitacion->caracteristicas }}</th>
+
+            <th>{{ $habitacion->tipo }}</th>
 
             <th>{{ $habitacion->estado }}</th>
 

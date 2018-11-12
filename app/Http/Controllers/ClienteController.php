@@ -110,6 +110,8 @@ class ClienteController extends Controller
 
             'nombre' => 'required',
 
+            'nacionalidad' => 'required',
+
             'observacion',
 
             'estado' => 'required'
@@ -123,6 +125,8 @@ class ClienteController extends Controller
             'ci' => $request->input('ci'),
 
             'nombre' => $request->input('nombre'),
+
+            'nacionalidad' => $request->input('nacionalidad'),
 
             'observacion' => $request->input('observacion'),
 
@@ -202,6 +206,8 @@ class ClienteController extends Controller
             'ci' => 'required|unique:clientes,ci,'.$cliente->id,
 
             'nombre' => 'required',
+
+            'nacionalidad' => 'required',
 
             'observacion',
 

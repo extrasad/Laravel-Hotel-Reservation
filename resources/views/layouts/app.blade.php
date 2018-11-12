@@ -27,6 +27,8 @@
     <!-- Styles -->
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/pdf.css') }}" rel="stylesheet">
+
 
 </head>
 
@@ -87,6 +89,12 @@
                             <li><a class="nav-link" href="{{ route('habitaciones.index') }}">Habitaciones</a></li>
 
                             <li><a class="nav-link" href="{{ route('productos.index') }}">Productos</a></li>
+
+                            <li><a class="nav-link" href="{{ route('tarifarios.index') }}">Tarifario</a></li>
+
+                            <li><a class="nav-link" href="{{ route('turnos.index') }}">Turnos</a></li>
+
+                            <li><a class="nav-link" href="{{ route('reservaciones.index') }}">Reservaciones</a></li>
 
 
                             <li class="nav-item dropdown">

@@ -49,6 +49,8 @@
 
             <th>Nombre</th>
 
+            <th>Turnos</th>
+
             <th width="280px">Acción</th>
 
         </tr>
@@ -62,6 +64,15 @@
 	        <th>{{ $empleado->ci }}</th>
 
             <th>{{ $empleado->nombre }}</th>
+
+            <th>
+            
+            @if(!empty($empleado->empleados_turnos($empleado->id)))
+                @foreach($empleado->empleados_turnos($empleado->id) as $turno)
+                    <label class="badge badge-success">{{ $turno->turno_id }}</label> 
+                @endforeach
+            @endif
+            </th>
 
 	        <td>
 

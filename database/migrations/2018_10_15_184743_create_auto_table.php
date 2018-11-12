@@ -20,7 +20,7 @@ class CreateAutoTable extends Migration
             $table->string('modelo');
             $table->string('color');
             $table->string('observacion')->nullable();
-            $table->enum('estado', array('Advertencia', 'Solicitado', 'Sin Problemas'));
+            $table->enum('estado', array('Advertencia', 'Solicitado', 'Activo'));
             $table->timestamps();
         });
     }

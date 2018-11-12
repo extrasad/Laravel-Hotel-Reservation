@@ -66,6 +66,31 @@
 
             <div class="form-group">
 
+                <strong>Caracteristicas:</strong>
+
+                {{ $habitacion->caracteristicas }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Tipo de habitacion:</strong>
+
+                {{ $habitacion->tipo }}
+
+            </div>
+
+        </div>
+
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
                 <strong>Estado:</strong>
 
                 {{ $habitacion->estado }}

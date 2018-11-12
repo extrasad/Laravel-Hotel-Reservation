@@ -12,7 +12,7 @@ class Turno extends Model
     protected $fillable = [
         'fecha', 'hora_entrada', 'hora_salida'
     ];
-    public function empleado(){
-    	return $this->belongsToMany(Empleado::class);
+    public function empleados(){
+    	return $this->belongsToMany(Empleado::class, 'empleados_turnos');
     }
 }

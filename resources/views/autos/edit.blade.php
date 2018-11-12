@@ -108,7 +108,7 @@
 
             <strong>Estado:</strong>
 
-            {!! Form::select('estado', ['Advertencia' => 'Advertencia', 'Solicitado' => 'Solicitado', 'Sin Problemas' => 'Sin Problemas']); !!}
+            {!! Form::select('estado', ['Advertencia' => 'Advertencia', 'Solicitado' => 'Solicitado', 'Activo' => 'Activo'], array('default' => $auto->estado)); !!}
 
         </div>
 

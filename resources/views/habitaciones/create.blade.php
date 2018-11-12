@@ -56,18 +56,6 @@
 
 		        <div class="form-group">
 
-		            <strong>Costo:</strong>
-
-		            <input type="number" step="any" name="costo" class="form-control" placeholder="Costo">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
 		            <strong>Habitacion:</strong>
 
 		            <input type="text" name="habitacion" class="form-control" placeholder="Habitacion">
@@ -88,17 +76,41 @@
 
 		    </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="col-xs-12 col-sm-12 col-md-12">
 
-        <div class="form-group">
+		        <div class="form-group">
 
-            <strong>Estado:</strong>
+		            <strong>Caracteristicas:</strong>
 
-            {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza']); !!}
+		            <textarea class="form-control" style="height:150px" name="caracteristicas" placeholder="Caracteristicas"></textarea>
 
-        </div>
+		        </div>
 
-    </div>
+		    </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="form-group">
+
+                    <strong>Estado:</strong>
+
+                    {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza']); !!}
+
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+        
+                <div class="form-group">
+        
+                    <strong>Tipo de habitacion:</strong>
+        
+                    {!! Form::select('tipo', $tipo); !!}
+        
+                </div>
+        
+            </div>
 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 

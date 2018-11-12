@@ -98,6 +98,14 @@ class PermissionTableSeeder extends Seeder
 
            'turno-delete',
 
+           'tarifario-list',
+
+           'tarifario-create',
+
+           'tarifario-edit',
+
+           'tarifario-delete',
+
         ];
 
 

@@ -9,13 +9,13 @@
 
             <div class="pull-left">
 
-                <h2>Editar Cliente</h2>
+                <h2>Editar Consumo</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('clientes.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('consumos.index') }}"> Atras</a>
 
             </div>
 
@@ -45,7 +45,7 @@
     @endif
 
 
-    <form action="{{ route('clientes.update',$cliente->id) }}" method="POST">
+    <form action="{{ route('consumos.update',$consumo->id) }}" method="POST">
 
     	@csrf
 
@@ -54,29 +54,41 @@
 
          <div class="row">
 
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Costo:</strong>
-
-		            <input type="number" step="any" name="costo" class="form-control" placeholder="Costo">
-
-		        </div>
-
-		    </div>
-
             <div class="col-xs-12 col-sm-12 col-md-12">
         
                 <div class="form-group">
         
                     <strong>Estado:</strong>
         
-                    {!! Form::select('estado', ['Pendiente por pagar' => 'Pendiente por pagar', 'Cancelado' => 'Cancelado']); !!}
+                    {!! Form::select('estado',['Pendiente por pagar' => 'Pendiente por pagar', 'Cancelado' => 'Cancelado'], array('default' => $consumo->estado)); !!}
         
                 </div>
         
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="form-group">
+
+                    <strong>Productos:</strong>
+
+                    {!! Form::select('productos[]', $productos,$consumoProducto, array('class' => 'form-control','multiple')) !!}
+
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="form-group">
+
+                    <strong>Reservacion ID:</strong>
+
+                    {!! Form::select('reservacion',$consumo->reservacion, $reservaciones); !!}
+
+                </div>
+
+            </div>
+
+
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
 		            <button type="submit" class="btn btn-primary">Enviar</button>

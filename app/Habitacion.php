@@ -14,7 +14,7 @@ class Habitacion extends Model
      * @var array
      */
     protected $fillable = [
-        'estado', 'costo', 'habitacion'
+        'estado', 'costo', 'habitacion', 'tipo', 'observacion', 'caracteristicas'
     ];
     public function reservaciones()
     {

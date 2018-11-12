@@ -15,29 +15,17 @@ class CreateReservacionTable extends Migration
     {
         Schema::create('reservacions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('habitacion')->unsigned();
-            $table->foreign('habitacion')
-            ->references('id')->on('habitacions')
-            ->onDelete('cascade');
-            $table->integer('placa')->unsigned();
-            $table->foreign('placa')
-            ->references('id')->on('autos')
-            ->onDelete('cascade');
-            $table->integer('ci')->unsigned();
-            $table->foreign('ci')
-            ->references('id')->on('clientes')
-            ->onDelete('cascade');
-            $table->integer('ci2')->unsigned();
-            $table->foreign('ci2')
-            ->references('id')->on('clientes')
-            ->onDelete('cascade');
-            $table->float('costo');
+            $table->integer('habitacion_id')->nullable();
+            $table->integer('auto_id')->nullable();
+            $table->integer('cliente1_id')->nullable();
+            $table->integer('cliente2_id')->nullable();
+            $table->float('costo')->nullable();
             $table->date('fecha_entrada');
             $table->date('fecha_salida');
             $table->time('hora_entrada');
             $table->time('hora_salida');
             $table->string('observacion')->nullable();
-            $table->enum('estado', array('Advertencia', 'Solicitado', 'Sin Problemas'));
+            $table->enum('estado', array('Activa', 'Inactiva'));
             $table->timestamps();
         });
     }

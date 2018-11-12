@@ -18,6 +18,6 @@ class Producto extends Model
         'descripcion', 'costo'
     ];
     public function consumo(){
-    	return $this->belongsToMany(Consumo::class);
+    	return $this->belongsToMany(Consumo::class, 'consumo_producto');
     }
 }

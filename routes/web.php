@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('descargar-factura', 'ReservacionController@pdf')->name('reservaciones.pdf');
 
 Route::group(['middleware' => ['auth']], function() {
 
@@ -45,7 +46,11 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('productos','ProductoController');
 
-    #Route::resource('reservaciones','ReservacionController');
+    Route::resource('tarifarios','TarifarioController');
+
+    Route::resource('turnos','TurnoController');
+
+    Route::resource('reservaciones','ReservacionController');
 
 
 });

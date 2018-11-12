@@ -14,9 +14,9 @@ class Cliente extends Model
      * @var array
      */
     protected $fillable = [
-        'ci', 'nombre', 'observacion', 'estado'
+        'ci', 'nombre', 'observacion', 'estado', 'nacionalidad'
     ];
-    public function reservaciones()
+    public function reservacion()
     {
         return $this->hasMany(Reservacion::class);
     }
