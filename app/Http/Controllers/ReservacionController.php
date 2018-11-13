@@ -197,7 +197,7 @@ class ReservacionController extends Controller
 
      *
 
-     * @param  \App\Reservacion  $reservacion
+     * @param $reservacion
 
      */
 
@@ -209,6 +209,7 @@ class ReservacionController extends Controller
         $fpdf->SetFont('Courier', 'B', 18);
         $fpdf->Cell(50, 25, $reservacion->id);
         $fpdf->Cell(50, 25, $reservacion->cliente1->ci);
+        $fpdf->Cell(50, 25, 'hola');
         $fpdf->Output();
         exit;
     }

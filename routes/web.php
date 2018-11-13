@@ -28,6 +28,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('descargar-factura/{id}', 'ReservacionController@pdf')->name('reservacion.pdf');
 
+Route::get('/','SearchController@index')->name('search.index');
+ 
+Route::get('/search','SearchController@search')->name('search.search');
+
 Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('roles','RoleController');

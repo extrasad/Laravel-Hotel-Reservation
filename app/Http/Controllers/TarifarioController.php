@@ -121,7 +121,6 @@ class TarifarioController extends Controller
             
             ]);
 
-
         return redirect()->route('tarifarios.index')
 
                         ->with('success','Tarifario creado satisfactoriamente');
@@ -198,6 +197,12 @@ class TarifarioController extends Controller
 
 
         $tarifario->update($request->all());
+
+        $habitacion = DB::table('habitacions')->where('tipo', $tarifario->tipo);
+
+        $habitacion->update([
+            'costo' => $tarifario->precio
+        ]);
 
 
         return redirect()->route('tarifarios.index')
