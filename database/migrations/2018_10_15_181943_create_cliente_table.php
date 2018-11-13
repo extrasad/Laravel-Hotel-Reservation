@@ -19,8 +19,8 @@ class CreateClienteTable extends Migration
             $table->unique('ci');
             $table->string('nacionalidad');
             $table->string('nombre');
+            $table->string('estado');
             $table->string('observacion')->nullable();
-            $table->enum('estado', array('Advertencia', 'Solicitado', 'Activo'));
             $table->timestamps();
         });
     }

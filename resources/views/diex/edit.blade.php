@@ -9,13 +9,13 @@
 
             <div class="pull-left">
 
-                <h2>Editar Reservacion</h2>
+                <h2>Editar Registro</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('reservaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('diex.index') }}"> Atras</a>
 
             </div>
 
@@ -45,7 +45,7 @@
     @endif
 
 
-    <form action="{{ route('reservaciones.update',$reservacion->id) }}" method="POST">
+    <form action="{{ route('diex.update', $diex->id) }}" method="POST">
 
     	@csrf
 
@@ -54,25 +54,13 @@
 
          <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="col-xs-12 col-sm-12 col-md-12">
 
 		        <div class="form-group">
 
-		            <strong>Fecha de entrada:</strong>
+		            <strong>Cedula de Identidad:</strong>
 
-                    {!! Form::date('fecha_entrada', $reservacion->fecha_entrada) !!}
-
-		        </div>
-
-		    </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Fecha de salida:</strong>
-
-                    {!! Form::date('fecha_salida', $reservacion->fecha_salida) !!}
+		            <input type="text" name="ci" value="{{ $diex->ci }}" class="form-control" placeholder="Cedula de Identidad">
 
 		        </div>
 
@@ -82,31 +70,32 @@
 
 		        <div class="form-group">
 
-		            <strong>Hora entrada:</strong>
+		            <strong>Nombre:</strong>
 
-		           {!! Form::time('hora_entrada', $reservacion->hora_entrada) !!}
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Hora salida:</strong>
-
-		           {!! Form::time('hora_salida', $reservacion->hora_salida) !!}
+		            <input type="text" name="nombre" value="{{ $diex->nombre }}" class="form-control" placeholder="Nombre">
 
 		        </div>
+
 		    </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
+
+		        <div class="form-group">
+
+		            <strong>Placa:</strong>
+
+		            <input type="text" name="placa" class="form-control" value="{{ $diex->placa }}" placeholder="Placa">
+
+		        </div>
+		    </div>
+
+		    <div class="col-xs-12 col-sm-12 col-md-12">
 
 		        <div class="form-group">
 
 		            <strong>Observación:</strong>
 
-		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación">{{ $reservacion->observacion }}</textarea>
+		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación">{{ $diex->observacion }}</textarea>
 
 		        </div>
 
@@ -118,12 +107,11 @@
 
                     <strong>Estado:</strong>
 
-                    {!! Form::select('estado', ['Advertencia' => 'Advertencia', 'Solicitado' => 'Solicitado', 'Activo' => 'Activo'], array('default' => $reservacion->estado)); !!}
+                    {!! Form::select('estado', ['Solicitado' => 'Solicitado', 'Advertencia' => 'Advertencia'], array('default' => $diex->estado)); !!}
 
                 </div>
 
             </div>
-
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
 		            <button type="submit" class="btn btn-primary">Enviar</button>

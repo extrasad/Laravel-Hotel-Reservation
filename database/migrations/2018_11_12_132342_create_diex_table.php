@@ -13,11 +13,12 @@ class CreateDiexTable extends Migration
      */
     public function up()
     {
-        Schema::create('diex', function (Blueprint $table) {
+        Schema::create('diexes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('placa')->nullable();
             $table->string('ci')->nullable();
             $table->string('nombre')->nullable();
+            $table->enum('estado', array('Advertencia', 'Solicitado'));
             $table->string('observacion')->nullable();
             $table->timestamps();
         });

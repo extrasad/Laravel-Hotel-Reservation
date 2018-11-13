@@ -15,7 +15,7 @@
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('habitaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('habitacion.index') }}"> Atras</a>
 
             </div>
 
@@ -45,7 +45,7 @@
     @endif
 
 
-    <form action="{{ route('habitaciones.store') }}" method="POST">
+    <form action="{{ route('habitacion.store') }}" method="POST">
 
     	@csrf
 

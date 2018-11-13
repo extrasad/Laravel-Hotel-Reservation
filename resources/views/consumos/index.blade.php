@@ -51,6 +51,8 @@
 
             <th>Productos</th>
 
+            <th>Reservacion ID</th>
+
             <th width="280px">Acción</th>
 
         </tr>
@@ -71,6 +73,7 @@
             @endforeach
             </th>
 
+            <th> {{ $consumo->reservacion->id }} </th>
 
 	        <td>
 

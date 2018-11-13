@@ -98,6 +98,22 @@ class RoleTableSeeder extends Seeder
            'tarifario-edit',
 
            'tarifario-delete',
+
+           'diex-list',
+
+           'diex-create',
+
+           'diex-edit',
+
+           'diex-delete',
+
+           'promo-list',
+
+           'promo-create',
+
+           'promo-edit',
+
+           'promo-delete'
  
          ];
 

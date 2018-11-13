@@ -19,8 +19,8 @@ class CreateAutoTable extends Migration
             $table->unique('placa');
             $table->string('modelo');
             $table->string('color');
+            $table->string('estado');
             $table->string('observacion')->nullable();
-            $table->enum('estado', array('Advertencia', 'Solicitado', 'Activo'));
             $table->timestamps();
         });
     }

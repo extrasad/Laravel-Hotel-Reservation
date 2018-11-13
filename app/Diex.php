@@ -14,6 +14,6 @@ class Diex extends Model
      * @var array
      */
     protected $fillable = [
-        'ci', 'nombre', 'placa', 'observacion'
+        'ci', 'nombre', 'placa', 'observacion', 'estado'
     ];
 }

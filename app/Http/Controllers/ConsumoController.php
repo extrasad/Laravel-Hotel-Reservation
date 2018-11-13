@@ -87,7 +87,7 @@ class ConsumoController extends Controller
 
         $productos = Producto::pluck('descripcion','descripcion')->all();
 
-        $reservaciones = Reservacion::where('estado','Activa')->value('id');
+        $reservaciones = Reservacion::where('estado','Activa')->pluck('id', 'id')->all();
 
         return view('consumos.create',compact('productos', 'reservaciones'));
 
@@ -144,6 +144,12 @@ class ConsumoController extends Controller
         $consumo->producto()->attach($producto_find);
         $consumo->reservacion()->associate($request->input('reservacion'));
         $consumo->save();
+        $reservacion = Reservacion::find($request->input('reservacion'));
+        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $reservacion->update(
+            ['costo' => $precio]
+
+        );
 
         return redirect()->route('consumos.index')
 
@@ -189,7 +195,7 @@ class ConsumoController extends Controller
     {
         $productos = Producto::pluck('descripcion','descripcion')->all();
 
-        $reservaciones = Reservacion::where('estado','Activa')->value('id');
+        $reservaciones = Reservacion::where('estado','Activa')->pluck('id', 'id')->all();
 
         $consumoProducto = $consumo->producto->pluck('descripcion','descripcion')->all();
 
@@ -220,9 +226,7 @@ class ConsumoController extends Controller
 
             'estado' => 'required',
 
-            'productos' => 'required',
-
-            'reservacion' => 'required'
+            'productos' => 'required'
 
         ]);
 
@@ -248,8 +252,12 @@ class ConsumoController extends Controller
 
         $producto_find = Producto::find($product_list);
         $consumo->producto()->attach($producto_find);
-        $consumo->reservacion()->associate($request->input('reservacion'));
         $consumo->save();
+        $reservacion = Reservacion::find($consumo->reservacion->id);
+        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $reservacion->update(
+            ['costo' => $precio]
+        );
 
 
         return redirect()->route('consumos.index')

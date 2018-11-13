@@ -18,7 +18,7 @@ use App\Cliente;
 
 use App\Consumo;
 
-use Barryvdh\DomPDF\Facade as PDF;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 use Spatie\Permission\Models\Permission;
 
@@ -70,7 +70,7 @@ class ReservacionController extends Controller
 
         $reservaciones = Reservacion::orderBy('id','DESC')->paginate(5);
 
-        return view('reservaciones.index',compact('reservaciones'))
+        return view('reservacion.index',compact('reservaciones'))
 
             ->with('i', ($request->input('page', 1) - 1) * 5);
 
@@ -91,9 +91,9 @@ class ReservacionController extends Controller
 
     {
 
-        $habitaciones = Habitacion::pluck('habitacion','habitacion')->all();
+        $habitaciones = Habitacion::where('estado', 'Disponible')->pluck('habitacion','habitacion')->all();
 
-        return view('reservaciones.create',compact('habitaciones', 'autos', 'clientes'));
+        return view('reservacion.create',compact('habitaciones', 'autos', 'clientes'));
 
     }
 
@@ -115,14 +115,6 @@ class ReservacionController extends Controller
     {
 
         $this->validate($request, [
-            
-            'hora_entrada' => 'required',
-
-            'hora_salida' => 'required',
-
-            'fecha_entrada' => 'required',
-
-            'fecha_salida' => 'required',
 
             'observacion',
 
@@ -142,18 +134,15 @@ class ReservacionController extends Controller
         $estado = Habitacion::where('habitacion', ($request->input('habitacion')))->value('estado');
 
         if($estado != 'Disponible'){
-            return redirect()->route('reservaciones.index')
+            return redirect()->route('reservacion.index')
                         ->with('success','Habitacion no disponible');
         }
 
         $costo = Habitacion::where('habitacion', ($request->input('habitacion')))->value('costo');
         $reservacion = Reservacion::create(
             [
-                'hora_entrada' => $request->input('hora_entrada'),
 
                 'hora_salida' => $request->input('hora_salida'),
-    
-                'fecha_entrada' => $request->input('fecha_entrada'),
     
                 'fecha_salida' => $request->input('fecha_salida'),
     
@@ -176,7 +165,7 @@ class ReservacionController extends Controller
         $reservacion_find->cliente2()->associate($cliente2_find);
         $reservacion_find->save();
 
-        return redirect()->route('reservaciones.index')
+        return redirect()->route('reservacion.index')
 
                         ->with('success','Reservacion creada satisfactoriamente');
 
@@ -198,17 +187,30 @@ class ReservacionController extends Controller
 
     {
 
-        return view('reservaciones.show',compact('reservacion'));
+        return view('reservacion.show',compact('reservacion'));
 
     }
 
-    public function pdf(Reservacion $reservacion)
+    /**
+
+     * PDF of the resource.
+
+     *
+
+     * @param  \App\Reservacion  $reservacion
+
+     */
+
+    public function pdf($reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
-
-        $pdf = PDF::loadView('pdf.factura', compact('reservacion'));
-
-        return $pdf->download('factura.pdf');
+        $fpdf = new Fpdf;
+        $fpdf->AddPage();
+        $fpdf->SetFont('Courier', 'B', 18);
+        $fpdf->Cell(50, 25, $reservacion->id);
+        $fpdf->Cell(50, 25, $reservacion->cliente1->ci);
+        $fpdf->Output();
+        exit;
     }
 
 
@@ -227,14 +229,11 @@ class ReservacionController extends Controller
     public function edit(Reservacion $reservacion)
 
     {
-        $habitaciones = Habitacion::pluck('habitacion','habitacion')->all();
-        $reservacionesClientes = $reservacion->cliente;
+        $habitaciones = Habitacion::where('estado', 'Disponible')->pluck('habitacion','habitacion')->all();
 
-        return view('reservaciones.edit',compact(
+        return view('reservacion.edit',compact(
             'reservacion',
-            'habitaciones',
-            'reservacionesClientes'
-
+            'habitaciones'
         ));
 
     }
@@ -260,15 +259,11 @@ class ReservacionController extends Controller
 
          request()->validate([
 
-            'hora_entrada' => 'required',
+            'hora_salida',
 
-            'hora_salida' => 'required',
+            'fecha_salida',
 
-            'fecha_entrada' => 'required',
-
-            'fecha_salida' => 'required',
-
-            'observacion' => 'required',
+            'observacion',
 
             'estado' => 'required',
 
@@ -276,37 +271,40 @@ class ReservacionController extends Controller
 
             'auto' => 'required',
 
-            'clientes' => 'required'
+            'cliente1' => 'required',
+
+            'cliente2' => 'required'
 
         ]);
 
-        $consumo = Consumo::where('id', $reservacion->consumo)->where('estado', 'Pendiente por pagar');
-        $habitacion = Habitacion::find($request->input('habitacion'));
-        $costo = $consumo->costo + $habitacion->costo;
-
         $reservacion->update([
-            'hora_entrada' => $request->input('hora_entrada'),
 
             'hora_salida' => $request->input('hora_salida'),
-    
-            'fecha_entrada' => $request->input('fecha_entrada'),
     
             'fecha_salida' => $request->input('fecha_salida'),
     
             'observacion' => $request->input('observacion'),
     
-            'estado' => $request->input('estado'),
-
-            'costo' => $costo
+            'estado' => $request->input('estado')
         ]);
 
         DB::table('reservaciones_clientes')->where('reservacion_id',$reservacion->id)->delete();
         $reservacion->habitacion()->dissociate();
         $reservacion->auto()->dissociate();
         $reservacion->save();
+        $auto_find = Auto::where('placa', $request->input('auto'))->value('id');
+        $cliente1_find = Cliente::where('ci', $request->input('cliente1'))->value('id');
+        $cliente2_find = Cliente::where('ci', $request->input('cliente2'))->value('id');
+        $habitacion_find = Habitacion::where('habitacion', $request->input('habitacion'))->value('id');
+        $reservacion_find = Reservacion::find($reservacion->id);
+        $reservacion_find->habitacion()->associate($habitacion_find);
+        $reservacion_find->auto()->associate($auto_find);
+        $reservacion_find->cliente1()->associate($cliente1_find);
+        $reservacion_find->cliente2()->associate($cliente2_find);
+        $reservacion_find->save();
 
 
-        return redirect()->route('reservaciones.index')
+        return redirect()->route('reservacion.index')
 
                         ->with('success','Reservacion Actualizado Satisfactoriamente');
 
@@ -334,7 +332,7 @@ class ReservacionController extends Controller
         $reservacion->delete();
         
 
-        return redirect()->route('reservaciones.index')
+        return redirect()->route('reservacion.index')
 
                         ->with('success','Reservacion borrada satisfactoriamente');
 

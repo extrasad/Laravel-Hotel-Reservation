@@ -58,9 +58,9 @@ class DiexController extends Controller
 
     {
 
-        $diexs = Diex::orderBy('id','DESC')->paginate(5);
+        $diex = Diex::orderBy('id','DESC')->paginate(5);
 
-        return view('diexs.index',compact('diexs'))
+        return view('diex.index',compact('diex'))
 
             ->with('i', ($request->input('page', 1) - 1) * 5);
 
@@ -83,7 +83,7 @@ class DiexController extends Controller
 
         $permission = Permission::get();
 
-        return view('diexs.create',compact('permission'));
+        return view('diex.create',compact('permission'));
 
     }
 
@@ -112,7 +112,9 @@ class DiexController extends Controller
 
             'placa',
 
-            'observacion'
+            'observacion',
+
+            'estado'
         ]);
 
 
@@ -125,12 +127,14 @@ class DiexController extends Controller
 
             'nombre' => $request->input('nombre'),
 
-            'placa' => $request->input('placa')
+            'placa' => $request->input('placa'),
+
+            'estado' => $request->input('estado')
             
             ]);
 
 
-        return redirect()->route('diexs.index')
+        return redirect()->route('diex.index')
 
                         ->with('success','Diex creado satisfactoriamente');
 
@@ -152,7 +156,7 @@ class DiexController extends Controller
 
     {
 
-        return view('diexs.show',compact('diex'));
+        return view('diex.show',compact('diex'));
 
     }
 
@@ -173,7 +177,7 @@ class DiexController extends Controller
 
     {
 
-        return view('diexs.edit',compact('diex'));
+        return view('diex.edit',compact('diex'));
 
     }
 
@@ -204,7 +208,9 @@ class DiexController extends Controller
 
             'placa',
 
-            'observacion'
+            'observacion',
+
+            'estado'
 
         ]);
 
@@ -212,7 +218,7 @@ class DiexController extends Controller
         $diex->update($request->all());
 
 
-        return redirect()->route('diexs.index')
+        return redirect()->route('diex.index')
 
                         ->with('success','Diex Actualizado Satisfactoriamente');
 
@@ -238,7 +244,7 @@ class DiexController extends Controller
         $diex->delete();
 
 
-        return redirect()->route('diexs.index')
+        return redirect()->route('diex.index')
 
                         ->with('success','Diex borrado satisfactoriamente');
 

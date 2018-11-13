@@ -17,7 +17,7 @@
 
                 @can('habitacion-create')
 
-                <a class="btn btn-success" href="{{ route('habitaciones.create') }}"> Crear una nueva habitacion</a>
+                <a class="btn btn-success" href="{{ route('habitacion.create') }}"> Crear una nueva habitacion</a>
 
                 @endcan
 
@@ -81,13 +81,13 @@
 
 	        <td>
 
-                <form action="{{ route('habitaciones.destroy',$habitacion->id) }}" method="POST">
+                <form action="{{ route('habitacion.destroy',$habitacion->id) }}" method="POST">
 
-                    <a class="btn btn-info" href="{{ route('habitaciones.show',$habitacion->id) }}">Mostrar</a>
+                    <a class="btn btn-info" href="{{ route('habitacion.show',$habitacion->id) }}">Mostrar</a>
 
                     @can('habitacion-edit')
 
-                    <a class="btn btn-primary" href="{{ route('habitaciones.edit',$habitacion->id) }}">Editar</a>
+                    <a class="btn btn-primary" href="{{ route('habitacion.edit',$habitacion->id) }}">Editar</a>
 
                     @endcan
 

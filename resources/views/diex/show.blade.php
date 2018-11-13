@@ -9,13 +9,13 @@
 
             <div class="pull-left">
 
-                <h2> Mostrar consumo</h2>
+                <h2> Mostrar Lista Negra</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('consumos.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('diex.index') }}"> Atras</a>
 
             </div>
 
@@ -30,9 +30,45 @@
 
             <div class="form-group">
 
-                <strong>Costo:</strong>
+                <strong>Nombre:</strong>
 
-                {{ $consumo->costo }}
+                {{ $diex->nombre }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Cedula de Identidad:</strong>
+
+                {{ $diex->ci }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Observación:</strong>
+
+                {{ $diex->observacion }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Placa:</strong>
+
+                {{ $diex->placa }}
 
             </div>
 
@@ -44,36 +80,9 @@
 
                 <strong>Estado:</strong>
 
-                {{ $consumo->estado }}
+                {{ $diex->estado }}
 
             </div>
-
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Productos:</strong>
-
-                @foreach($consumo->producto as $producto)
-                    {{ $producto->descripcion }}
-                @endforeach
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Reservacion ID:</strong>
-
-                    {{ $consumo->reservacion->id}}
-
-            </div>
-
-        </div>
 
         </div>
 

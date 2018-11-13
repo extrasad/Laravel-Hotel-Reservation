@@ -76,17 +76,6 @@
                 </div>
 
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-                <div class="form-group">
-
-                    <strong>Reservacion ID:</strong>
-
-                    {!! Form::select('reservacion',$consumo->reservacion, $reservaciones); !!}
-
-                </div>
-
-            </div>
 
 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">

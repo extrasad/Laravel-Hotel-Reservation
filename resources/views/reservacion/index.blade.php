@@ -17,7 +17,7 @@
 
                 @can('reservacion-create')
 
-                <a class="btn btn-success" href="{{ route('reservaciones.create') }}"> Crear una nueva reservacion</a>
+                <a class="btn btn-success" href="{{ route('reservacion.create') }}"> Crear una nueva reservacion</a>
 
                 @endcan
 
@@ -47,16 +47,6 @@
 
             <th>ID</th>
 
-            <th>Fecha de entrada</th>
-
-            <th>Fecha de salida</th>
-
-            <th>Hora de entrada</th>
-
-            <th>Hora de salida</th>
-
-            <th>Observacion</th>
-
             <th>Estado</th>
 
             <th>Consumo</th>
@@ -83,19 +73,12 @@
 
             <th>{{ $reservacion->id }}</th>
 
-            <th>{{ $reservacion->fecha_entrada }}</th>
-
-            <th>{{ $reservacion->fecha_salida }}</th>
-
-            <th>{{ $reservacion->hora_entrada }}</th>
-
-            <th>{{ $reservacion->hora_salida }}</th>
-
-            <th>{{ $reservacion->observacion }}</th>
-
             <th>{{ $reservacion->estado }}</th>
 
-            <th>{{ $reservacion->consumo->costo }}</th>
+            <th>@if(isset($reservacion->consumo->costo))
+            {{ $reservacion->consumo->costo}}
+            @endif
+            </th>
 
             <th>{{ $reservacion->cliente1->ci }}</th>
 
@@ -110,15 +93,15 @@
 
 	        <td>
 
-                <form action="{{ route('reservaciones.destroy',$reservacion->id) }}" method="POST">
+                <form action="{{ route('reservacion.destroy',$reservacion->id) }}" method="POST">
 
-                    <a class="btn btn-info" href="{{ route('reservaciones.show',$reservacion->id) }}">Mostrar</a>
+                    <a class="btn btn-info" href="{{ route('reservacion.show',$reservacion->id) }}">Mostrar</a>
 
-                    <a href="{{ route('reservaciones.pdf', $reservacion->id) }}" class="btn btn-sm btn-primary">Descargar Factura en PDF</a>
+                    <a href="{{ route('reservacion.pdf',$reservacion->id) }}" class="btn btn-sm btn-primary">Descargar Factura en PDF</a>
 
                     @can('reservacion-edit')
 
-                    <a class="btn btn-primary" href="{{ route('reservaciones.edit',$reservacion->id) }}">Editar</a>
+                    <a class="btn btn-primary" href="{{ route('reservacion.edit',$reservacion->id) }}">Editar</a>
 
                     @endcan
 

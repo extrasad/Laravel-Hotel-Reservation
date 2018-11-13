@@ -15,7 +15,7 @@
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('reservaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('reservacion.index') }}"> Atras</a>
 
             </div>
 
@@ -44,7 +44,19 @@
 
                 <strong>Fecha de entrada:</strong>
 
-                {{ $reservacion->fecha_entrada }}
+                {{ $reservacion->created_at->format('d/m/Y') }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Hora de entrada:</strong>
+
+                {{ $reservacion->created_at->format('H:i:s') }}
 
             </div>
 
@@ -66,35 +78,12 @@
 
             <div class="form-group">
 
-                <strong>Hora de entrada:</strong>
-
-                {{ $reservacion->hora_entrada }}
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
                 <strong>Hora de salida:</strong>
 
                 {{ $reservacion->hora_salida }}
 
             </div>
 
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Observacion:</strong>
-
-                {{ $reservacion->observacion }}
-
-            </div>
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -114,7 +103,7 @@
 
                 <strong>Consumo:</strong>
 
-                {{ $reservacion->consumo }}
+                {{ $reservacion->consumo->costo }}
 
             </div>
         </div>
@@ -123,10 +112,8 @@
             <div class="form-group">
 
                 <strong>Cliente:</strong>
-                    @if(!empty($reservacion->cliente1))
-                    @foreach($reservacion->cliente1 as $cliente)
-                    {{ $reservacion->cliente->id }}
-                    @endforeach
+                    @if(!empty($reservacion->cliente1->ci))
+                        {{ $reservacion->cliente1->ci }}
                     @endif
             </div>
 
@@ -137,10 +124,8 @@
             <div class="form-group">
 
                 <strong>Acompañante:</strong>
-                    @if(!empty($reservacion->cliente2))
-                    @foreach($reservacion->cliente2 as $cliente)
-                    {{ $reservacion->cliente->id }}
-                    @endforeach
+                    @if(!empty($reservacion->cliente2->ci))
+                    {{ $reservacion->cliente2->ci  }}
                     @endif
             </div>
 
@@ -152,7 +137,7 @@
 
                 <strong>Auto:</strong>
 
-                {{ $reservacion->auto }}
+                {{ $reservacion->auto->placa }}
 
             </div>
 
@@ -164,7 +149,7 @@
 
                 <strong>Habitacion:</strong>
 
-                {{ $reservacion->habitacion }}
+                {{ $reservacion->habitacion->habitacion }}
 
             </div>
 

@@ -15,7 +15,7 @@
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('habitaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('habitacion.index') }}"> Atras</a>
 
             </div>
 
@@ -45,7 +45,7 @@
     @endif
 
 
-    <form action="{{ route('habitaciones.update', $habitacion->id) }}" method="POST">
+    <form action="{{ route('habitacion.update', $habitacion->id) }}" method="POST">
 
     	@csrf
 
@@ -61,18 +61,6 @@
 		            <strong>Habitacion:</strong>
 
 		            <input type="text" name="habitacion" value="{{ $habitacion->habitacion }}" class="form-control" placeholder="Habitacion">
-
-		        </div>
-
-		    </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Tipo de Habitación:</strong>
-
-		            <input type="text" name="tipo" value="{{ $habitacion->tipo }}" class="form-control" placeholder="Tipo de Habitacion">
 
 		        </div>
 
@@ -120,7 +108,7 @@
 
                     <strong>Tipo de habitacion:</strong>
 
-                    {!! Form::select('tipo',$habitacion->tipo, $tipo); !!}
+                    {!! Form::select('tipo',$tipo, $habitacion->tipo); !!}
 
                 </div>
 

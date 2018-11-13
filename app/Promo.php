@@ -6,7 +6,7 @@ use App\Promo;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Diex extends Model
+class Promo extends Model
 {
     /**
      * The attributes that are mass assignable.

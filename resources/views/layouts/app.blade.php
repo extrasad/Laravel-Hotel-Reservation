@@ -86,7 +86,7 @@
 
                             <li><a class="nav-link" href="{{ route('empleados.index') }}">Empleados</a></li>
 
-                            <li><a class="nav-link" href="{{ route('habitaciones.index') }}">Habitaciones</a></li>
+                            <li><a class="nav-link" href="{{ route('habitacion.index') }}">Habitaciones</a></li>
 
                             <li><a class="nav-link" href="{{ route('productos.index') }}">Productos</a></li>
 
@@ -94,8 +94,9 @@
 
                             <li><a class="nav-link" href="{{ route('turnos.index') }}">Turnos</a></li>
 
-                            <li><a class="nav-link" href="{{ route('reservaciones.index') }}">Reservaciones</a></li>
+                            <li><a class="nav-link" href="{{ route('reservacion.index') }}">Reservaciones</a></li>
 
+                            <li><a class="nav-link" href="{{ route('diex.index') }}">Lista Negra</a></li>
 
                             <li class="nav-item dropdown">
 
