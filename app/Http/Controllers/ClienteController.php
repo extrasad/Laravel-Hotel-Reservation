@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 
 use App\Cliente;
 
+use App\Diex;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -110,12 +112,17 @@ class ClienteController extends Controller
 
             'nombre' => 'required',
 
-            'observacion',
-
-            'estado' => 'required'
+            'nacionalidad' => 'required'
 
         ]);
 
+        $estado = Diex::where('ci', $request->input('ci'))->value('estado');
+
+        $observacion = Diex::where('ci', $request->input('ci'))->value('observacion');
+
+        if($estado == null){
+            $estado = 'Activo';
+        }
 
         $cliente = Cliente::create(
             [
@@ -124,9 +131,11 @@ class ClienteController extends Controller
 
             'nombre' => $request->input('nombre'),
 
-            'observacion' => $request->input('observacion'),
+            'nacionalidad' => $request->input('nacionalidad'),
 
-            'estado' => $request->input('estado')
+            'observacion' => $observacion,
+
+            'estado' => $estado
             
             ]);
 
@@ -203,14 +212,30 @@ class ClienteController extends Controller
 
             'nombre' => 'required',
 
-            'observacion',
+            'nacionalidad' => 'required',
 
-            'estado' => 'required'
+            'observacion'
 
         ]);
 
+        $estado = Diex::where('ci', $request->input('ci'))->value('estado');
+        $observacion = Diex::where('ci', $request->input('ci'))->value('observacion');
+        if($estado == null){
+            $estado = 'Activo';
+        }
+        $cliente->update([
 
-        $cliente->update($request->all());
+            'ci' => $request->input('ci'),
+
+            'nombre' => $request->input('nombre'),
+
+            'nacionalidad' => $request->input('nacionalidad'),
+
+            'observacion' => $observacion,
+
+            'estado' => $estado
+            
+        ]);
 
 
         return redirect()->route('clientes.index')

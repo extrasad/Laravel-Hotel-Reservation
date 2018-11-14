@@ -9,13 +9,13 @@
 
             <div class="pull-left">
 
-                <h2> Mostrar Habitacion</h2>
+                <h2> Mostrar Turno</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('habitaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('turnos.index') }}"> Atras</a>
 
             </div>
 
@@ -30,21 +30,9 @@
 
             <div class="form-group">
 
-                <strong>Costo:</strong>
+                <strong>Fecha:</strong>
 
-                {{ $habitacion->costo }}
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Habitacion:</strong>
-
-                {{ $habitacion->habitacion }}
+                {{ $turno->fecha }}
 
             </div>
 
@@ -54,9 +42,9 @@
 
             <div class="form-group">
 
-                <strong>Observación:</strong>
+                <strong>Hora de Entrada:</strong>
 
-                {{ $habitacion->observacion }}
+                {{ $turno->hora_entrada }}
 
             </div>
 
@@ -66,9 +54,9 @@
 
             <div class="form-group">
 
-                <strong>Estado:</strong>
+                <strong>Hora de Salida:</strong>
 
-                {{ $habitacion->estado }}
+                {{ $turno->hora_salida }}
 
             </div>
 

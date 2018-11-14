@@ -20,10 +20,10 @@ class Consumo extends Model
         'costo', 'estado'
     ];
     public function producto(){
-    	return $this->belongsToMany(Producto::class);
+    	return $this->belongsToMany(Producto::class, 'consumo_producto');
     }
     public function reservacion()
     {
-        return $this->hasOne(Reservacion::class);
+        return $this->belongsTo(Reservacion::class);
     }
 }

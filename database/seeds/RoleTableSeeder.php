@@ -90,6 +90,30 @@ class RoleTableSeeder extends Seeder
             'turno-edit',
  
             'turno-delete',
+
+            'tarifario-list',
+
+           'tarifario-create',
+
+           'tarifario-edit',
+
+           'tarifario-delete',
+
+           'diex-list',
+
+           'diex-create',
+
+           'diex-edit',
+
+           'diex-delete',
+
+           'promo-list',
+
+           'promo-create',
+
+           'promo-edit',
+
+           'promo-delete'
  
          ];
 
@@ -210,6 +234,14 @@ class RoleTableSeeder extends Seeder
             'turno-edit',
  
             'turno-delete',
+            
+            'tarifario-list',
+
+           'tarifario-create',
+
+           'tarifario-edit',
+
+           'tarifario-delete'
  
          ];
         foreach ($permissions_root as $permission) {

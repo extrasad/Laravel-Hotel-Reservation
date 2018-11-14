@@ -49,6 +49,10 @@
 
             <th>Estado</th>
 
+            <th>Productos</th>
+
+            <th>Reservacion ID</th>
+
             <th width="280px">Acción</th>
 
         </tr>
@@ -61,11 +65,15 @@
 
             <th>{{ $consumo->costo }}</th>
 
-            <th>{{ $consumo->created_at->format('H:i:s') }}</th>
-
             <th>{{ $consumo->estado }}</th>
+            
+            <th>
+            @foreach($consumo->producto as $producto)
+                {{ $producto->descripcion }}
+            @endforeach
+            </th>
 
-            <th>{{ $consumo->created_at->format('d/m/Y') }}</th>
+            <th> {{ $consumo->reservacion->id }} </th>
 
 	        <td>
 

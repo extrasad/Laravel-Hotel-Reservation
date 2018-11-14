@@ -50,6 +50,20 @@
 
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Turnos:</strong>
+                @if(!empty($empleado->empleados_turnos($empleado->id)))
+                @foreach($empleado->empleados_turnos($empleado->id) as $turno)
+                    <label class="badge badge-success">{{ $turno->turno_id }}</label> 
+                @endforeach
+                @endif
+            </div>
+
+        </div>
+
     </div>
 
 @endsection

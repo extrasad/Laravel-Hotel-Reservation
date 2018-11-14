@@ -29,6 +29,8 @@
     <!-- Styles -->
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/pdf.css') }}" rel="stylesheet">
+
 
 </head>
 
@@ -86,10 +88,19 @@
 
                             <li><a class="nav-link" href="{{ route('empleados.index') }}">Empleados</a></li>
 
-                            <li><a class="nav-link" href="{{ route('habitaciones.index') }}">Habitaciones</a></li>
+                            <li><a class="nav-link" href="{{ route('habitacion.index') }}">Habitaciones</a></li>
+
+                            <li><a class="nav-link" href="{{ route('search.index') }}">Buscador</a></li>
 
                             <li><a class="nav-link" href="{{ route('productos.index') }}">Productos</a></li>
 
+                            <li><a class="nav-link" href="{{ route('tarifarios.index') }}">Tarifario</a></li>
+
+                            <li><a class="nav-link" href="{{ route('turnos.index') }}">Turnos</a></li>
+
+                            <li><a class="nav-link" href="{{ route('reservacion.index') }}">Reservaciones</a></li>
+
+                            <li><a class="nav-link" href="{{ route('diex.index') }}">Lista Negra</a></li>
 
                             <li class="nav-item dropdown">
 

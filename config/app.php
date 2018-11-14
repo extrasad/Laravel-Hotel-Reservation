@@ -160,6 +160,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Codedge\Fpdf\FpdfServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -222,6 +223,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
 
     ],
 

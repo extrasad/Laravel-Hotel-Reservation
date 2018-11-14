@@ -78,29 +78,17 @@
 
 		    </div>
 
-		    <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-12 col-sm-12 col-md-12">
 
 		        <div class="form-group">
 
-		            <strong>Observación:</strong>
+		            <strong>Nacionalidad:</strong>
 
-		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación">{{ $cliente->observacion }}</textarea>
+		            <input type="text" name="nacionalidad" class="form-control" value="{{ $cliente->nacionalidad }}" placeholder="Nacionalidad">
 
 		        </div>
-
 		    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Estado:</strong>
-
-            {!! Form::select('estado', ['Advertencia' => 'Advertencia', 'Solicitado' => 'Solicitado', 'Sin Problemas' => 'Sin Problemas']); !!}
-
-        </div>
-
-    </div>
+			
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
 		            <button type="submit" class="btn btn-primary">Enviar</button>

@@ -42,9 +42,22 @@
 
             <div class="form-group">
 
-                <strong>Hora:</strong>
+                <strong>Estado:</strong>
 
-                {{ $consumo->created_at->format('H:i:s')}}
+                {{ $consumo->estado }}
+
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Productos:</strong>
+
+                @foreach($consumo->producto as $producto)
+                    {{ $producto->descripcion }}
+                @endforeach
 
             </div>
 
@@ -54,19 +67,9 @@
 
             <div class="form-group">
 
-                <strong>Estado:</strong>
+                <strong>Reservacion ID:</strong>
 
-                {{ $consumo->estado }}
-
-            </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Fecha:</strong>
-
-                {{ $consumo->created_at->format('d/m/Y') }}
+                    {{ $consumo->reservacion->id}}
 
             </div>
 

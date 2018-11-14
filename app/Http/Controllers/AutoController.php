@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 
 use App\Auto;
 
+use App\Diex;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -110,14 +112,16 @@ class AutoController extends Controller
 
             'modelo' => 'required',
 
-            'color' => 'required',
-
-            'observacion',
-
-            'estado' => 'required',
-
+            'color' => 'required'
         ]);
 
+        $estado = Diex::where('placa', $request->input('placa'))->value('estado');
+
+        $observacion = Diex::where('placa', $request->input('placa'))->value('observacion');
+
+        if($estado == null){
+            $estado = 'Activo';
+        }
 
         $auto = Auto::create(
             [
@@ -128,9 +132,9 @@ class AutoController extends Controller
 
             'color' => $request->input('color'),
 
-            'observacion' => $request->input('observacion'),
+            'observacion' => $observacion,
 
-            'estado' => $request->input('estado')
+            'estado' => $estado
             
             ]);
 
@@ -207,16 +211,30 @@ class AutoController extends Controller
 
             'modelo' => 'required',
 
-            'color' => 'required',
-
-            'observacion',
-
-            'estado' => 'required'
+            'color' => 'required'
 
         ]);
 
+        $estado = Diex::where('placa', $request->input('placa'))->value('estado');
+        $observacion = Diex::where('placa', $request->input('placa'))->value('observacion');
+        
+        if($estado == null){
+            $estado = 'Activo';
+        }
 
-        $auto->update($request->all());
+        $auto->update(
+            [
+            'placa' => $request->input('placa'),
+
+            'modelo' => $request->input('modelo'),
+
+            'color' => $request->input('color'),
+
+            'observacion' => $observacion,
+
+            'estado' => $estado
+            ]
+        );
 
 
         return redirect()->route('autos.index')

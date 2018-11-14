@@ -24,11 +24,14 @@ class Reservacion extends Model
     public function auto(){
     	return $this->belongsTo(Auto::class);
     }
-    public function clientes(){
+    public function cliente1(){
+    	return $this->belongsTo(Cliente::class);
+    }
+    public function cliente2(){
     	return $this->belongsTo(Cliente::class);
     }
     public function consumo()
     {
-        return $this->belongsTo(Consumo::class);
+        return $this->hasOne(Consumo::class);
     }
 }

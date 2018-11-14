@@ -9,15 +9,15 @@
 
             <div class="pull-left">
 
-                <h2>Habitaciones</h2>
+                <h2>Lista Negra</h2>
 
             </div>
 
             <div class="pull-right">
 
-                @can('habitacion-create')
+                @can('diex-create')
 
-                <a class="btn btn-success" href="{{ route('habitaciones.create') }}"> Crear una nueva habitacion</a>
+                <a class="btn btn-success" href="{{ route('diex.create') }}"> Crear nuevo registro</a>
 
                 @endcan
 
@@ -45,11 +45,13 @@
 
             <th>No</th>
 
-            <th>Costo</th>
+            <th>Nombre</th>
 
-            <th>Habitacion</th>
+            <th>Cedula de identidad</th>
 
             <th>Observación</th>
+
+            <th>Placa</th>
 
             <th>Estado</th>
 
@@ -57,29 +59,31 @@
 
         </tr>
 
-	    @foreach ($habitaciones as $habitacion)
+	    @foreach ($diex as $diex)
 
 	    <tr>
 
 	        <td>{{ ++$i }}</td>
 
-	        <th>{{ $habitacion->costo }}</th>
+	        <th>{{ $diex->nombre }}</th>
 
-            <th>{{ $habitacion->habitacion }}</th>
+            <th>{{ $diex->ci }}</th>
 
-            <th>{{ $habitacion->observacion }}</th>
+            <th>{{ $diex->observacion }}</th>
 
-            <th>{{ $habitacion->estado }}</th>
+            <th>{{ $diex->placa }}</th>
+
+            <th>{{ $diex->estado }}</th>
 
 	        <td>
 
-                <form action="{{ route('habitaciones.destroy',$habitacion->id) }}" method="POST">
+                <form action="{{ route('diex.destroy',$diex->id) }}" method="POST">
 
-                    <a class="btn btn-info" href="{{ route('habitaciones.show',$habitacion->id) }}">Mostrar</a>
+                    <a class="btn btn-info" href="{{ route('diex.show',$diex->id) }}">Mostrar</a>
 
-                    @can('habitacion-edit')
+                    @can('diex-edit')
 
-                    <a class="btn btn-primary" href="{{ route('habitaciones.edit',$habitacion->id) }}">Editar</a>
+                    <a class="btn btn-primary" href="{{ route('diex.edit',$diex->id) }}">Editar</a>
 
                     @endcan
 
@@ -88,7 +92,7 @@
 
                     @method('DELETE')
 
-                    @can('habitacion-delete')
+                    @can('diex-delete')
 
                     <button type="submit" class="btn btn-danger">Borrar</button>
 
@@ -103,9 +107,6 @@
 	    @endforeach
 
     </table>
-
-
-    {!! $habitaciones->links() !!}
 
 
 @endsection

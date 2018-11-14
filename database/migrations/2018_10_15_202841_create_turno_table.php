@@ -18,10 +18,6 @@ class CreateTurnoTable extends Migration
             $table->date('fecha');
             $table->time('hora_entrada');
             $table->time('hora_salida');
-            $table->integer('empleado')->unsigned();
-            $table->foreign('empleado')
-            ->references('id')->on('empleados')
-            ->onDelete('cascade');
             $table->timestamps();
         });
     }

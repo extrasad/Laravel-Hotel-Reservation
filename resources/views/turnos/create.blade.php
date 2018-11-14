@@ -9,13 +9,13 @@
 
             <div class="pull-left">
 
-                <h2>Editar Habitacion</h2>
+                <h2>Agregar nuevo turno</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('habitaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('turnos.index') }}"> Atras</a>
 
             </div>
 
@@ -45,11 +45,9 @@
     @endif
 
 
-    <form action="{{ route('habitaciones.update',$habitacion->id) }}" method="POST">
+    <form action="{{ route('turnos.store') }}" method="POST">
 
     	@csrf
-
-        @method('PUT')
 
 
          <div class="row">
@@ -58,21 +56,9 @@
 
 		        <div class="form-group">
 
-		            <strong>Costo:</strong>
+		            <strong>Fecha:</strong>
 
-		            <input type="number" step="any" name="costo" class="form-control" placeholder="Costo">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Habitacion:</strong>
-
-		            <input type="text" name="habitacion" class="form-control" placeholder="Habitacion">
+                     <input type="date" name="fecha" class="form-control">
 
 		        </div>
 
@@ -82,32 +68,33 @@
 
 		        <div class="form-group">
 
-		            <strong>Observación:</strong>
+		            <strong>Hora entrada:</strong>
 
-		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación"></textarea>
+		           <input type="time" name="hora_entrada" class="form-control">
 
 		        </div>
 
 		    </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
+		    <div class="col-xs-12 col-sm-12 col-md-12">
 
-                <div class="form-group">
+		        <div class="form-group">
 
-                    <strong>Estado:</strong>
+		            <strong>Hora salida:</strong>
 
-                    {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza']); !!}
+		           <input type="time" name="hora_salida" class="form-control">
 
-                </div>
+		        </div>
 
-            </div>
+		    </div>
+
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+
 
 		            <button type="submit" class="btn btn-primary">Enviar</button>
 
 		    </div>
 
     </form>
-
 
 @endsection

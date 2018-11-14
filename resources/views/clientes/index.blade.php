@@ -49,6 +49,8 @@
 
             <th>Nombre</th>
 
+            <th>Nacionalidad</th>
+
             <th>Observación</th>
 
             <th>Estado</th>
@@ -68,6 +70,8 @@
 	        <th>{{ $cliente->ci }}</th>
 
             <th>{{ $cliente->nombre }}</th>
+
+            <th>{{ $cliente->nacionalidad }}</th>
 
             <th>{{ $cliente->observacion }}</th>
 

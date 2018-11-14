@@ -60,7 +60,7 @@
 
 		            <strong>Costo:</strong>
 
-		            <input type="number" step="any" name="costo" class="form-control" placeholder="Costo">
+		            <input type="number" step="any" value="{{ $producto->costo }}" name="costo" class="form-control" placeholder="Costo">
 
 		        </div>
 
@@ -72,7 +72,7 @@
 
 		            <strong>Descripción:</strong>
 
-		            <textarea class="form-control" style="height:150px" name="descripcion" placeholder="Descripción"></textarea>
+		            <textarea class="form-control" style="height:150px" name="descripcion" placeholder="Descripción">{{ $producto->descripcion }}</textarea>
 
 		        </div>
 

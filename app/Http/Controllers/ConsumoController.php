@@ -12,6 +12,8 @@ use App\Consumo;
 
 use App\Producto;
 
+use App\Reservacion;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -85,7 +87,9 @@ class ConsumoController extends Controller
 
         $productos = Producto::pluck('descripcion','descripcion')->all();
 
-        return view('consumos.create',compact('productos'));
+        $reservaciones = Reservacion::where('estado','Activa')->pluck('id', 'id')->all();
+
+        return view('consumos.create',compact('productos', 'reservaciones'));
 
     }
 
@@ -110,7 +114,9 @@ class ConsumoController extends Controller
 
             'estado' => 'required',
 
-            'productos' => 'required'
+            'productos' => 'required',
+
+            'reservacion' => 'required'
 
         ]);
 
@@ -118,19 +124,32 @@ class ConsumoController extends Controller
 
         $costo = array();
 
-        $consumo = new Consumo();
+        $product_list = array();
 
         foreach($productos as $producto){
             $producto_id = DB::table('productos')->where('descripcion',$producto)->value('id');
-            $consumo->producto = $producto_id;
             $producto_costo = DB::table('productos')->where('descripcion',$producto)->value('costo');
             array_push($costo, $producto_costo);
+            array_push($product_list, $producto_id);
         }
         $total = array_sum($costo);
-        $consumo->costo= $total;
-        $consumo->estado = $request->input('estado');
-        $consumo->save();
+        $consumo = Consumo::create(
+            [
+                'costo' => $total,
 
+                'estado' => $request->input('estado')
+            ]
+        );
+        $producto_find = Producto::find($product_list);
+        $consumo->producto()->attach($producto_find);
+        $consumo->reservacion()->associate($request->input('reservacion'));
+        $consumo->save();
+        $reservacion = Reservacion::find($request->input('reservacion'));
+        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $reservacion->update(
+            ['costo' => $precio]
+
+        );
 
         return redirect()->route('consumos.index')
 
@@ -176,9 +195,11 @@ class ConsumoController extends Controller
     {
         $productos = Producto::pluck('descripcion','descripcion')->all();
 
-        $consumoProducto = $consumo->productos->pluck('descripcion','descripcion')->all();
+        $reservaciones = Reservacion::where('estado','Activa')->pluck('id', 'id')->all();
 
-        return view('consumos.edit',compact('consumo'));
+        $consumoProducto = $consumo->producto->pluck('descripcion','descripcion')->all();
+
+        return view('consumos.edit',compact('consumo', 'consumoProducto', 'productos', 'reservaciones'));
 
     }
 
@@ -205,12 +226,38 @@ class ConsumoController extends Controller
 
             'estado' => 'required',
 
-            'producto' => 'required'
+            'productos' => 'required'
 
         ]);
 
+        $productos = $request->input('productos');
 
-        $consumo->update($request->all());
+        $costo = array();
+
+        $product_list = array();
+
+        foreach($productos as $producto){
+            $producto_id = DB::table('productos')->where('descripcion',$producto)->value('id');
+            $producto_costo = DB::table('productos')->where('descripcion',$producto)->value('costo');
+            array_push($costo, $producto_costo);
+            array_push($product_list, $producto_id);
+        }
+        $total = array_sum($costo);
+        $consumo->update([
+            'costo' => $total,
+            'estado' => $request->input('estado')
+        ]);
+
+        DB::table('consumo_producto')->where('consumo_id',$consumo->id)->delete();
+
+        $producto_find = Producto::find($product_list);
+        $consumo->producto()->attach($producto_find);
+        $consumo->save();
+        $reservacion = Reservacion::find($consumo->reservacion->id);
+        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $reservacion->update(
+            ['costo' => $precio]
+        );
 
 
         return redirect()->route('consumos.index')
@@ -236,7 +283,9 @@ class ConsumoController extends Controller
 
     {
 
+        DB::table('consumo_producto')->where('consumo_id',$consumo->id)->delete();
         $consumo->delete();
+        
 
 
         return redirect()->route('consumos.index')

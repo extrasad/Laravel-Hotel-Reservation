@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 
 use App\Habitacion;
 
+use App\Tarifario;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -60,7 +62,7 @@ class HabitacionController extends Controller
 
         $habitaciones = Habitacion::orderBy('id','DESC')->paginate(5);
 
-        return view('habitaciones.index',compact('habitaciones'))
+        return view('habitacion.index',compact('habitaciones'))
 
             ->with('i', ($request->input('page', 1) - 1) * 5);
 
@@ -83,7 +85,9 @@ class HabitacionController extends Controller
 
         $permission = Permission::get();
 
-        return view('habitaciones.create',compact('permission'));
+        $tipo = Tarifario::pluck('tipo','tipo')->all();
+
+        return view('habitacion.create',compact('permission', 'tipo'));
 
     }
 
@@ -106,32 +110,39 @@ class HabitacionController extends Controller
 
         $this->validate($request, [
 
-            'costo' => 'required',
-
             'estado' => 'required',
 
             'observacion',
 
-            'habitacion' => 'required'
+            'tipo' => 'required',
+
+            'caracteristicas' => 'required',
+
+            'habitacion' => 'required|unique:habitacions,habitacion'
 
         ]);
 
+        $costo_hab = Tarifario::where('tipo', $request->input('tipo'))->value('precio');
 
         $habitacion = Habitacion::create(
             [
 
-            'costo' => $request->input('costo'),
+            'costo' => $costo_hab,
 
             'habitacion' => $request->input('habitacion'),
 
             'observacion' => $request->input('observacion'),
+
+            'caracteristicas' => $request->input('caracteristicas'),
+
+            'tipo' => $request->input('tipo'),
 
             'estado' => $request->input('estado')
             
             ]);
 
 
-        return redirect()->route('habitaciones.index')
+        return redirect()->route('habitacion.index')
 
                         ->with('success','Habitacion creado satisfactoriamente');
 
@@ -153,7 +164,7 @@ class HabitacionController extends Controller
 
     {
 
-        return view('habitaciones.show',compact('habitacion'));
+        return view('habitacion.show',compact('habitacion'));
 
     }
 
@@ -173,8 +184,9 @@ class HabitacionController extends Controller
     public function edit(Habitacion $habitacion)
 
     {
+        $tipo = Tarifario::pluck('tipo','tipo')->all();
 
-        return view('habitaciones.edit',compact('habitacion'));
+        return view('habitacion.edit',compact('habitacion', 'tipo'));
 
     }
 
@@ -199,21 +211,41 @@ class HabitacionController extends Controller
 
          request()->validate([
 
-            'costo' => 'required',
-
-            'habitacion' => 'required',
+            'estado' => 'required',
 
             'observacion',
 
-            'estado' => 'required'
+            'tipo' => 'required',
+
+            'caracteristicas' => 'required',
+
+            'habitacion' => 'required|unique:habitacions,habitacion,'.$habitacion->id,
 
         ]);
 
 
-        $habitacion->update($request->all());
+        $costo_hab = Tarifario::where('tipo', $request->input('tipo'))->value('precio');
+
+        $habitacion->update([
+
+            'costo' => $costo_hab,
+
+            'habitacion' => $request->input('habitacion'),
+
+            'observacion' => $request->input('observacion'),
+
+            'caracteristicas' => $request->input('caracteristicas'),
+
+            'tipo' => $request->input('tipo'),
+
+            'habitacion' => $request->input('habitacion'),
+
+            'estado' => $request->input('estado')
+            
+            ]);
 
 
-        return redirect()->route('habitaciones.index')
+        return redirect()->route('habitacion.index')
 
                         ->with('success','Habitacion Actualizada Satisfactoriamente');
 
@@ -239,7 +271,7 @@ class HabitacionController extends Controller
         $habitacion->delete();
 
 
-        return redirect()->route('habitaciones.index')
+        return redirect()->route('habitacion.index')
 
                         ->with('success','Habitacion borrada satisfactoriamente');
 

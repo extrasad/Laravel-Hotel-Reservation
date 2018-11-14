@@ -9,13 +9,13 @@
 
             <div class="pull-left">
 
-                <h2>Agregar nueva Habitacion</h2>
+                <h2>Agregar nuevo tarifario</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-primary" href="{{ route('habitaciones.index') }}"> Atras</a>
+                <a class="btn btn-primary" href="{{ route('tarifarios.index') }}"> Atras</a>
 
             </div>
 
@@ -45,7 +45,7 @@
     @endif
 
 
-    <form action="{{ route('habitaciones.store') }}" method="POST">
+    <form action="{{ route('tarifarios.store') }}" method="POST">
 
     	@csrf
 
@@ -56,21 +56,9 @@
 
 		        <div class="form-group">
 
-		            <strong>Costo:</strong>
+		            <strong>Tipo de habitación:</strong>
 
-		            <input type="number" step="any" name="costo" class="form-control" placeholder="Costo">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Habitacion:</strong>
-
-		            <input type="text" name="habitacion" class="form-control" placeholder="Habitacion">
+		            <input type="text" name="tipo" class="form-control" placeholder="Tipo de habitacion">
 
 		        </div>
 
@@ -80,25 +68,13 @@
 
 		        <div class="form-group">
 
-		            <strong>Observación:</strong>
+		            <strong>Precio:</strong>
 
-		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación"></textarea>
+		             <input type="number" step="any" name="precio" class="form-control" placeholder="Precio">
 
 		        </div>
 
 		    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Estado:</strong>
-
-            {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza']); !!}
-
-        </div>
-
-    </div>
 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
