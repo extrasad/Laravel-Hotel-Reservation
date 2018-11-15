@@ -79,6 +79,24 @@
                         <span>Productos</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('turnos.index') }}">
+                        <i class="material-icons">layers</i>
+                        <span>Turnos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('tarifarios.index') }}">
+                        <i class="material-icons">layers</i>
+                        <span>Tarifarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('reservacion.index') }}">
+                        <i class="material-icons">layers</i>
+                        <span>Reservación</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- #Menu -->
