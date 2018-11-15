@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\Habitacion;
 
-use App\Tarifario;
+use App\Promo;
 
 use Spatie\Permission\Models\Permission;
 
@@ -85,7 +85,7 @@ class HabitacionController extends Controller
 
         $permission = Permission::get();
 
-        $tipo = Tarifario::pluck('tipo','tipo')->all();
+        $tipo = Promo::pluck('tipo','tipo')->all();
 
         return view('habitacion.create',compact('permission', 'tipo'));
 
@@ -122,7 +122,7 @@ class HabitacionController extends Controller
 
         ]);
 
-        $costo_hab = Tarifario::where('tipo', $request->input('tipo'))->value('precio');
+        $costo_hab = Promo::where('tipo', $request->input('tipo'))->value('costo');
 
         $habitacion = Habitacion::create(
             [
@@ -184,7 +184,7 @@ class HabitacionController extends Controller
     public function edit(Habitacion $habitacion)
 
     {
-        $tipo = Tarifario::pluck('tipo','tipo')->all();
+        $tipo = Promo::pluck('tipo','tipo')->all();
 
         return view('habitacion.edit',compact('habitacion', 'tipo'));
 
@@ -223,12 +223,7 @@ class HabitacionController extends Controller
 
         ]);
 
-
-        $costo_hab = Tarifario::where('tipo', $request->input('tipo'))->value('precio');
-
         $habitacion->update([
-
-            'costo' => $costo_hab,
 
             'habitacion' => $request->input('habitacion'),
 

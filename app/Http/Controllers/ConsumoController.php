@@ -145,7 +145,7 @@ class ConsumoController extends Controller
         $consumo->reservacion()->associate($request->input('reservacion'));
         $consumo->save();
         $reservacion = Reservacion::find($request->input('reservacion'));
-        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $precio = $reservacion->costo_hab + $consumo->costo;
         $reservacion->update(
             ['costo' => $precio]
 

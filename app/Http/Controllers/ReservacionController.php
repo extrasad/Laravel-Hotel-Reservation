@@ -118,11 +118,7 @@ class ReservacionController extends Controller
 
             'observacion',
 
-            'estado' => 'required',
-
             'habitacion' => 'required',
-
-            'auto' => 'required',
 
             'cliente1' => 'required',
 
@@ -148,7 +144,9 @@ class ReservacionController extends Controller
     
                 'observacion' => $request->input('observacion'),
     
-                'estado' => $request->input('estado'),
+                'estado' => 'Activa',
+
+                'costo_hab' => $costo,
 
                 'costo' => $costo
             
@@ -266,27 +264,21 @@ class ReservacionController extends Controller
 
             'observacion',
 
-            'estado' => 'required',
-
             'habitacion' => 'required',
 
-            'auto' => 'required',
+            'auto',
 
             'cliente1' => 'required',
 
             'cliente2' => 'required'
 
         ]);
-
+        
         $reservacion->update([
-
-            'hora_salida' => $request->input('hora_salida'),
-    
-            'fecha_salida' => $request->input('fecha_salida'),
     
             'observacion' => $request->input('observacion'),
     
-            'estado' => $request->input('estado')
+            'estado' => 'Activa'
         ]);
 
         DB::table('reservaciones_clientes')->where('reservacion_id',$reservacion->id)->delete();

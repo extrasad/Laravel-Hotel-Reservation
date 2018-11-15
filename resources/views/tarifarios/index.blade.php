@@ -47,8 +47,6 @@
 
             <th>Tipo de habitación</th>
 
-            <th>Precio</th>
-
             <th width="280px">Acción</th>
 
         </tr>
@@ -60,8 +58,6 @@
 	        <td>{{ ++$i }}</td>
 
 	        <th>{{ $tarifario->tipo }}</th>
-
-            <th>{{ $tarifario->precio }}</th>
 
 	        <td>
 

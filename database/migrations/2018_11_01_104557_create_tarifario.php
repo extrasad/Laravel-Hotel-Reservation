@@ -16,7 +16,6 @@ class CreateTarifario extends Migration
         Schema::create('tarifarios', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tipo');
-            $table->float('precio');
             $table->timestamps();
         });
     }

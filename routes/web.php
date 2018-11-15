@@ -58,5 +58,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('diex','DiexController');
 
+    Route::resource('promos','PromoController');
+
 
 });

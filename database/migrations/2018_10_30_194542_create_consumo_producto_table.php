@@ -17,6 +17,7 @@ class CreateConsumoProductoTable extends Migration
             $table->increments('id');
             $table->integer('consumo_id')->unsigned();
             $table->integer('producto_id')->unsigned();
+            $table->integer('cantidad')->nullable();
             $table->timestamps();
         });
     }

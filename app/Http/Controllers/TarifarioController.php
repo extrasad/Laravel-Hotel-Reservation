@@ -106,18 +106,14 @@ class TarifarioController extends Controller
 
         $this->validate($request, [
 
-            'tipo' => 'required',
-
-            'precio' => 'required'
+            'tipo' => 'required'
         ]);
 
 
         $tarifario = Tarifario::create(
             [
 
-            'tipo' => $request->input('tipo'),
-
-            'precio' => $request->input('precio')
+            'tipo' => $request->input('tipo')
             
             ]);
 
@@ -191,18 +187,10 @@ class TarifarioController extends Controller
 
             'tipo' => 'required',
 
-            'precio' => 'required'
-
         ]);
 
 
         $tarifario->update($request->all());
-
-        $habitacion = DB::table('habitacions')->where('tipo', $tarifario->tipo);
-
-        $habitacion->update([
-            'costo' => $tarifario->precio
-        ]);
 
 
         return redirect()->route('tarifarios.index')

@@ -12,6 +12,6 @@ class Tarifario extends Model
      * @var array
      */
     protected $fillable = [
-        'tipo', 'precio'
+        'tipo'
     ];
 }

@@ -49,8 +49,6 @@
 
             <th>Estado</th>
 
-            <th>Consumo</th>
-
             <th>Cliente</th>
 
             <th>Acompañante</th>
@@ -59,7 +57,11 @@
 
             <th>Habitacion</th>
 
-            <th>Costo</th>
+            <th>Costo consumo</th>
+
+            <th>Costo Habitacion</th>
+
+            <th>Costo Total</th>
 
             <th width="280px">Acción</th>
 
@@ -75,11 +77,6 @@
 
             <th>{{ $reservacion->estado }}</th>
 
-            <th>@if(isset($reservacion->consumo->costo))
-            {{ $reservacion->consumo->costo}}
-            @endif
-            </th>
-
             <th>{{ $reservacion->cliente1->ci }}</th>
 
             <th>{{ $reservacion->cliente2->ci }}</th>
@@ -87,6 +84,13 @@
             <th>{{ $reservacion->auto->placa }}</th>
 
             <th>{{ $reservacion->habitacion->habitacion }}</th>
+
+            <th>@if(isset($reservacion->consumo->costo))
+            {{ $reservacion->consumo->costo }}
+            @endif
+            </th>
+
+            <th>{{ $reservacion->costo_hab}}</th>
 
             <th>{{ $reservacion->costo }}</th>
 

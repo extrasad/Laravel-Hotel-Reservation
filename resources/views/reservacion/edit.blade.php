@@ -57,29 +57,6 @@
 
 		        <div class="form-group">
 
-		            <strong>Fecha de salida:</strong>
-
-                    {!! Form::date('fecha_salida', $reservacion->fecha_salida) !!}
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Hora salida:</strong>
-
-		           {!! Form::time('hora_salida', $reservacion->hora_salida) !!}
-
-		        </div>
-		    </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
 		            <strong>Observación:</strong>
 
 		            <textarea class="form-control" style="height:150px" name="observacion" placeholder="Observación">{{ $reservacion->observacion }}</textarea>
@@ -87,19 +64,6 @@
 		        </div>
 
 		    </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-                <div class="form-group">
-
-                    <strong>Estado:</strong>
-
-                    {!! Form::select('estado',['Activa' => 'Activa', 'Inactiva' => 'Inactiva'], array('default' => $reservacion->estado)); !!}
-
-                </div>
-
-            </div>
-
             <div class="col-xs-12 col-sm-12 col-md-12">
 
                 <div class="form-group">
