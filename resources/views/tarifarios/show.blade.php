@@ -3,53 +3,41 @@
 
 @section('content')
 
-    <div class="row">
+<div class="block-header">
+    <h2>INFORMACION DE TARIFARIO</h2>
+</div>
 
-        <div class="col-lg-12 margin-tb">
+<div class="row">
 
-            <div class="pull-left">
+    <div class="col-lg-12 margin-tb">
 
-                <h2> Mostrar Tarifario</h2>
+        <div class="pull-right">
 
-            </div>
-
-            <div class="pull-right">
-
-                <a class="btn btn-primary" href="{{ route('tarifarios.index') }}"> Atras</a>
-
-            </div>
+            <a class="btn btn-primary" href="{{ route('tarifarios.index') }}"> Atras</a>
 
         </div>
 
     </div>
 
-
-    <div class="row">
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Tipo de habitación:</strong>
-
-                {{ $tarifario->tipo }}
-
+</div>
+<div class="row clearfix">
+    <!-- Basic Examples -->
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    {{ $tarifario->tipo }}
+                    <small>Información detallada del tarifario para la habitacion de tipo {{ $tarifario->tipo }} </small>
+                </h2>
             </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Precio:</strong>
-
-                {{ $tarifario->precio }}
-
+            <div class="body">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong class="font-bold col-orange">Tipo de habitación:</strong> {{ $tarifario->tipo }} </li>
+                    <li class="list-group-item"><strong class="font-bold col-orange">Costo:</strong> {{ $tarifario->precio }} </li>
+                </ul>
             </div>
-
         </div>
-
     </div>
+</div>
 
 @endsection
