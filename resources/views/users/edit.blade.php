@@ -26,7 +26,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Creación de usuario
+                    Editar usuario
                 </h2>
             </div>
             <div class="body">

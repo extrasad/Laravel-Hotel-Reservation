@@ -3,96 +3,82 @@
 
 @section('content')
 
-    <div class="row">
+<div class="block-header">
+    <h2>AGREGAR CLIENTE</h2>
+</div>
 
-        <div class="col-lg-12 margin-tb">
+<div class="row">
 
-            <div class="pull-left">
+    <div class="col-lg-12 m-b-20">
 
-                <h2>Agregar nuevo cliente</h2>
-
-            </div>
-
-            <div class="pull-right">
-
-                <a class="btn btn-primary" href="{{ route('clientes.index') }}"> Atras</a>
-
-            </div>
-
+        <div class="pull-right">
+            
+            <a class="btn btn-primary" href="{{ route('clientes.index') }}"> Atras</a>
+        
         </div>
 
     </div>
 
+</div>
 
-    @if ($errors->any())
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Creación de cliente
+                </h2>
+            </div>
+            <div class="body">
+                @if ($errors->any())
 
-        <div class="alert alert-danger">
+                    <div class="alert alert-danger">
+            
+                        <strong>Whoops!</strong> Hay algunos problemas con los datos ingresados.<br><br>
+            
+                        <ul>
+            
+                            @foreach ($errors->all() as $error)
+            
+                                <li>{{ $error }}</li>
+            
+                            @endforeach
+            
+                        </ul>
+            
+                    </div>
+            
+                @endif
 
-            <strong>Whoops!</strong> Hay algunos problemas con los datos ingresados.<br><br>
+                <form action="{{ route('clientes.store') }}" method="POST">
+                    @csrf
 
-            <ul>
-
-                @foreach ($errors->all() as $error)
-
-                    <li>{{ $error }}</li>
-
-                @endforeach
-
-            </ul>
-
+                    <label for="ci">Cédula de identidad</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" id="ci" name="ci" class="form-control" placeholder="Cedula de Identidad">
+                        </div>
+                    </div>
+                    <label for="nombre">Nombre</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <label for="nacionalidad">Nacionalidad</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" placeholder="Nacionalidad">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-    @endif
-
-
-    <form action="{{ route('clientes.store') }}" method="POST">
-
-    	@csrf
-
-
-         <div class="row">
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Cedula de Identidad:</strong>
-
-		            <input type="text" name="ci" class="form-control" placeholder="Cedula de Identidad">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Nombre:</strong>
-
-		            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
-
-		        </div>
-
-		    </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Nacionalidad:</strong>
-
-		            <input type="text" name="nacionalidad" class="form-control" placeholder="Nacionalidad">
-
-		        </div>
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-
-		            <button type="submit" class="btn btn-primary">Enviar</button>
-
-		    </div>
-
-    </form>
+    </div>
+</div>
 
 @endsection

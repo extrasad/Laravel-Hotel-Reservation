@@ -26,7 +26,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    Creación de usuario
+                    Creación de rol
                 </h2>
             </div>
             <div class="body">

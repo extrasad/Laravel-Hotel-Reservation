@@ -13,7 +13,7 @@
 
         <div class="pull-right">
 
-            <a class="btn btn-primary" href="{{ route('autos.index') }}"> Atras</a>
+            <a class="btn btn-primary" href="{{ route('autos.index') }}"> Atrás</a>
 
         </div>
 
