@@ -3,98 +3,82 @@
 
 @section('content')
 
-    <div class="row">
+<div class="block-header">
+    <h2>AGREGAR TURNO</h2>
+</div>
 
-        <div class="col-lg-12 margin-tb">
+<div class="row">
 
-            <div class="pull-left">
+    <div class="col-lg-12 m-b-20">
 
-                <h2>Agregar nuevo turno</h2>
-
-            </div>
-
-            <div class="pull-right">
-
-                <a class="btn btn-primary" href="{{ route('turnos.index') }}"> Atras</a>
-
-            </div>
-
+        <div class="pull-right">
+            
+            <a class="btn btn-primary" href="{{ route('turnos.index') }}"> Atras</a>
+        
         </div>
 
     </div>
 
+</div>
 
-    @if ($errors->any())
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Creación de turno
+                </h2>
+            </div>
+            <div class="body">
+                @if ($errors->any())
 
-        <div class="alert alert-danger">
+                    <div class="alert alert-danger">
+            
+                        <strong>Whoops!</strong> Hay algunos problemas con los datos ingresados.<br><br>
+            
+                        <ul>
+            
+                            @foreach ($errors->all() as $error)
+            
+                                <li>{{ $error }}</li>
+            
+                            @endforeach
+            
+                        </ul>
+            
+                    </div>
+            
+                @endif
 
-            <strong>Whoops!</strong> Hay algunos problemas con los datos ingresados.<br><br>
+                <form action="{{ route('turnos.store') }}" method="POST">
+                    @csrf
 
-            <ul>
-
-                @foreach ($errors->all() as $error)
-
-                    <li>{{ $error }}</li>
-
-                @endforeach
-
-            </ul>
-
+                    <label for="fecha">Fecha</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="date" id="fecha" name="fecha" class="form-control">
+                        </div>
+                    </div>
+                    <label for="hora_entrada">Hora de entrada</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="time" id="hora_entrada" name="hora_entrada" class="form-control">
+                        </div>
+                    </div>
+                    <label for="hora_salida">Hora de salida</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="time" id="hora_salida" name="hora_salida" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-    @endif
-
-
-    <form action="{{ route('turnos.store') }}" method="POST">
-
-    	@csrf
-
-
-         <div class="row">
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Fecha:</strong>
-
-                     <input type="date" name="fecha" class="form-control">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Hora entrada:</strong>
-
-		           <input type="time" name="hora_entrada" class="form-control">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-
-		        <div class="form-group">
-
-		            <strong>Hora salida:</strong>
-
-		           <input type="time" name="hora_salida" class="form-control">
-
-		        </div>
-
-		    </div>
-
-		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-
-
-		            <button type="submit" class="btn btn-primary">Enviar</button>
-
-		    </div>
-
-    </form>
+    </div>
+</div>
 
 @endsection
