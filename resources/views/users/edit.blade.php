@@ -3,121 +3,92 @@
 
 @section('content')
 
+<div class="block-header">
+    <h2>EDITAR USUARIO</h2>
+</div>
+
 <div class="row">
 
-    <div class="col-lg-12 margin-tb">
-
-        <div class="pull-left">
-
-            <h2>Editar Usuario</h2>
-
-        </div>
+    <div class="col-lg-12 m-b-20">
 
         <div class="pull-right">
-
+            
             <a class="btn btn-primary" href="{{ route('users.index') }}"> Atras</a>
-
+        
         </div>
 
     </div>
 
 </div>
 
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Creación de usuario
+                </h2>
+            </div>
+            <div class="body">
+                @if (count($errors) > 0)
 
-@if (count($errors) > 0)
+                    <div class="alert alert-danger">
 
-  <div class="alert alert-danger">
+                        <strong>Whoops!</strong> Hay algunos problemas con los datos ingresados.
+                        <br><br>
 
-    <strong>Whoops!</strong> Hay algunos problemas con los datos ingresados.<br><br>
+                        <ul>
+                        
+                            @foreach ($errors->all() as $error)
+                            
+                                <li>{{ $error }}</li>
+                            
+                            @endforeach
+                        
+                        </ul>
 
-    <ul>
+                    </div>
+                @endif
 
-       @foreach ($errors->all() as $error)
-
-         <li>{{ $error }}</li>
-
-       @endforeach
-
-    </ul>
-
-  </div>
-
-@endif
-
-
-{!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
-
-<div class="row">
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Nombre:</strong>
-
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-
+                {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+                <label for="name">Nombre</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            {!! Form::text('name', null, array('placeholder' => 'Ingrese el nombre','class' => 'form-control','id' => 'name')) !!}
+                        </div>
+                    </div>
+                    <label for="username">Nombre de usuario</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            {!! Form::text('username', null, array('placeholder' => 'Ingrese el nombre de usuario','class' => 'form-control','id' => 'username')) !!}
+                        </div>
+                    </div>
+                    <label for="password">Contraseña</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            {!! Form::password('password', array('placeholder' => 'Ingrese la contraseña','class' => 'form-control', 'id' => 'password')) !!}
+                        </div>
+                    </div>
+                    <label for="confirm-password">Confirmar contraseña</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            {!! Form::password('confirm-password', array('placeholder' => 'Confirme la contraseña','class' => 'form-control', 'id' => 'confirm-password')) !!}
+                        </div>
+                    </div>
+                    <label for="roles">Roles</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary waves-effect">Editar usuario</button>
+                    </div>
+                {!! Form::close() !!}
+            </div>
         </div>
-
     </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Username:</strong>
-
-            {!! Form::text('username', null, array('placeholder' => 'Username','class' => 'form-control')) !!}
-
-        </div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Contraseña:</strong>
-
-            {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
-
-        </div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Confirmar contraseña:</strong>
-
-            {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
-
-        </div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Rol:</strong>
-
-            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
-
-        </div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-
-        <button type="submit" class="btn btn-primary">Enviar</button>
-
-    </div>
-
 </div>
-
-{!! Form::close() !!}
-
 
 @endsection

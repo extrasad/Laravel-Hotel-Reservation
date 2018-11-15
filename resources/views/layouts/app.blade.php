@@ -176,10 +176,6 @@
 
     <title>Afrodita</title>
 
-    <!-- Scripts -->
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
 
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -191,6 +187,7 @@
     <!-- Styles -->
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
     <body class="theme-red">
 
@@ -200,12 +197,60 @@
 
         <section class="content">
 
-            @yield('content')
+            <div class="container-fluid">
+
+                @yield('content')
+            
+            </div>
 
         </section>
         
         <script type="text/javascript">
             const APP_URL = {!! json_encode(url('/')) !!};
         </script>
+
+        <!-- Jquery Core Js -->
+        <script src="{{ asset('js/plugins/jquery/jquery.min.js')}}"></script>
+
+        <!-- Bootstrap Core Js -->
+        <script src="{{ asset('js/plugins/bootstrap/js/bootstrap.js')}}"></script>
+
+        <!-- Select Plugin Js -->
+        <script src="{{ asset('js/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+
+        <!-- Slimscroll Plugin Js -->
+        <script src="{{ asset('js/plugins/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
+
+        <!-- Waves Effect Plugin Js -->
+        <script src="{{ asset('js/plugins/node-waves/waves.js')}}"></script>
+
+        <!-- Jquery CountTo Plugin Js -->
+        <script src="{{ asset('js/plugins/jquery-countto/jquery.countTo.js')}}"></script>
+
+        <!-- Morris Plugin Js -->
+        <script src="{{ asset('js/plugins/raphael/raphael.min.js')}}"></script>
+        <script src="{{ asset('js/plugins/morrisjs/morris.js')}}"></script>
+
+        <!-- ChartJs -->
+        <script src="{{ asset('js/plugins/chartjs/Chart.bundle.js') }}"></script>
+
+        <!-- Flot Charts Plugin Js -->
+        <script src="{{ asset('js/plugins/flot-charts/jquery.flot.js') }}"></script>
+        <script src="{{ asset('js/plugins/flot-charts/jquery.flot.resize.js') }}"></script>
+        <script src="{{ asset('js/plugins/flot-charts/jquery.flot.pie.js')}}"></script>
+        <script src="{{ asset('js/plugins/flot-charts/jquery.flot.categories.js')}}"></script>
+        <script src="{{ asset('js/plugins/flot-charts/jquery.flot.time.js')}}"></script>
+
+        <!-- Sparkline Chart Plugin Js -->
+        <script src="{{ asset('js/plugins/jquery-sparkline/jquery.sparkline.js')}}"></script>
+    
+        <!-- Custom Js -->
+        <script src="{{ asset('js/admin.js')}}"></script>
+        <script src="{{ asset('js/pages/index.js')}}"></script>
+
+        <!-- Demo Js -->
+        <script src="{{ asset('js/helpers.js')}}"></script>
+        <script src="{{ asset('js/demo.js')}}"></script>
+
     </body>
 </html>

@@ -13,20 +13,8 @@ try {
 
 	// require('adminbsb-materialdesign/plugins/bootstrap/js/bootstrap.js');
 	// require('bootstrap');
+	
 	require('bootstrap-sass');
-	require('adminbsb-materialdesign/plugins/bootstrap-select/js/bootstrap-select.js');
-	require('adminbsb-materialdesign/plugins/jquery-slimscroll/jquery.slimscroll');
-	window.Waves = require('adminbsb-materialdesign/plugins/node-waves/waves.js');
-	require('adminbsb-materialdesign/plugins/jquery-countto/jquery.countTo.js');
-	window.Raphael = require('adminbsb-materialdesign/plugins/raphael/raphael.min.js');
-	require('adminbsb-materialdesign/plugins/morrisjs/morris.js');
-	require('adminbsb-materialdesign/plugins/chartjs/Chart.bundle.js');
-	require('adminbsb-materialdesign/plugins/flot-charts/jquery.flot.js');
-	require('adminbsb-materialdesign/plugins/flot-charts/jquery.flot.resize.js');
-	require('adminbsb-materialdesign/plugins/flot-charts/jquery.flot.pie.js');
-	require('adminbsb-materialdesign/plugins/flot-charts/jquery.flot.categories.js');
-	require('adminbsb-materialdesign/plugins/flot-charts/jquery.flot.time.js');
-	require('adminbsb-materialdesign/plugins/jquery-sparkline/jquery.sparkline.js');
 	require('adminbsb-materialdesign/js/admin.js');
 	require('adminbsb-materialdesign/js/pages/index.js');
 	require('adminbsb-materialdesign/js/demo.js');

@@ -2,10 +2,7 @@
     <!-- Left Sidebar -->
     <aside id="leftsidebar" class="sidebar">
         <!-- User Info -->
-        <div class="user-info">
-            <div class="image">
-                <img src="images/user.png" width="48" height="48" alt="User" />
-            </div>
+        <div class="user-info" style="background-image: url({{ asset('images/vendor/adminbsb-materialdesign/user-img-background.jpg') }});">
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
                 <div class="email">john.doe@example.com</div>
@@ -71,7 +68,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('habitaciones.index') }}">
+                    <a href="{{ route('habitacion.index') }}">
                         <i class="material-icons">layers</i>
                         <span>Habitaciones</span>
                     </a>

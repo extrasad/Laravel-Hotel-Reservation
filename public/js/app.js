@@ -11197,6 +11197,7 @@ try {
 
   // require('adminbsb-materialdesign/plugins/bootstrap/js/bootstrap.js');
   // require('bootstrap');
+
   __webpack_require__(15);
   __webpack_require__(16);
   __webpack_require__(17);

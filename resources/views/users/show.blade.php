@@ -3,15 +3,13 @@
 
 @section('content')
 
+<div class="block-header">
+    <h2>INFORMACION DE USUARIO</h2>
+</div>
+
 <div class="row">
 
     <div class="col-lg-12 margin-tb">
-
-        <div class="pull-left">
-
-            <h2> Mostrar Usuario</h2>
-
-        </div>
 
         <div class="pull-right">
 
@@ -22,54 +20,37 @@
     </div>
 
 </div>
+<div class="row clearfix">
+    <!-- Basic Examples -->
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    {{ $user->name }}
+                    <small>Información detallada del usuario {{ $user->name }}</small>
+                </h2>
+            </div>
+            <div class="body">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong class="font-bold col-orange">Nombre:</strong> {{ $user->name }} </li>
 
+                    <li class="list-group-item"><strong class="font-bold col-orange">Nombre de usuario:</strong> {{ $user->username }} </li>
+                    <li class="list-group-item">
+                        <strong class="font-bold col-orange">Roles:</strong>             
+                        @if(!empty($user->getRoleNames()))
 
-<div class="row">
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Nombre:</strong>
-
-            {{ $user->name }}
-
+                            @foreach($user->getRoleNames() as $v)
+            
+                                <label class="badge badge-success">{{ $v }}</label>
+            
+                            @endforeach
+            
+                        @endif 
+                    </li>
+                </ul>
+            </div>
         </div>
-
     </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Username:</strong>
-
-            {{ $user->username }}
-
-        </div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="form-group">
-
-            <strong>Roles:</strong>
-
-            @if(!empty($user->getRoleNames()))
-
-                @foreach($user->getRoleNames() as $v)
-
-                    <label class="badge badge-success">{{ $v }}</label>
-
-                @endforeach
-
-            @endif
-
-        </div>
-
-    </div>
-
 </div>
 
 @endsection
