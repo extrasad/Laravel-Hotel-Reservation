@@ -3,101 +3,45 @@
 
 @section('content')
 
-    <div class="row">
+<div class="block-header">
+    <h2>INFORMACION DE AUTO</h2>
+</div>
 
-        <div class="col-lg-12 margin-tb">
+<div class="row">
 
-            <div class="pull-left">
+    <div class="col-lg-12 margin-tb">
 
-                <h2> Mostrar Auto</h2>
+        <div class="pull-right">
 
-            </div>
-
-            <div class="pull-right">
-
-                <a class="btn btn-primary" href="{{ route('autos.index') }}"> Atras</a>
-
-            </div>
+            <a class="btn btn-primary" href="{{ route('autos.index') }}"> Atras</a>
 
         </div>
 
     </div>
 
-
-    <div class="row">
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Placa:</strong>
-
-                {{ $auto->placa }}
-
+</div>
+<div class="row clearfix">
+    <!-- Basic Examples -->
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    {{$auto->placa}}
+                    <small>Información detallada del auto con placa {{$auto->placa}}</small>
+                </h2>
             </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Modelo:</strong>
-
-                {{ $auto->modelo }}
-
+            <div class="body">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong class="font-bold col-orange">Placa:</strong> {{ $auto->placa }}</li>
+                    <li class="list-group-item"><strong class="font-bold col-orange">Modelo:</strong> {{ $auto->modelo }}</li>
+                    <li class="list-group-item"><strong class="font-bold col-orange">Color:</strong> {{ $auto->color }}</li>
+                    <li class="list-group-item"><strong class="font-bold col-orange">Observación:</strong> {{ $auto->observacion }}</li>
+                    <li class="list-group-item"><strong class="font-bold col-orange">Estado:</strong> {{ $auto->estado }}</li>
+                    <li class="list-group-item"><strong class="font-bold col-orange">Fecha:</strong> {{ $auto->created_at->format('d/m/Y')}} </li>
+                </ul>
             </div>
-
         </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Color:</strong>
-
-                {{ $auto->color }}
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Observación:</strong>
-
-                {{ $auto->observacion }}
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Estado:</strong>
-
-                {{ $auto->estado }}
-
-            </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Fecha:</strong>
-
-                {{ $auto->created_at->format('d/m/Y')}}
-
-            </div>
-
-        </div>
-
-        </div>
-
     </div>
+</div>
 
 @endsection
