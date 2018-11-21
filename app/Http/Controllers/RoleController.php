@@ -154,6 +154,24 @@ class RoleController extends Controller
     }
 
 
+    public function searchRole(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $roles=DB::table('roles')->where('name','LIKE','%'.$request->searchRole."%")
+            ->get();
+
+            if($roles){
+                return response()->json($roles);
+            }
+        }
+    }
+
+
     /**
 
      * Show the form for editing the specified resource.

@@ -68,7 +68,7 @@
 
                 <strong>Fecha de salida:</strong>
 
-                {{ $reservacion->fecha_salida }}
+                {{ $reservacion->fecha_salida->format('d/m/Y') }}
 
             </div>
 
@@ -80,7 +80,7 @@
 
                 <strong>Hora de salida:</strong>
 
-                {{ $reservacion->hora_salida }}
+                {{ $reservacion->fecha_salida->format('H:i:s') }}
 
             </div>
 

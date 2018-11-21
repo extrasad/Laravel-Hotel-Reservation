@@ -15,7 +15,7 @@ class CreateHabitacionTable extends Migration
     {
         Schema::create('habitacions', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('estado', array('Ocupada', 'Disponible', 'En limpieza'));
+            $table->enum('estado', array('Ocupada', 'Disponible', 'En limpieza', 'Dañada'));
             $table->string('tipo');
             $table->float('costo');
             $table->string('habitacion');
@@ -32,6 +32,6 @@ class CreateHabitacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('habitaciones');
+        Schema::dropIfExists('habitacions');
     }
 }

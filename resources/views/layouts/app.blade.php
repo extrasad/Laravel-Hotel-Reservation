@@ -90,8 +90,6 @@
 
                             <li><a class="nav-link" href="{{ route('habitacion.index') }}">Habitaciones</a></li>
 
-                            <li><a class="nav-link" href="{{ route('search.index') }}">Buscador</a></li>
-
                             <li><a class="nav-link" href="{{ route('productos.index') }}">Productos</a></li>
 
                             <li><a class="nav-link" href="{{ route('tarifarios.index') }}">Tarifario</a></li>

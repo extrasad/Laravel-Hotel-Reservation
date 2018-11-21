@@ -18,11 +18,17 @@ use App\Cliente;
 
 use App\Consumo;
 
+use App\Diex;
+
 use Codedge\Fpdf\Fpdf\Fpdf;
 
 use Spatie\Permission\Models\Permission;
 
 use DB;
+
+use Input;
+
+use Carbon\Carbon;
 
 
 class ReservacionController extends Controller
@@ -87,13 +93,12 @@ class ReservacionController extends Controller
 
      */
 
-    public function create()
+    public function custom_create($habitacion)
 
     {
+        $habitaciones = Habitacion::where('habitacion', $habitacion)->pluck('habitacion','habitacion')->all();
 
-        $habitaciones = Habitacion::where('estado', 'Disponible')->pluck('habitacion','habitacion')->all();
-
-        return view('reservacion.create',compact('habitaciones', 'autos', 'clientes'));
+        return view('reservacion.create',compact('habitaciones'));
 
     }
 
@@ -132,12 +137,14 @@ class ReservacionController extends Controller
 
         $habitacion = Habitacion::where('habitacion', ($request->input('habitacion')));
         $estado = Habitacion::where('habitacion', ($request->input('habitacion')))->value('estado');
-
         if($estado != 'Disponible'){
             return redirect()->route('reservacion.index')
                         ->with('success','Habitacion no disponible');
         }
+        $habitacion->update(
+            ['estado' => 'Ocupada']
 
+        );
         $costo = Habitacion::where('habitacion', ($request->input('habitacion')))->value('costo');
         $reservacion = Reservacion::create(
             [
@@ -148,9 +155,11 @@ class ReservacionController extends Controller
     
                 'observacion' => $request->input('observacion'),
     
-                'estado' => $request->input('estado'),
+                'estado' => 'Activa',
 
-                'costo' => $costo
+                'costo' => $costo,
+
+                'costo_hab' => $costo
             
             ]);
 
@@ -200,7 +209,7 @@ class ReservacionController extends Controller
      * @param $reservacion
 
      */
-
+    //ARREGLAR ESTILOS PDF
     public function pdf($reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
@@ -214,6 +223,132 @@ class ReservacionController extends Controller
         exit;
     }
 
+
+    public function searchReservacion(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $reservacions=DB::table('reservacions')->where('habitacion_id','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('auto_id','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('cliente1_id','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('cliente2_id','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('costo','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('costo_hab','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('fecha_salida','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('observacion','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('estado','LIKE','%'.$request->searchReservacion."%")
+            ->orWhere('created_at','LIKE','%'.$request->searchReservacion."%")
+            ->get();
+
+            if($reservacions){
+                return response()->json($reservacions);
+            }
+        }
+    }
+
+    public function searchCliente(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $clientes=DB::table('clientes')->where('ci','LIKE','%'.$request->searchCliente."%")->get();
+
+            if($clientes){
+                return response()->json($clientes);
+            }
+        }
+    }
+
+    public function searchAuto(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $autos=DB::table('autos')->where('placa','LIKE','%'.$request->searchAuto."%")->get();
+
+            if($autos){
+                return response()->json($autos);
+            }
+        }
+    }
+
+    public function searchProducto(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $productos=DB::table('productos')->where('descripcion','LIKE','%'.$request->searchProductos."%")->get();
+
+            if($productos){
+                return response()->json($productos);
+            }
+        }
+    }
+
+    public function cerrar(Request $request, $reservacion)
+    {        
+        $reservacion = Reservacion::findOrFail($reservacion);
+        if($request->input('observacion')){
+            $obs = $request->input('observacion');
+            $cl1 = $reservacion->cliente1;
+            $cl2 = $reservacion->cliente2;
+            $auto = $reservacion->auto;
+            $fecha = Carbon::now();
+            $estado = $request->input('estado');
+            $reservacion->update([
+                'estado' => 'Inactiva',
+                'observacion' => $obs,
+                'fecha_salida'=> $fecha
+            ]);
+            Diex::create(
+                [
+    
+                    'observacion' => $obs,
+
+                    'ci' => $cl1->ci,
+        
+                    'nombre' => $cl1->nombre,
+        
+                    'placa' => $auto->placa,
+        
+                    'estado' => $estado
+                
+                ]);
+                Diex::create(
+                    [
+        
+                        'observacion' => $obs,
+    
+                        'ci' => $cl2->ci,
+            
+                        'nombre' => $cl2->nombre,
+            
+                        'placa' => $auto->placa,
+            
+                        'estado' => $estado
+                    
+                    ]);
+
+        }else{
+            $reservacion->update([
+                'estado' => 'Inactiva',
+            ]);
+        }
+    }
+    
 
     /**
 
@@ -266,7 +401,7 @@ class ReservacionController extends Controller
 
             'observacion',
 
-            'estado' => 'required',
+            'estado',
 
             'habitacion' => 'required',
 
@@ -286,7 +421,7 @@ class ReservacionController extends Controller
     
             'observacion' => $request->input('observacion'),
     
-            'estado' => $request->input('estado')
+            'estado' => 'Activa'
         ]);
 
         DB::table('reservaciones_clientes')->where('reservacion_id',$reservacion->id)->delete();

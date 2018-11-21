@@ -77,11 +77,11 @@
                             @endif
                             </th>
                 
-                            <th>{{ $reservacion->cliente1->ci }}</th>
+                            <th>511</th>
                 
-                            <th>{{ $reservacion->cliente2->ci }}</th>
+                            <th>125</th>
                 
-                            <th>{{ $reservacion->auto->placa }}</th>
+                            <th>15314</th>
                 
                             <th>{{ $reservacion->habitacion->habitacion }}</th>
                 

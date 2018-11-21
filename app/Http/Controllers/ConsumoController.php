@@ -93,6 +93,24 @@ class ConsumoController extends Controller
 
     }
 
+    public function searchConsumo(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $consumos=DB::table('consumos')->where('reservacion_id','LIKE','%'.$request->searchConsumo."%")
+            ->orWhere('costo','LIKE','%'.$request->searchConsumo."%")
+            ->orWhere('estado','LIKE','%'.$request->searchConsumo."%")
+            ->get();
+
+            if($consumos){
+                return response()->json($consumos);
+            }
+        }
+    }
 
     /**
 
@@ -145,7 +163,7 @@ class ConsumoController extends Controller
         $consumo->reservacion()->associate($request->input('reservacion'));
         $consumo->save();
         $reservacion = Reservacion::find($request->input('reservacion'));
-        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $precio = $reservacion->costo_hab + $consumo->costo;
         $reservacion->update(
             ['costo' => $precio]
 
@@ -254,7 +272,7 @@ class ConsumoController extends Controller
         $consumo->producto()->attach($producto_find);
         $consumo->save();
         $reservacion = Reservacion::find($consumo->reservacion->id);
-        $precio = $reservacion->habitacion->costo + $consumo->costo;
+        $precio = $reservacion->costo_hab + $consumo->costo;
         $reservacion->update(
             ['costo' => $precio]
         );

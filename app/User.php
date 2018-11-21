@@ -29,4 +29,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Sistemas de roles
+     */
+
+    public function hasRoles(array $roles)
+    {
+        foreach ($roles as $key => $role) { 
+            foreach ($this->roles as $userRole) {
+                if($userRole->name === $role)
+                {
+                    return true;
+                }
+            }
+            # code...
+        }
+        return false;
+    }
+
+    public function isRecepcionista()
+    {
+        return $this->hasRoles(['Recepcionista']);
+    }
+
 }

@@ -76,7 +76,7 @@
                     </div>
                     <label>Estado</label>
                     <div class="form-group">
-                        {!! Form::select('estado', ['Ocupada' => 'Ocupada', 'Disponible' => 'Disponible', 'En limpieza' => 'En limpieza'], array('default' => $habitacion->estado)); !!}
+                        {!! Form::select('estado', ['Disponible' => 'Disponible', 'En limpieza' => 'En limpieza', 'Dañada' => 'Dañada'], array('default' => $habitacion->estado)); !!}
                     </div>
                     <label>Tipo de habitacion</label>
                     <div class="form-group">

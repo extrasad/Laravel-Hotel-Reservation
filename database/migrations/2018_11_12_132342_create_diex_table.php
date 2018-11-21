@@ -31,6 +31,6 @@ class CreateDiexTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('diex');
+        Schema::dropIfExists('diexes');
     }
 }

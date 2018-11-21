@@ -11012,7 +11012,8 @@ button.close {
   margin-bottom: 5px;
 }
 
-.icon-button-demo button {
+.icon-button-demo button,
+.icon-button-demo a {
   margin-right: 5px;
   margin-bottom: 12px;
 }

@@ -165,6 +165,26 @@ class AutoController extends Controller
 
     }
 
+    public function searchAuto(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $autos=DB::table('autos')->where('ci','LIKE','%'.$request->searchAuto."%")
+            ->orWhere('nacionalidad','LIKE','%'.$request->searchAuto."%")
+            ->orWhere('nombre','LIKE','%'.$request->searchAuto."%")
+            ->orWhere('estado','LIKE','%'.$request->searchAuto."%")
+            ->orWhere('observacion','LIKE','%'.$request->searchAuto."%")
+            ->get();
+
+            if($autos){
+                return response()->json($autos);
+            }
+        }
+    }
 
     /**
 

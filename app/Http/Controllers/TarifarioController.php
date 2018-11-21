@@ -147,6 +147,23 @@ class TarifarioController extends Controller
 
     }
 
+    public function searchTarifario(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $tarifarios=DB::table('tarifarios')->where('tipo','LIKE','%'.$request->searchTarifario."%")
+            ->orWhere('precio','LIKE','%'.$request->searchTarifario."%")
+            ->get();
+
+            if($tarifarios){
+                return response()->json($tarifarios);
+            }
+        }
+    }
 
     /**
 

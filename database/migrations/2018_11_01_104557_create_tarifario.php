@@ -28,6 +28,6 @@ class CreateTarifario extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tarifario');
+        Schema::dropIfExists('tarifarios');
     }
 }

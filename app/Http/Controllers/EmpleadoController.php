@@ -158,6 +158,25 @@ class EmpleadoController extends Controller
     }
 
 
+    public function searchEmpleado(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $empleados=DB::table('empleados')->where('ci','LIKE','%'.$request->searchEmpleado."%")
+            ->orWhere('nombre','LIKE','%'.$request->searchEmpleado."%")
+            ->get();
+
+            if($empleados){
+                return response()->json($empleados);
+            }
+        }
+    }
+
+
     /**
 
      * Show the form for editing the specified resource.

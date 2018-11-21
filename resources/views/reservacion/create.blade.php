@@ -188,13 +188,6 @@
 
                 {!! Form::open(array('route' => 'reservacion.store','method'=>'POST')) !!}
                     @csrf
-
-                    <label for="observacion">Observación</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <textarea id="observacion" class="form-control" style="height:150px" name="observacion" placeholder="Observación"></textarea>
-                        </div>
-                    </div>
                     <label for="cliente1">CI Cliente</label>
                     <div class="form-group">
                         <div class="form-line">
@@ -219,13 +212,6 @@
                             {!! Form::select('habitacion', $habitaciones, array('class' => 'form-control')); !!}
                         </div>
                     </div>
-                    <label for="bservacion">Estado</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            {!! Form::select('estado', ['Activa' => 'Activa', 'Inactiva' => 'Inactiva'], array('class' => 'form-control')); !!}
-                        </div>
-                    </div>
-                    <br>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
                     </div>

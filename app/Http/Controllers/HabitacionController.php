@@ -12,6 +12,8 @@ use App\Habitacion;
 
 use App\Tarifario;
 
+use App\Promo;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -85,7 +87,7 @@ class HabitacionController extends Controller
 
         $permission = Permission::get();
 
-        $tipo = Tarifario::pluck('tipo','tipo')->all();
+        $tipo = Promo::pluck('tipo','tipo')->all();
 
         return view('habitacion.create',compact('permission', 'tipo'));
 
@@ -122,7 +124,7 @@ class HabitacionController extends Controller
 
         ]);
 
-        $costo_hab = Tarifario::where('tipo', $request->input('tipo'))->value('precio');
+        $costo_hab = Promo::where('tipo', $request->input('tipo'))->value('costo');
 
         $habitacion = Habitacion::create(
             [
@@ -168,6 +170,27 @@ class HabitacionController extends Controller
 
     }
 
+    public function searchHabitacion(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $habitacions=DB::table('habitacions')->where('caracteristicas','LIKE','%'.$request->searchHabitacion."%")
+            ->orWhere('tipo','LIKE','%'.$request->searchHabitacion."%")
+            ->orWhere('costo','LIKE','%'.$request->searchHabitacion."%")
+            ->orWhere('estado','LIKE','%'.$request->searchHabitacion."%")
+            ->orWhere('observacion','LIKE','%'.$request->searchHabitacion."%")
+            ->orWhere('habitacion','LIKE','%'.$request->searchHabitacion."%")
+            ->get();
+
+            if($habitacions){
+                return response()->json($habitacions);
+            }
+        }
+    }
 
     /**
 
@@ -184,7 +207,7 @@ class HabitacionController extends Controller
     public function edit(Habitacion $habitacion)
 
     {
-        $tipo = Tarifario::pluck('tipo','tipo')->all();
+        $tipo = Promo::pluck('tipo','tipo')->all();
 
         return view('habitacion.edit',compact('habitacion', 'tipo'));
 

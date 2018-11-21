@@ -20,6 +20,7 @@ class CreateAutoTable extends Migration
             $table->string('modelo');
             $table->string('color');
             $table->string('estado');
+            $table->enum('tipo', array('Auto', 'Moto', 'Taxi'));
             $table->string('observacion')->nullable();
             $table->timestamps();
         });

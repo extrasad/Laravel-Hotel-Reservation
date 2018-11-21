@@ -148,6 +148,24 @@ class UserController extends Controller
     }
 
 
+    public function searchUser(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $users=DB::table('users')->where('name','LIKE','%'.$request->searchUser."%")
+            ->orWhere('username','LIKE','%'.$request->searchUser."%")
+            ->get();
+
+            if($users){
+                return response()->json($users);
+            }
+        }
+    }
+
     /**
 
      * Show the form for editing the specified resource.

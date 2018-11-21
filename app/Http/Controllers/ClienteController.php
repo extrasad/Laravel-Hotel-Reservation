@@ -166,7 +166,27 @@ class ClienteController extends Controller
 
     }
 
+    public function searchCliente(Request $request)
 
+    {
+
+    if($request->ajax())
+
+        {
+
+            $clientes=DB::table('clientes')->where('ci','LIKE','%'.$request->searchCliente."%")
+            ->orWhere('nacionalidad','LIKE','%'.$request->searchCliente."%")
+            ->orWhere('nombre','LIKE','%'.$request->searchCliente."%")
+            ->orWhere('estado','LIKE','%'.$request->searchCliente."%")
+            ->orWhere('observacion','LIKE','%'.$request->searchCliente."%")
+            ->orWhere('created_at','LIKE','%'.$request->searchCliente."%")
+            ->get();
+
+            if($clientes){
+                return response()->json($clientes);
+            }
+        }
+    }
     /**
 
      * Show the form for editing the specified resource.

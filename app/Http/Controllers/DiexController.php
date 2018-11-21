@@ -160,6 +160,26 @@ class DiexController extends Controller
 
     }
 
+    public function searchDiex(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $diex=DB::table('diexes')->where('ci','LIKE','%'.$request->searchDiex."%")
+            ->orWhere('placa','LIKE','%'.$request->searchDiex."%")
+            ->orWhere('nombre','LIKE','%'.$request->searchDiex."%")
+            ->orWhere('estado','LIKE','%'.$request->searchDiex."%")
+            ->orWhere('observacion','LIKE','%'.$request->searchDiex."%")
+            ->get();
+
+            if($diex){
+                return response()->json($diex);
+            }
+        }
+    }
 
     /**
 

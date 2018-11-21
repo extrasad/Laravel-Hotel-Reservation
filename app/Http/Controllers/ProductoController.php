@@ -149,6 +149,23 @@ class ProductoController extends Controller
 
     }
 
+    public function searchProducto(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $productos=DB::table('productos')->where('descripcion','LIKE','%'.$request->searchProducto."%")
+            ->orWhere('costo','LIKE','%'.$request->searchProducto."%")
+            ->get();
+
+            if($productos){
+                return response()->json($productos);
+            }
+        }
+    }
 
     /**
 

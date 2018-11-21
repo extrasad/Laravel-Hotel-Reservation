@@ -28,9 +28,45 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('descargar-factura/{id}', 'ReservacionController@pdf')->name('reservacion.pdf');
 
-Route::get('/','SearchController@index')->name('search.index');
- 
-Route::get('/search','SearchController@search')->name('search.search');
+Route::post('descargar-reporte/', 'HomeController@reporte_pdf')->name('reporte_dashboard.pdf');
+
+Route::get('/search-cliente-reservacion', 'ReservacionController@searchCliente')->name('reservacion.cliente');
+
+Route::get('/search-auto-reservacion', 'ReservacionController@searchAuto')->name('reservacion.auto');
+
+Route::get('/search-producto-reservacion', 'ReservacionController@searchProducto')->name('reservacion.producto');
+
+Route::get('/search-reservacion', 'ReservacionController@searchReservacion')->name('reservacion.search');
+
+Route::get('/search-auto', 'AutoController@searchAuto')->name('auto.search');
+
+Route::get('/search-cliente', 'ClienteController@searchCliente')->name('cliente.search');
+
+Route::get('/search-consumo', 'ConsumoController@searchConsumo')->name('consumo.search');
+
+Route::get('/search-diex', 'DiexController@searchDiex')->name('diex.search');
+
+Route::get('/search-empleado', 'EmpleadoController@searchEmpleado')->name('empleado.search');
+
+Route::get('/search-habitacion', 'HabitacionController@searchHabitacion')->name('habitacion.search');
+
+Route::get('/search-producto', 'ProductoController@searchProducto')->name('producto.search');
+
+Route::get('/search-promo', 'PromoController@searchPromo')->name('promo.search');
+
+Route::get('/search-reservacion', 'ReservacionController@searchReservacion')->name('reservacion.search');
+
+Route::get('/search-role', 'RoleController@searchRole')->name('role.search');
+
+Route::get('/search-tarifario', 'TarifarioController@searchTarifario')->name('tarifario.search');
+
+Route::get('/search-turno', 'TurnoController@searchTurno')->name('turno.search');
+
+Route::get('/search-user', 'UserController@searchUser')->name('user.search');
+
+Route::get('/reservacion/{id}', 'ReservacionController@custom_create')->name('reservacion.custom_create');
+
+Route::post('/cerrar-reservacion/{id}', 'ReservacionController@cerrar')->name('reservacion.cerrar');
 
 Route::group(['middleware' => ['auth']], function() {
 

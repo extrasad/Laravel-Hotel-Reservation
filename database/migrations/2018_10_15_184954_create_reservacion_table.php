@@ -20,8 +20,8 @@ class CreateReservacionTable extends Migration
             $table->integer('cliente1_id')->nullable();
             $table->integer('cliente2_id')->nullable();
             $table->float('costo')->nullable();
+            $table->float('costo_hab')->nullable();
             $table->date('fecha_salida')->nullable();
-            $table->time('hora_salida')->nullable();
             $table->string('observacion')->nullable();
             $table->enum('estado', array('Activa', 'Inactiva'));
             $table->timestamps();
@@ -35,6 +35,6 @@ class CreateReservacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservaciones');
+        Schema::dropIfExists('reservacions');
     }
 }

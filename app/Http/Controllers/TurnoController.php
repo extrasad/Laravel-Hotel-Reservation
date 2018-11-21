@@ -153,6 +153,24 @@ class TurnoController extends Controller
 
     }
 
+    public function searchTurno(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $turnos=DB::table('turnos')->where('fecha','LIKE','%'.$request->searchTurno."%")
+            ->orWhere('hora_entrada','LIKE','%'.$request->searchTurno."%")
+            ->orWhere('hora_salida','LIKE','%'.$request->searchTurno."%")
+            ->get();
+
+            if($turnos){
+                return response()->json($turnos);
+            }
+        }
+    }
 
     /**
 
