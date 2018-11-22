@@ -59,7 +59,7 @@
                     <label for="habitacion">Habitacion</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <input type="text" id="habitacion" name="habitacion" value="{{ $habitacion->habitacion }}" class="form-control" placeholder="Habitacion">
+                            <input type="number" id="habitacion" name="habitacion" value="{{ $habitacion->habitacion }}" class="form-control" placeholder="Habitacion">
                         </div>
                     </div>
                     <label for="observacion">Observación</label>
