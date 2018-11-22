@@ -106,18 +106,14 @@ class TarifarioController extends Controller
 
         $this->validate($request, [
 
-            'tipo' => 'required',
-
-            'precio' => 'required'
+            'tipo' => 'required'
         ]);
 
 
         $tarifario = Tarifario::create(
             [
 
-            'tipo' => $request->input('tipo'),
-
-            'precio' => $request->input('precio')
+            'tipo' => $request->input('tipo')
             
             ]);
 
@@ -156,7 +152,6 @@ class TarifarioController extends Controller
         {
 
             $tarifarios=DB::table('tarifarios')->where('tipo','LIKE','%'.$request->searchTarifario."%")
-            ->orWhere('precio','LIKE','%'.$request->searchTarifario."%")
             ->get();
 
             if($tarifarios){
@@ -206,9 +201,7 @@ class TarifarioController extends Controller
 
          request()->validate([
 
-            'tipo' => 'required',
-
-            'precio' => 'required'
+            'tipo' => 'required'
 
         ]);
 

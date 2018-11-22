@@ -362,11 +362,11 @@ class ReservacionController extends Controller
 
      */
 
-    public function edit(Reservacion $reservacion)
+    public function edit(Habitacion $habitacion)
 
     {
         $habitaciones = Habitacion::where('estado', 'Disponible')->pluck('habitacion','habitacion')->all();
-
+        $reservacion = Reservacion::where('habitacion_id', $habitacion->id);
         return view('reservacion.edit',compact(
             'reservacion',
             'habitaciones'
