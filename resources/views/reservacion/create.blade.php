@@ -112,18 +112,6 @@
 
             </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
-
-                <div class="form-group">
-
-                    <strong>Estado:</strong>
-
-                    {!! Form::select('estado', ['Activa' => 'Activa', 'Inactiva' => 'Inactiva']); !!}
-
-                 </div>
-
-            </div>
-
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
 		            <button type="submit" class="btn btn-primary">Enviar</button>

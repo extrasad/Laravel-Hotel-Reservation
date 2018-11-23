@@ -96,17 +96,6 @@
 
             </div>
         </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-
-            <div class="form-group">
-
-                <strong>Consumo:</strong>
-
-                {{ $reservacion->consumo->costo }}
-
-            </div>
-        </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
 
             <div class="form-group">
@@ -155,6 +144,37 @@
 
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong> Costo Consumo:</strong>
+                @if(!empty($reservacion->consumo->costo))
+                {{ $reservacion->consumo->costo }}
+                @endif
+
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong> Costo Habitacion:</strong>
+                {{ $reservacion->costo_hab}}
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong> Costo Total:</strong>
+
+                {{ $reservacion->costo }}
+
+            </div>
+        </div>
         </div>
 
     </div>

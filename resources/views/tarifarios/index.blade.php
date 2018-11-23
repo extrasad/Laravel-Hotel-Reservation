@@ -39,10 +39,40 @@
 
                 @endcan
 
+<<<<<<< HEAD
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
+=======
+            </div>
+
+        </div>
+
+    </div>
+
+
+    @if ($message = Session::get('success'))
+
+        <div class="alert alert-success">
+
+            <p>{{ $message }}</p>
+
+        </div>
+
+    @endif
+
+
+    <table class="table table-bordered">
+
+        <tr>
+
+            <th>No</th>
+
+            <th>Tipo de habitación</th>
+
+            <th width="280px">Acción</th>
+>>>>>>> master
 
                             <th>Tipo de habitación</th>
                 

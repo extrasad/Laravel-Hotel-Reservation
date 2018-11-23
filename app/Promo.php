@@ -14,6 +14,6 @@ class Promo extends Model
      * @var array
      */
     protected $fillable = [
-        'tipo', 'descripcion', 'cantidad', 'costo'
+        'tipo', 'descripcion', 'horas', 'costo'
     ];
 }

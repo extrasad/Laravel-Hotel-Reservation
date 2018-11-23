@@ -123,11 +123,7 @@ class ReservacionController extends Controller
 
             'observacion',
 
-            'estado' => 'required',
-
             'habitacion' => 'required',
-
-            'auto' => 'required',
 
             'cliente1' => 'required',
 
@@ -156,6 +152,11 @@ class ReservacionController extends Controller
                 'observacion' => $request->input('observacion'),
     
                 'estado' => 'Activa',
+<<<<<<< HEAD
+=======
+
+                'costo_hab' => $costo,
+>>>>>>> master
 
                 'costo' => $costo,
 
@@ -405,19 +406,15 @@ class ReservacionController extends Controller
 
             'habitacion' => 'required',
 
-            'auto' => 'required',
+            'auto',
 
             'cliente1' => 'required',
 
             'cliente2' => 'required'
 
         ]);
-
+        
         $reservacion->update([
-
-            'hora_salida' => $request->input('hora_salida'),
-    
-            'fecha_salida' => $request->input('fecha_salida'),
     
             'observacion' => $request->input('observacion'),
     

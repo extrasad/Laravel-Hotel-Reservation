@@ -13,11 +13,11 @@ class CreatePromoTable extends Migration
      */
     public function up()
     {
-        Schema::create('promo', function (Blueprint $table) {
+        Schema::create('promos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tipo');
             $table->string('descripcion');
-            $table->integer('cantidad');
+            $table->integer('horas');
             $table->float('costo');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreatePromoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('promo');
+        Schema::dropIfExists('promos');
     }
 }

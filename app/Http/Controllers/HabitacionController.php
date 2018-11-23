@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\Habitacion;
 
-use App\Tarifario;
+use App\Promo;
 
 use App\Promo;
 
@@ -246,12 +246,7 @@ class HabitacionController extends Controller
 
         ]);
 
-
-        $costo_hab = Tarifario::where('tipo', $request->input('tipo'))->value('precio');
-
         $habitacion->update([
-
-            'costo' => $costo_hab,
 
             'habitacion' => $request->input('habitacion'),
 

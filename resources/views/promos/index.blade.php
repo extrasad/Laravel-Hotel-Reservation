@@ -9,15 +9,15 @@
 
             <div class="pull-left">
 
-                <h2>Lista Negra</h2>
+                <h2>Promociones</h2>
 
             </div>
 
             <div class="pull-right">
 
-                @can('diex-create')
+                @can('promo-create')
 
-                <a class="btn btn-success" href="{{ route('diex.create') }}"> Crear nuevo registro</a>
+                <a class="btn btn-success" href="{{ route('promos.create') }}"> Crear una nueva promocion</a>
 
                 @endcan
 
@@ -45,45 +45,41 @@
 
             <th>No</th>
 
-            <th>Nombre</th>
+            <th>Costo</th>
 
-            <th>Cedula de identidad</th>
+            <th>Tipo</th>
 
-            <th>Observación</th>
+            <th>Descripcion</th>
 
-            <th>Placa</th>
-
-            <th>Estado</th>
+            <th>Horas</th>
 
             <th width="280px">Acción</th>
 
         </tr>
 
-	    @foreach ($diex as $diex)
+	    @foreach ($promos as $promo)
 
 	    <tr>
 
 	        <td>{{ ++$i }}</td>
 
-	        <th>{{ $diex->nombre }}</th>
+	        <th>{{ $promo->costo }}</th>
 
-            <th>{{ $diex->ci }}</th>
+            <th>{{ $promo->tipo }}</th>
 
-            <th>{{ $diex->observacion }}</th>
+            <th>{{ $promo->descripcion }}</th>
 
-            <th>{{ $diex->placa }}</th>
-
-            <th>{{ $diex->estado }}</th>
+            <th>{{ $promo->horas }}</th>
 
 	        <td>
 
-                <form action="{{ route('diex.destroy',$diex->id) }}" method="POST">
+                <form action="{{ route('promos.destroy',$promo->id) }}" method="POST">
 
-                    <a class="btn btn-info" href="{{ route('diex.show',$diex->id) }}">Mostrar</a>
+                    <a class="btn btn-info" href="{{ route('promos.show',$promo->id) }}">Mostrar</a>
 
-                    @can('diex-edit')
+                    @can('promo-edit')
 
-                    <a class="btn btn-primary" href="{{ route('diex.edit',$diex->id) }}">Editar</a>
+                    <a class="btn btn-primary" href="{{ route('promos.edit',$promo->id) }}">Editar</a>
 
                     @endcan
 
@@ -92,7 +88,7 @@
 
                     @method('DELETE')
 
-                    @can('diex-delete')
+                    @can('promo-delete')
 
                     <button type="submit" class="btn btn-danger">Borrar</button>
 
@@ -108,6 +104,8 @@
 
     </table>
 
-{!! $diex->links() !!}
+
+    {!! $promos->links() !!}
+
 
 @endsection
