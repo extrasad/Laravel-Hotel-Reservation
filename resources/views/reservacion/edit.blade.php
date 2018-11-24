@@ -48,6 +48,7 @@
                     <div class="header">
                         <h2>
                             AGREGAR CONSUMO
+                            {{ dump($productos) }}
                         </h2>
                     </div>
                     <div class="body">

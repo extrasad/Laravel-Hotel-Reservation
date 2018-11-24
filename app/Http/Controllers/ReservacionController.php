@@ -18,6 +18,8 @@ use App\Cliente;
 
 use App\Consumo;
 
+use App\Producto;
+
 use App\Diex;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -339,6 +341,9 @@ class ReservacionController extends Controller
                 'estado' => 'Inactiva',
             ]);
         }
+    return redirect()->route('home')
+
+        ->with('success','Reservacion cerrada satisfactoriamente');
     }
     
 
@@ -360,9 +365,11 @@ class ReservacionController extends Controller
         $habitaciones = Habitacion::findOrFail($habitacion);
         $get_reservacion = Reservacion::where('habitacion_id', $habitacion)->where('estado', 'Activa')->value('id');
         $reservacion = Reservacion::findOrFail($get_reservacion);
+        $productos = Producto::all();
         return view('reservacion.edit',compact(
             'reservacion',
-            'habitaciones'
+            'habitaciones',
+            'productos'
         ));
 
     }
