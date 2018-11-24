@@ -26,6 +26,8 @@ use Codedge\Fpdf\Fpdf\Fpdf;
 
 use Spatie\Permission\Models\Permission;
 
+use Illuminate\Support\Facades\Auth;
+
 use DB;
 
 use Input;
@@ -168,10 +170,12 @@ class ReservacionController extends Controller
         $reservacion_find->cliente2()->associate($cliente2_find);
         $reservacion_find->save();
 
-        return redirect()->route('reservacion.index')
-
-                        ->with('success','Reservacion creada satisfactoriamente');
-
+        if(Auth::user()->isRecepcionista()){
+            return redirect()->route('home');
+        }else{
+            return redirect()->route('reservacion.index')
+                        ->with('success','Reservacion Creada Satisfactoriamente');
+        }
     }
 
     /**

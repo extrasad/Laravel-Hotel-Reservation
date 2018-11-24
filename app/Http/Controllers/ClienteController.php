@@ -12,6 +12,8 @@ use App\Cliente;
 
 use App\Diex;
 
+use Illuminate\Support\Facades\Auth;
+
 use Spatie\Permission\Models\Permission;
 
 use DB;
@@ -139,10 +141,12 @@ class ClienteController extends Controller
             
             ]);
 
-
-        return redirect()->route('clientes.index')
-
-                        ->with('success','Cliente creado satisfactoriamente');
+        if(Auth::user()->isRecepcionista()){
+            return redirect()->back();
+        }else{
+            return redirect()->route('clientes.index')
+                        ->with('success','Cliente Creado Satisfactoriamente');
+        }
 
     }
 

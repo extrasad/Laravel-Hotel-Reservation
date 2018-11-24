@@ -23,7 +23,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
-
+    <link href="{{ asset('js/plugins/jquery-spinner/css/bootstrap-spinner.css') }}" rel="stylesheet">
+    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Jquery Core Js -->
@@ -58,6 +59,8 @@
         <script src="{{ asset('js/plugins/bootstrap/js/bootstrap.js')}}"></script>
 
         <!-- Select Plugin Js -->
+
+        <script src="{{ asset('js/plugins/jquery-spinner/js/jquery.spinner.js') }}"></script>
 
         <!-- Slimscroll Plugin Js -->
         <script src="{{ asset('js/plugins/jquery-slimscroll/jquery.slimscroll.js')}}"></script>

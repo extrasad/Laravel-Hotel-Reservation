@@ -57,7 +57,7 @@
                             <label for="searchCliente">CI Cliente</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" id="searchCliente" class="form-control" name="cliente1"></input>
+                                    <input type="number" id="searchCliente" class="form-control" name="cliente1"></input>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             <label for="searchCliente2">CI Acompañante</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" id="searchCliente2" class="form-control" name="cliente2"></input>
+                                    <input type="number" id="searchCliente2" class="form-control" name="cliente2"></input>
                                 </div>
                             </div>
                         </div>
@@ -114,6 +114,123 @@
                         <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
                     </div>
                 {!! Form::close() !!}
+            </div>
+            <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" style="display: none;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Cliente1 title</h4>
+                        </div>
+                        <div class="modal-body">
+                        <form action="{{ route('clientes.store') }}" method="POST">
+                            @csrf
+
+                            <label for="ci">Cédula de identidad</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="ci" name="ci" class="form-control" placeholder="Cedula de Identidad">
+                                </div>
+                            </div>
+                            <label for="nombre">Nombre</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+                                </div>
+                            </div>
+                            <label for="nacionalidad">Nacionalidad</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" placeholder="Nacionalidad">
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#clienteModal">MODAL - DEFAULT SIZE</button>
+            </div>
+            <div class="modal fade" id="clienteModal2" tabindex="-1" role="dialog" style="display: none;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Cliente2 title</h4>
+                        </div>
+                        <div class="modal-body">
+                        <form action="{{ route('clientes.store') }}" method="POST">
+                            @csrf
+
+                            <label for="ci">Cédula de identidad</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="ci" name="ci" class="form-control" placeholder="Cedula de Identidad">
+                                </div>
+                            </div>
+                            <label for="nombre">Nombre</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+                                </div>
+                            </div>
+                            <label for="nacionalidad">Nacionalidad</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" placeholder="Nacionalidad">
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#clienteModal2">MODAL - DEFAULT SIZE</button>
+            </div>
+            <div class="modal fade" id="autoModal" tabindex="-1" role="dialog" style="display: none;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Auto title</h4>
+                        </div>
+                        <div class="modal-body">
+                        <form action="{{ route('autos.store') }}" method="POST">
+                            @csrf
+
+                            <label for="placa">Placa</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="placa" name="placa" class="form-control" placeholder="Placa">
+                                </div>
+                            </div>
+                            <label for="modelo">Modelo</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Modelo">
+                                </div>
+                            </div>
+                            <label for="color">Color</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="color" name="color" class="form-control" placeholder="Color">
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#autoModal">MODAL - DEFAULT SIZE</button>
             </div>
         </div>
     </div>
@@ -164,10 +281,13 @@
                 success:function(data){
                     console.log(data);
 
-                    data.map(function(cliente, index) {
-                        lista1.append(`<button type="button" class="list-group-item clientes1" value="${cliente.ci}">${cliente.nombre}</button>`);
-                    });
-
+                    if (data.length < 1) {
+                        lista1.append(`<button type="button" class="btn btn-default waves-effect m-l-20" data-toggle="modal" data-target="#clienteModal">CREAR CLIENTE</button>`);
+                    } else {
+                        data.map(function(cliente, index) {
+                            lista1.append(`<button type="button" class="list-group-item clientes1" value="${cliente.ci}">${cliente.nombre}</button>`);
+                        });
+                    }
 
                 }
             });
@@ -222,9 +342,14 @@
                 success:function(data){
                     console.log(data);
 
-                    data.map(function(cliente, index) {
-                        lista2.append(`<button type="button" class="list-group-item clientes2" value="${cliente.ci}">${cliente.nombre}</button>`);
-                    });
+                    if (data.length < 1) {
+                        lista2.append(`<button type="button" class="btn btn-default waves-effect m-l-20" data-toggle="modal" data-target="#clienteModal2">CREAR CLIENTE</button>`);
+                    } else {
+                        data.map(function(cliente, index) {
+                            lista2.append(`<button type="button" class="list-group-item clientes2" value="${cliente.ci}">${cliente.nombre}</button>`);
+                        });
+                    }
+
 
 
                 }
@@ -280,10 +405,13 @@
                 success:function(data){
                     console.log(data);
 
-                    data.map(function(auto, index) {
-                        lista3.append(`<button type="button" class="list-group-item autos" value="${auto.placa}">${auto.placa}</button>`);
-                    });
-
+                    if (data.length < 1) {
+                        lista3.append(`<button type="button" class="btn btn-default waves-effect m-l-20" data-toggle="modal" data-target="#autoModal">CREAR AUTO</button>`);
+                    } else {
+                        data.map(function(auto, index) {
+                            lista3.append(`<button type="button" class="list-group-item autos" value="${auto.placa}">${auto.placa}</button>`);
+                        });
+                    }
 
                 }
             });

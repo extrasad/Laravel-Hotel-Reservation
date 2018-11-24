@@ -14,6 +14,8 @@ use App\Diex;
 
 use Spatie\Permission\Models\Permission;
 
+use Illuminate\Support\Facades\Auth;
+
 use DB;
 
 
@@ -139,9 +141,12 @@ class AutoController extends Controller
             ]);
 
 
-        return redirect()->route('autos.index')
-
-                        ->with('success','Auto creado satisfactoriamente');
+            if(Auth::user()->isRecepcionista()){
+                return redirect()->back();
+            }else{
+                return redirect()->route('autos.index')
+                            ->with('success','Auto Creado Satisfactoriamente');
+            }
 
     }
 

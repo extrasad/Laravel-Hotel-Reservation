@@ -59,12 +59,6 @@
                             <input type="text" id="tipo" name="tipo" class="form-control" placeholder="Tipo de habitacion">
                         </div>
                     </div>
-                    <label for="precio">Precio</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <input type="number" id="precio" step="any" name="precio" class="form-control" placeholder="Precio">
-                        </div>
-                    </div>
                     <br>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary waves-effect">Enviar</button>

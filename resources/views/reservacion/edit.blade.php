@@ -17,23 +17,23 @@
                     <div class="body">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Ci cliente:</strong> 15351254
+                                <strong class="font-bold col-orange">Ci cliente:</strong> {{ $reservacion->cliente1->ci }}
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Nombre cliente:</strong> John Doe
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Ci cliente:</strong> 15351254
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Nombre cliente:</strong> John Doe
+                                <strong class="font-bold col-orange">Nombre cliente:</strong> {{ $reservacion->cliente1->nombre }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Placa auto:</strong> asda15
+                                <strong class="font-bold col-orange">Ci cliente:</strong> {{ $reservacion->cliente2->ci }}
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <strong class="font-bold col-orange">Nombre cliente:</strong> {{ $reservacion->cliente2->nombre }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <strong class="font-bold col-orange">Placa auto:</strong> {{ $reservacion->auto->placa }}
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             </div>
@@ -42,41 +42,34 @@
                 </div>
             </div>
         </div>
+
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
                         <h2>
                             AGREGAR CONSUMO
-                            {{ dump($productos) }}
                         </h2>
                     </div>
                     <div class="body">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" value="" placeholder="Buscar producto..." name="search-producto"></input>
+                                        <select class="form-control" id="productoSelect">
+                                        @foreach( $productos as $key => $producto)
+
+                                            <option data-index="{{ $key }}" data-costo="{{ $producto->costo }}" value="{{ $producto->id }}">{{ $producto->descripcion }}</option>
+                                        
+                                        @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-5 col-sm-5 col-md-5">
-                                <strong class="font-bold col-orange">Cocossette</strong>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4">
-                                <label>Canntidad:</label>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="number" class="form-control" placeholder="Ingrese la cantidad">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3 col-sm-3 col-md-3">
-                                <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect">AGREGAR</button>
+                            <div class="col-md-6">
+
+                                <button type="button" id="addProducto" class="btn btn-primary btn-lg m-l-15 waves-effect">AGREGAR</button>
 
                             </div>
                         </div>
@@ -104,15 +97,16 @@
                             <th>Cantidad</th>
                 
                             <th>Costo</th>
+                            <th>Accion</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table__body producto-table-body">
 
                         <tr>
                 
                             <td>Cocossette</td>
                 
-                            <th>231</th>
+                            <td></td>
                 
                             <th>2312Bs</th>
                 
@@ -132,6 +126,92 @@
         </div>
     </div>
 </div>
+    <script type="text/javascript">
+
+        jQuery(document).ready( function($) {
+
+            const addProductoBtn = $('#addProducto');
+            const tableBody = $('.producto-table-body');
+            const tableRow = $('.producto-table-row');
+            const productoSelect = $('#productoSelect');
+            let previousSelected;
+
+            // Events
+            addProductoBtn.on('click', addRequisito);
+            tableBody.on('click', '.btn-remove-requisito', removeRequisito);
+            // tableBody.on('click', '.btns-quantity', quantityLogic);
+
+            function addRequisito() {
+                if (tableBody.children().hasClass('form__table-no-element')) {
+                    tableBody.children().remove();
+                }
+
+                const valProducto = productoSelect.val();
+                const productoSelected = productoSelect.find(':selected');
+                const costoProducto = productoSelected.data('costo');
+                const nombreProducto = productoSelected.text();
+                const indexProducto = productoSelected.data('index');
+
+                if (productoSelected !== previousSelected) {
+                    tableBody.append(`
+                        <tr id="producto-${valProducto}" class="producto-table-row">
+
+                            <td>
+                                <label for="productos[${indexProducto}][${nombreProducto}]" >${nombreProducto}</label>
+                                <input type="text" id="productos[${indexProducto}][${nombreProducto}]" name="productos[${indexProducto}][${nombreProducto}]" value="${valProducto}" hidden>
+                            </td>
+
+                            <td>
+                                <input type="number" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="${valProducto}">
+                            </td>
+
+                            <td class="product-quantity">${costoProducto}</td>
+
+                            <td class="producto-remove">
+                                <span class="btn-remove-requisito" data-delete="#producto-${valProducto}">
+                                    x
+                                </span>
+                            </td>
+                        </tr>
+                    `);
+                }
+
+                previousSelected = productoSelect.find(':selected');
+                
+            }
+
+            function addNoRequisito() {
+                const type = requisitoSelect.data('type');
+                tableBody.append('<tr class="form__table-row form__table-no-element"><td class="form__table-no-element">No se han agregado ' + type + '</td></tr>');
+            }
+
+            function removeRequisito(e) {
+                const thisEL = e.target.parentNode;
+                const dataRemove = thisEL.dataset.delete;
+                console.log(dataRemove);
+                $(dataRemove).remove();
+
+                if (tableBody.children().length < 1) {
+                    addNoRequisito();
+                }
+            }
+
+            function quantityLogic() {
+                const thisEl = $(this);
+                const cantidadBase = thisEl.data('cantidad');
+                const costo = thisEl.data('costoprod');
+                const value = thisEl.val();
+                const parent = thisEl.parent().parent().parent().parent();
+                
+                if (cantidadBase === value) {
+                    
+                }
+
+            }
+
+        });
+            
+    </script>
     @else
     <div class="row">
 
