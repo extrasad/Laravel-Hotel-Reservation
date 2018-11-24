@@ -106,6 +106,18 @@
                         <span>Reservación</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('promos.index') }}">
+                        <i class="material-icons">layers</i>
+                        <span>Promos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('diex.index') }}">
+                        <i class="material-icons">layers</i>
+                        <span>Diex</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- #Menu -->

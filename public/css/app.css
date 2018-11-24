@@ -1,3 +1,20 @@
+/* CUSTOM CSS */
+
+.clientes-block {
+  height: 16vh;
+  overflow-y: scroll;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+/* ------------------------- */
+
+
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 
 /*!

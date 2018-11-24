@@ -12,8 +12,6 @@ use App\Habitacion;
 
 use App\Promo;
 
-use App\Promo;
-
 use Spatie\Permission\Models\Permission;
 
 use DB;

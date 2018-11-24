@@ -67,9 +67,9 @@
             <div class="form-group">
 
                 <strong>Fecha de salida:</strong>
-
+                @if($reservacion->fecha_salida)
                 {{ $reservacion->fecha_salida->format('d/m/Y') }}
-
+                @endif
             </div>
 
         </div>
@@ -79,9 +79,9 @@
             <div class="form-group">
 
                 <strong>Hora de salida:</strong>
-
+                @if($reservacion->fecha_salida)
                 {{ $reservacion->fecha_salida->format('H:i:s') }}
-
+                @endif
             </div>
 
         </div>

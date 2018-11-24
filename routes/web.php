@@ -54,8 +54,6 @@ Route::get('/search-producto', 'ProductoController@searchProducto')->name('produ
 
 Route::get('/search-promo', 'PromoController@searchPromo')->name('promo.search');
 
-Route::get('/search-reservacion', 'ReservacionController@searchReservacion')->name('reservacion.search');
-
 Route::get('/search-role', 'RoleController@searchRole')->name('role.search');
 
 Route::get('/search-tarifario', 'TarifarioController@searchTarifario')->name('tarifario.search');
@@ -64,7 +62,7 @@ Route::get('/search-turno', 'TurnoController@searchTurno')->name('turno.search')
 
 Route::get('/search-user', 'UserController@searchUser')->name('user.search');
 
-Route::get('/reservacion/{id}', 'ReservacionController@custom_create')->name('reservacion.custom_create');
+Route::get('/reservacion-custom-create/{id}', 'ReservacionController@custom_create')->name('reservacion.custom_create');
 
 Route::post('/cerrar-reservacion/{id}', 'ReservacionController@cerrar')->name('reservacion.cerrar');
 

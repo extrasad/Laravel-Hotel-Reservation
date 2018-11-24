@@ -246,9 +246,8 @@
                 <div class="form-group">
 
                     <strong>Habitacion:</strong>
-
-                    {!! Form::select('habitacion', $habitaciones, $reservacion->habitacion->habitacion); !!}
-
+                    <label for="habitacion-reservacion">{{ $reservacion->habitacion->habitacion }}</label>
+                    <input type="text" id="habitacion-reservacion" name="habitacion" value="{{ $reservacion->habitacion->habitacion }}" hidden>
                 </div>
 
             </div>

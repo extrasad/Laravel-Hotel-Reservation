@@ -148,17 +148,8 @@ class ReservacionController extends Controller
                 'hora_salida' => $request->input('hora_salida'),
     
                 'fecha_salida' => $request->input('fecha_salida'),
-    
-                'observacion' => $request->input('observacion'),
-    
+        
                 'estado' => 'Activa',
-<<<<<<< HEAD
-=======
-
-                'costo_hab' => $costo,
->>>>>>> master
-
-                'costo' => $costo,
 
                 'costo_hab' => $costo
             
@@ -259,7 +250,7 @@ class ReservacionController extends Controller
 
         {
 
-            $clientes=DB::table('clientes')->where('ci','LIKE','%'.$request->searchCliente."%")->get();
+            $clientes=DB::table('clientes')->where('ci','LIKE',$request->search."%")->get();
 
             if($clientes){
                 return response()->json($clientes);
@@ -275,7 +266,7 @@ class ReservacionController extends Controller
 
         {
 
-            $autos=DB::table('autos')->where('placa','LIKE','%'.$request->searchAuto."%")->get();
+            $autos=DB::table('autos')->where('placa','LIKE',$request->search."%")->get();
 
             if($autos){
                 return response()->json($autos);
@@ -291,7 +282,7 @@ class ReservacionController extends Controller
 
         {
 
-            $productos=DB::table('productos')->where('descripcion','LIKE','%'.$request->searchProductos."%")->get();
+            $productos=DB::table('productos')->where('descripcion','LIKE',$request->search."%")->get();
 
             if($productos){
                 return response()->json($productos);
@@ -363,11 +354,12 @@ class ReservacionController extends Controller
 
      */
 
-    public function edit(Habitacion $habitacion)
+    public function edit($habitacion)
 
     {
-        $habitaciones = Habitacion::where('estado', 'Disponible')->pluck('habitacion','habitacion')->all();
-        $reservacion = Reservacion::where('habitacion_id', $habitacion->id);
+        $habitaciones = Habitacion::findOrFail($habitacion);
+        $get_reservacion = Reservacion::where('habitacion_id', $habitacion)->where('estado', 'Activa')->value('id');
+        $reservacion = Reservacion::findOrFail($get_reservacion);
         return view('reservacion.edit',compact(
             'reservacion',
             'habitaciones'
