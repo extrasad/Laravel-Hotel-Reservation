@@ -166,8 +166,8 @@ class EmpleadoController extends Controller
 
         {
 
-            $empleados=DB::table('empleados')->where('ci','LIKE','%'.$request->searchEmpleado."%")
-            ->orWhere('nombre','LIKE','%'.$request->searchEmpleado."%")
+            $empleados=DB::table('empleados')->where('ci','LIKE',$request->search."%")
+            ->orWhere('nombre','LIKE',$request->search."%")
             ->get();
 
             if($empleados){

@@ -178,12 +178,12 @@ class ClienteController extends Controller
 
         {
 
-            $clientes=DB::table('clientes')->where('ci','LIKE','%'.$request->searchCliente."%")
-            ->orWhere('nacionalidad','LIKE','%'.$request->searchCliente."%")
-            ->orWhere('nombre','LIKE','%'.$request->searchCliente."%")
-            ->orWhere('estado','LIKE','%'.$request->searchCliente."%")
-            ->orWhere('observacion','LIKE','%'.$request->searchCliente."%")
-            ->orWhere('created_at','LIKE','%'.$request->searchCliente."%")
+            $clientes=DB::table('clientes')->where('ci','LIKE',$request->search."%")
+            ->orWhere('nacionalidad','LIKE',$request->search."%")
+            ->orWhere('nombre','LIKE',$request->search."%")
+            ->orWhere('estado','LIKE',$request->search."%")
+            ->orWhere('observacion','LIKE',$request->search."%")
+            ->orWhere('created_at','LIKE',$request->search."%")
             ->get();
 
             if($clientes){

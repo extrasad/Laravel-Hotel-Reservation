@@ -162,7 +162,7 @@ class RoleController extends Controller
 
         {
 
-            $roles=DB::table('roles')->where('name','LIKE','%'.$request->searchRole."%")
+            $roles=DB::table('roles')->where('name','LIKE',$request->search."%")
             ->get();
 
             if($roles){

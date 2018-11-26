@@ -156,8 +156,8 @@ class UserController extends Controller
 
         {
 
-            $users=DB::table('users')->where('name','LIKE','%'.$request->searchUser."%")
-            ->orWhere('username','LIKE','%'.$request->searchUser."%")
+            $users=DB::table('users')->where('name','LIKE',$request->search."%")
+            ->orWhere('username','LIKE',$request->search."%")
             ->get();
 
             if($users){

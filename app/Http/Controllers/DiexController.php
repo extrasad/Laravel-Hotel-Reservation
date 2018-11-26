@@ -168,11 +168,11 @@ class DiexController extends Controller
 
         {
 
-            $diex=DB::table('diexes')->where('ci','LIKE','%'.$request->searchDiex."%")
-            ->orWhere('placa','LIKE','%'.$request->searchDiex."%")
-            ->orWhere('nombre','LIKE','%'.$request->searchDiex."%")
-            ->orWhere('estado','LIKE','%'.$request->searchDiex."%")
-            ->orWhere('observacion','LIKE','%'.$request->searchDiex."%")
+            $diex=DB::table('diexes')->where('ci','LIKE',$request->search."%")
+            ->orWhere('placa','LIKE',$request->search."%")
+            ->orWhere('nombre','LIKE',$request->search."%")
+            ->orWhere('estado','LIKE',$request->search."%")
+            ->orWhere('observacion','LIKE',$request->search."%")
             ->get();
 
             if($diex){

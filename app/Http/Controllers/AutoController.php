@@ -178,11 +178,11 @@ class AutoController extends Controller
 
         {
 
-            $autos=DB::table('autos')->where('ci','LIKE','%'.$request->searchAuto."%")
-            ->orWhere('nacionalidad','LIKE','%'.$request->searchAuto."%")
-            ->orWhere('nombre','LIKE','%'.$request->searchAuto."%")
-            ->orWhere('estado','LIKE','%'.$request->searchAuto."%")
-            ->orWhere('observacion','LIKE','%'.$request->searchAuto."%")
+            $autos=DB::table('autos')->where('ci','LIKE',$request->search."%")
+            ->orWhere('nacionalidad','LIKE',$request->search."%")
+            ->orWhere('nombre','LIKE',$request->search."%")
+            ->orWhere('estado','LIKE',$request->search."%")
+            ->orWhere('observacion','LIKE',$request->search."%")
             ->get();
 
             if($autos){

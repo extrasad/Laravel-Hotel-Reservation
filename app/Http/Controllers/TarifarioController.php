@@ -151,7 +151,7 @@ class TarifarioController extends Controller
 
         {
 
-            $tarifarios=DB::table('tarifarios')->where('tipo','LIKE','%'.$request->searchTarifario."%")
+            $tarifarios=DB::table('tarifarios')->where('tipo','LIKE',$request->search."%")
             ->get();
 
             if($tarifarios){

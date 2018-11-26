@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <form action="{{ route('reservacion.cerrar', $reservacion->habitacion->id) }}" method="POST">
+        <form action="{{ route('reservacion.cerrar', $reservacion->id) }}" method="POST">
             @csrf
 
             <div class="row clearfix">

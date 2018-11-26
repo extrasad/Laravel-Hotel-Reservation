@@ -157,8 +157,8 @@ class ProductoController extends Controller
 
         {
 
-            $productos=DB::table('productos')->where('descripcion','LIKE','%'.$request->searchProducto."%")
-            ->orWhere('costo','LIKE','%'.$request->searchProducto."%")
+            $productos=DB::table('productos')->where('descripcion','LIKE',$request->search."%")
+            ->orWhere('costo','LIKE',$request->search."%")
             ->get();
 
             if($productos){

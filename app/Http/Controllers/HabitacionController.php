@@ -176,12 +176,12 @@ class HabitacionController extends Controller
 
         {
 
-            $habitacions=DB::table('habitacions')->where('caracteristicas','LIKE','%'.$request->searchHabitacion."%")
-            ->orWhere('tipo','LIKE','%'.$request->searchHabitacion."%")
-            ->orWhere('costo','LIKE','%'.$request->searchHabitacion."%")
-            ->orWhere('estado','LIKE','%'.$request->searchHabitacion."%")
-            ->orWhere('observacion','LIKE','%'.$request->searchHabitacion."%")
-            ->orWhere('habitacion','LIKE','%'.$request->searchHabitacion."%")
+            $habitacions=DB::table('habitacions')->where('caracteristicas','LIKE',$request->search."%")
+            ->orWhere('tipo','LIKE',$request->search."%")
+            ->orWhere('costo','LIKE',$request->search."%")
+            ->orWhere('estado','LIKE',$request->search."%")
+            ->orWhere('observacion','LIKE',$request->search."%")
+            ->orWhere('habitacion','LIKE',$request->search."%")
             ->get();
 
             if($habitacions){

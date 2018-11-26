@@ -161,9 +161,9 @@ class TurnoController extends Controller
 
         {
 
-            $turnos=DB::table('turnos')->where('fecha','LIKE','%'.$request->searchTurno."%")
-            ->orWhere('hora_entrada','LIKE','%'.$request->searchTurno."%")
-            ->orWhere('hora_salida','LIKE','%'.$request->searchTurno."%")
+            $turnos=DB::table('turnos')->where('fecha','LIKE',$request->search."%")
+            ->orWhere('hora_entrada','LIKE',$request->search."%")
+            ->orWhere('hora_salida','LIKE',$request->search."%")
             ->get();
 
             if($turnos){

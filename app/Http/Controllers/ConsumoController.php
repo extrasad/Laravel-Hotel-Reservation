@@ -101,9 +101,9 @@ class ConsumoController extends Controller
 
         {
 
-            $consumos=DB::table('consumos')->where('reservacion_id','LIKE','%'.$request->searchConsumo."%")
-            ->orWhere('costo','LIKE','%'.$request->searchConsumo."%")
-            ->orWhere('estado','LIKE','%'.$request->searchConsumo."%")
+            $consumos=DB::table('consumos')->where('reservacion_id','LIKE',$request->search."%")
+            ->orWhere('costo','LIKE',$request->search."%")
+            ->orWhere('estado','LIKE',$request->search."%")
             ->get();
 
             if($consumos){

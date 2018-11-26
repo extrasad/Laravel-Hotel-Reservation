@@ -230,16 +230,16 @@ class ReservacionController extends Controller
 
         {
 
-            $reservacions=DB::table('reservacions')->where('habitacion_id','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('auto_id','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('cliente1_id','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('cliente2_id','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('costo','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('costo_hab','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('fecha_salida','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('observacion','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('estado','LIKE','%'.$request->searchReservacion."%")
-            ->orWhere('created_at','LIKE','%'.$request->searchReservacion."%")
+            $reservacions=DB::table('reservacions')->where('habitacion_id','LIKE',$request->search."%")
+            ->orWhere('auto_id','LIKE',$request->search."%")
+            ->orWhere('cliente1_id','LIKE',$request->search."%")
+            ->orWhere('cliente2_id','LIKE',$request->search."%")
+            ->orWhere('costo','LIKE',$request->search."%")
+            ->orWhere('costo_hab','LIKE',$request->search."%")
+            ->orWhere('fecha_salida','LIKE',$request->search."%")
+            ->orWhere('observacion','LIKE',$request->search."%")
+            ->orWhere('estado','LIKE',$request->search."%")
+            ->orWhere('created_at','LIKE',$request->search."%")
             ->get();
 
             if($reservacions){
@@ -299,17 +299,21 @@ class ReservacionController extends Controller
     public function cerrar(Request $request, $reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
+        $fecha = Carbon::now();
+        $habitacion = Habitacion::findOrFail($reservacion->habitacion->id);
         if($request->input('observacion')){
             $obs = $request->input('observacion');
             $cl1 = $reservacion->cliente1;
             $cl2 = $reservacion->cliente2;
             $auto = $reservacion->auto;
-            $fecha = Carbon::now();
             $estado = $request->input('estado');
             $reservacion->update([
                 'estado' => 'Inactiva',
                 'observacion' => $obs,
                 'fecha_salida'=> $fecha
+            ]);
+            $habitacion->update([
+                'estado' => 'En limpieza'
             ]);
             Diex::create(
                 [
@@ -340,11 +344,51 @@ class ReservacionController extends Controller
                     
                     ]);
 
-        }else{
-            $reservacion->update([
-                'estado' => 'Inactiva',
+        }
+        $productos = $request->input('productos');
+
+        $costo = array();
+
+        $product_list = array();
+
+        foreach($productos as $producto){
+            $producto_id = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
+            $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
+            $cantidad = $producto['cantidad'];
+            $costo_total = $producto_costo * $cantidad;
+            array_push($costo, $costo_total);
+            array_push($product_list, $producto_id);
+        }
+        $total = array_sum($costo);
+        $consumo = Consumo::create(
+            [
+                'costo' => $total,
+
+                'estado' => 'Cancelado'
+            ]
+        );
+        $producto_find = Producto::find($product_list);
+        $consumo->producto()->attach($producto_find);
+        foreach($productos as $producto){
+            $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
+            DB::table('consumo_producto')->where('consumo_id',$consumo->id)
+            ->where('producto_id', $producto_id_find)
+            ->insert([
+                'cantidad' => $producto['cantidad']
             ]);
         }
+        $consumo->reservacion()->associate($reservacion->id);
+        $consumo->save();
+        $precio = $reservacion->costo_hab + $consumo->costo;
+        #$reservacion->update([
+        #    'estado' => 'Inactiva',
+        #    'fecha_salida'=> $fecha,
+        #     'costo' => $precio
+        #]);
+        #$habitacion->update([
+        #    'estado' => 'En limpieza'
+        #]);
+        
     return redirect()->route('home')
 
         ->with('success','Reservacion cerrada satisfactoriamente');

@@ -169,10 +169,10 @@ class PromoController extends Controller
 
         {
 
-            $promos=DB::table('promos')->where('descripcion','LIKE','%'.$request->searchPromo."%")
-            ->orWhere('costo','LIKE','%'.$request->searchPromo."%")
-            ->orWhere('tipo','LIKE','%'.$request->searchPromo."%")
-            ->orWhere('cantidad','LIKE','%'.$request->searchPromo."%")
+            $promos=DB::table('promos')->where('descripcion','LIKE',$request->search."%")
+            ->orWhere('costo','LIKE',$request->search."%")
+            ->orWhere('tipo','LIKE',$request->search."%")
+            ->orWhere('cantidad','LIKE',$request->search."%")
             ->get();
 
             if($promos){
