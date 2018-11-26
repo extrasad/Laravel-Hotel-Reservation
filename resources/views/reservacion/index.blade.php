@@ -130,4 +130,33 @@
 
 {!! $reservaciones->links() !!}
 
+<script type="text/javascript">
+ 
+    $('#search').on('keyup',function(){
+     
+    $value=$(this).val();
+     
+    $.ajax({
+     
+    type : 'get',
+     
+    url : '{{URL::to('search-reservacion')}}',
+     
+    data:{'search':$value},
+     
+    success:function(data){
+        console.log(data);
+     
+    $('tbody').html(data);
+     
+    }
+     
+    });
+     
+     
+     
+    })
+     
+    </script>
+
 @endsection

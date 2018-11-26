@@ -176,11 +176,11 @@
 
                             <td>
                                 <label for="productos[${indexProducto}][${nombreProducto}]" >${nombreProducto}</label>
-                                <input type="text" id="productos[${indexProducto}][${nombreProducto}]" name="productos[${indexProducto}][${nombreProducto}]" value="${valProducto}" hidden>
+                                <input type="text" id="productos[${indexProducto}][${nombreProducto}]" name="${indexProducto}[nombre][${nombreProducto}]" value="${valProducto}" hidden>
                             </td>
 
                             <td>
-                                <input type="number" class="input-cantidad" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="1">
+                                <input type="number" class="input-cantidad" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="${indexProducto}[cantidad]" value="1">
                             </td>
 
                             <td class="product-quantity" data-price="${costoProducto}">${costoProducto}</td>
