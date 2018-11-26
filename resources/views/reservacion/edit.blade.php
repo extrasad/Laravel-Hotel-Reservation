@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            HABITACION ##
+                            HABITACION {{ $reservacion->habitacion->habitacion }}
                         </h2>
                     </div>
                     <div class="body">

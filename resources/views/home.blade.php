@@ -55,19 +55,18 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    INLINE LAYOUT
+                    REPORTE RÁPIDO
                 </h2>
                 
             </div>
             <div class="body">
                 <form>
                     <div class="row clearfix">
-                    <!-- AGREGAR POR DEFECTO LOS VALORES DLE DIA DE HOY -->
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                             <label>Desde:</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="date" class="form-control" placeholder="Email Address">
+                                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" placeholder="Email Address">
                                 </div>
                             </div>
                         </div>
@@ -75,7 +74,7 @@
                             <label>Hasta:</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="date" class="form-control" placeholder="Password">
+                                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" placeholder="Password">
                                 </div>
                             </div>
                         </div>
@@ -130,7 +129,7 @@
                 <i class="material-icons">brightness_low</i>
             </div>
             <div class="content">
-                <div class="text">CLIENTES REGISTRADOS</div>
+                <div class="text">CLTS REGISTRADOS</div>
                 <div class="number">{{ $clientesMeta }}</div>
             </div>
         </div>
