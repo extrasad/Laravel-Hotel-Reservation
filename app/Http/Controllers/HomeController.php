@@ -55,4 +55,13 @@ class HomeController extends Controller
         $fpdf->Output();
         exit;
     }
+    public function habitacion_cambio(Request $request, $habitacion)
+    {        
+        $habitacion = Habitacion::findOrFail($habitacion);
+        $habitacion->update([
+            'estado' => $request->input('estado')
+        ]);
+        return redirect()->route('home')
+        ->with('success','Habitacion cambiado satisfactoriamente');
+    }
 }

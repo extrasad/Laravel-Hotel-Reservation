@@ -23,7 +23,7 @@ class CreateReservacionTable extends Migration
             $table->float('costo_hab')->nullable();
             $table->datetime('fecha_salida')->nullable();
             $table->string('observacion')->nullable();
-            $table->enum('estado', array('Activa', 'Inactiva'));
+            $table->enum('estado', array('Activa', 'Inactiva', 'Cancelada'));
             $table->timestamps();
         });
     }

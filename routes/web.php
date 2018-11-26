@@ -26,7 +26,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Router::post('habitacion-cambio/{id}', 'HomeController@habitacion_cambio')->name('habitacion_cambio');
+
 Route::get('descargar-factura/{id}', 'ReservacionController@pdf')->name('reservacion.pdf');
+
+Route::post('/agregar-consumo/{id}', 'ReservacionController@agregar_consumo')->name('reservacion.agregar_consumo');
+
+Route::post('/editar-consumo/{id}', 'ReservacionController@editar_consumo')->name('reservacion.editar_consumo');
+
+Route::post('/pagar-consumo/{id}', 'ReservacionController@consumo_cancelado')->name('reservacion.pagar_consumo');
+
+Route::post('/cancelar-reservacion/{id}', 'ReservacionController@cancelar_reservacion')->name('reservacion.cancelar');
 
 Route::post('descargar-reporte/', 'HomeController@reporte_pdf')->name('reporte_dashboard.pdf');
 
