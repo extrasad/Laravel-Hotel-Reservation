@@ -128,16 +128,6 @@ class ConsumoController extends Controller
 
     {
 
-        $this->validate($request, [
-
-            'estado' => 'required',
-
-            'productos' => 'required',
-
-            'reservacion' => 'required'
-
-        ]);
-
         $productos = $request->input('productos');
 
         $costo = array();
@@ -145,9 +135,11 @@ class ConsumoController extends Controller
         $product_list = array();
 
         foreach($productos as $producto){
-            $producto_id = DB::table('productos')->where('descripcion',$producto)->value('id');
-            $producto_costo = DB::table('productos')->where('descripcion',$producto)->value('costo');
-            array_push($costo, $producto_costo);
+            $producto_id = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
+            $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
+            $cantidad = $producto['cantidad'];
+            $costo_total = $producto_costo * $cantidad;
+            array_push($costo, $costo_total);
             array_push($product_list, $producto_id);
         }
         $total = array_sum($costo);
@@ -155,24 +147,23 @@ class ConsumoController extends Controller
             [
                 'costo' => $total,
 
-                'estado' => $request->input('estado')
+                'estado' => 'Cancelado'
             ]
         );
         $producto_find = Producto::find($product_list);
         $consumo->producto()->attach($producto_find);
-        $consumo->reservacion()->associate($request->input('reservacion'));
+        foreach($productos as $producto){
+            $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
+            DB::table('consumo_producto')->where('consumo_id',$consumo->id)
+            ->where('producto_id', $producto_id_find)
+            ->update([
+                'cantidad' => $producto['cantidad']
+            ]);
+        }
+        $consumo->reservacion()->associate($reservacion->id);
         $consumo->save();
-        $reservacion = Reservacion::find($request->input('reservacion'));
-        $precio = $reservacion->costo_hab + $consumo->costo;
-        $reservacion->update(
-            ['costo' => $precio]
 
-        );
-
-        return redirect()->route('consumos.index')
-
-                        ->with('success','Consumo creado satisfactoriamente');
-
+        return redirect()->route('reservacion.edit');
     }
 
     /**

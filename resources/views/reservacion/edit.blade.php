@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <form action="{{ route('reservacion.cerrar', $reservacion->id) }}" method="POST">
+        <form id="reservacionForm" action="{{ route('reservacion.cerrar', $reservacion->id) }}" method="POST">
             @csrf
 
             <div class="row clearfix">
@@ -85,24 +85,24 @@
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Cantidad</th>
-                                        <th>Costo</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table__body producto-table-body">
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>Costo Total:</td>
-                                        <th id="total-costo"></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Cantidad</th>
+                                            <th>Costo</th>
+                                            <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table__body producto-table-body">
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Costo Total:</td>
+                                            <th id="total-costo"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-link waves-effect">CONFIRMAR</button>
+                                    <button id="submit-form" type="button" data-selector="#reservacionForm" class="btn btn-link waves-effect">CONFIRMAR</button>
                                     <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
                                 </div>
                             </div>
@@ -157,6 +157,8 @@
             const tableBody = $('.producto-table-body');
             const tableRow = $('.producto-table-row');
             const productoSelect = $('#productoSelect');
+            const submitBtn = $('#submit-form');
+            const consumoBtn = $('#consumo-btn');
             let previousSelected;
 
             // Events
@@ -165,6 +167,8 @@
             tableBody.on('keyup mouseup', '.input-cantidad', quantityLogic);
             addProductoBtn.on('click', totalQuantity);
             tableBody.on('keyup mouseup', '.input-cantidad', totalQuantity);
+            submitBtn.on('click', submitForm);
+            consumoBtn.on('click', consumoForm);
 
             function addRequisito() {
                 if (tableBody.children().hasClass('form__table-no-element')) {
@@ -206,6 +210,21 @@
 
                 previousSelected = productoSelect.find(':selected');
                 
+            }
+
+            function submitForm() {
+                const thisEl = $(this);
+                const selector = thisEl.data('selector');
+
+                $(selector).submit();
+            }
+
+            function consumoForm() {
+                const thisEl = $(this);
+                const selector = thisEl.data('selector');
+                console.log(selector);
+
+                $(selector).submit();
             }
 
             function removeRequisito(e) {
