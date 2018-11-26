@@ -100,9 +100,11 @@ class ReservacionController extends Controller
     public function custom_create($habitacion)
 
     {
-        $habitaciones = Habitacion::where('habitacion', $habitacion)->pluck('habitacion','habitacion')->all();
+        $habitacion_find = Habitacion::findOrFail($habitacion)->pluck('habitacion', 'habitacion');
 
-        return view('reservacion.create',compact('habitaciones'));
+        $habitaciones = Habitacion::all()->pluck('habitacion', 'habitacion');
+
+        return view('reservacion.create',compact('habitaciones', 'habitacion_find'));
 
     }
 
@@ -486,7 +488,10 @@ class ReservacionController extends Controller
         $get_reservacion = Reservacion::where('habitacion_id', $habitacion)->where('estado', 'Activa')->value('id');
         $reservacion = Reservacion::findOrFail($get_reservacion);
         $productos = Producto::all();
-        $consumo = Consumo::findOrFail($reservacion->consumo->id);
+        if($reservacion->consumo){
+            $consumo = Consumo::findOrFail($reservacion->consumo->id);
+        }
+        
         return view('reservacion.edit',compact(
             'reservacion',
             'habitaciones',
