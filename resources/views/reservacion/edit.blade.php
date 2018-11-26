@@ -158,7 +158,6 @@
             const tableRow = $('.producto-table-row');
             const productoSelect = $('#productoSelect');
             const submitBtn = $('#submit-form');
-            const consumoBtn = $('#consumo-btn');
             let previousSelected;
 
             // Events
@@ -168,7 +167,6 @@
             addProductoBtn.on('click', totalQuantity);
             tableBody.on('keyup mouseup', '.input-cantidad', totalQuantity);
             submitBtn.on('click', submitForm);
-            consumoBtn.on('click', consumoForm);
 
             function addRequisito() {
                 if (tableBody.children().hasClass('form__table-no-element')) {
@@ -215,14 +213,6 @@
             function submitForm() {
                 const thisEl = $(this);
                 const selector = thisEl.data('selector');
-
-                $(selector).submit();
-            }
-
-            function consumoForm() {
-                const thisEl = $(this);
-                const selector = thisEl.data('selector');
-                console.log(selector);
 
                 $(selector).submit();
             }

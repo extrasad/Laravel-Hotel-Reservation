@@ -24,6 +24,8 @@ use App\Diex;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
 
+use App\Mypdf;
+
 use Spatie\Permission\Models\Permission;
 
 use Illuminate\Support\Facades\Auth;
@@ -211,13 +213,38 @@ class ReservacionController extends Controller
     public function pdf($reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
-        $fpdf = new Fpdf;
-        $fpdf->AddPage();
-        $fpdf->SetFont('Courier', 'B', 18);
-        $fpdf->Cell(50, 25, $reservacion->id);
-        $fpdf->Cell(50, 25, $reservacion->cliente1->ci);
-        $fpdf->Cell(50, 25, 'hola');
-        $fpdf->Output();
+        $pdf = new FPDF;
+        $pdf->AliasNbPages();
+        $pdf->AddPage('L','A4',0);
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(270, 5, 'TITULO',0,0,'C');
+        $pdf->Ln();
+        $pdf->SetFont('Times', '', 12);
+        $pdf->Cell(270,10,'STREET ADRESS OFF',0,0,'C');
+        $pdf->Ln(20);
+
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->SetX(26.5);
+        $pdf->Cell(30,10,'Habitacion',1,0,'C');
+        $pdf->Cell(40,10,'Cliente',1,0,'C');
+        $pdf->Cell(40,10,'Cliente 2',1,0,'C');
+        $pdf->Cell(60,10,'Costo',1,0,'C');
+        $pdf->Cell(36,10,'Observacion',1,0,'C');
+        $pdf->Cell(36,10,'Estado',1,0,'C');
+        $pdf->Ln();
+
+        $pdf->SetFont('Times','',12);
+        $pdf->SetX(26.5);
+        $pdf->Cell(30,10,$reservacion->habitacion->habitacion,1,0,'C');
+        $pdf->Cell(40,10,$reservacion->cliente1->nombre,1,0,'C');
+        $pdf->Cell(40,10,$reservacion->cliente2->nombre,1,0,'C');
+        $pdf->Cell(60,10,$reservacion->costo_hab,1,0,'C');
+        $pdf->Cell(36,10,$reservacion->observacion,1,0,'C');
+        $pdf->Cell(36,10,$reservacion->estado,1,0,'C');
+
+        $pdf->Output();
+
+
         exit;
     }
 
