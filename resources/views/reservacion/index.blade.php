@@ -33,6 +33,7 @@
 
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 align-right">
+                            <input type="text" class="form-controller" id="search" name="search"></input>
                             <a class="btn btn-success" href="{{ route('reservacion.create') }}"> Crear una nueva reservacion</a>
                         </div>
                     </div>

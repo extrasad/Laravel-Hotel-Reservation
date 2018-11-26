@@ -42,90 +42,105 @@
                 </div>
             </div>
         </div>
+        <form action="{{ route('reservacion.cerrar', $reservacion->habitacion->id) }}" method="POST">
+            @csrf
 
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>
-                            AGREGAR CONSUMO
-                        </h2>
-                    </div>
-                    <div class="body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <select class="form-control" id="productoSelect">
-                                        @foreach( $productos as $key => $producto)
-
-                                            <option data-index="{{ $key }}" data-costo="{{ $producto->costo }}" value="{{ $producto->id }}">{{ $producto->descripcion }}</option>
-                                        
-                                        @endforeach
-                                        </select>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                AGREGAR CONSUMO
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <select class="form-control" id="productoSelect">
+                                            @foreach( $productos as $key => $producto)
+                                                <option data-index="{{ $key }}" data-costo="{{ $producto->costo }}" value="{{ $producto->id }}">{{ $producto->descripcion }}</option>
+                                            
+                                            @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="col-md-6">
-
-                                <button type="button" id="addProducto" class="btn btn-primary btn-lg m-l-15 waves-effect">AGREGAR</button>
-
+                                <div class="col-md-6">
+                                    <button type="button" id="addProducto" class="btn btn-primary btn-lg m-l-15 waves-effect">AGREGAR</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-            <div class="header">
-                <h2>
-                    Tabla de consumo
-                    <small>Esta sección permite observar los consumos actuales de la habitacion.</small>
-                </h2>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Tabla de consumo
+                                <small>Esta sección permite observar los consumos actuales de la habitacion.</small>
+                            </h2>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Costo</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table__body producto-table-body">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Costo Total:</td>
+                                        <th id="total-costo"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-
-            <div class="body table-responsive">
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
-                
-                            <th>Costo</th>
-                            <th>Accion</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table__body producto-table-body">
-
-                        <tr>
-                
-                            <td>Cocossette</td>
-                
-                            <td></td>
-                
-                            <th>2312Bs</th>
-                
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                    
-                            <td>Costo Total:</td>
-                                
-                            <th>2312Bs</th>
-                
-                        </tr>
-                    </tfoot>
-                </table>
+            <div class="row clearfix m-b-20">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cerrarModal">CERRAR HABITACION</button>
+                    <div class="modal fade" id="cerrarModal" tabindex="-1" role="dialog" style="display: none;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="defaultModalLabel">¿Desea cerrar esta habitación?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <label for="searchCliente">Observación:</label>
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <textarea rows="4" class="form-control no-resize" name="observacion" placeholder="Escribe una observación..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-link waves-effect">CONFIRMAR</button>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</div>
+
     <script type="text/javascript">
 
         jQuery(document).ready( function($) {
@@ -139,7 +154,9 @@
             // Events
             addProductoBtn.on('click', addRequisito);
             tableBody.on('click', '.btn-remove-requisito', removeRequisito);
-            // tableBody.on('click', '.btns-quantity', quantityLogic);
+            tableBody.on('keyup mouseup', '.input-cantidad', quantityLogic);
+            addProductoBtn.on('click', totalQuantity);
+            tableBody.on('keyup mouseup', '.input-cantidad', totalQuantity);
 
             function addRequisito() {
                 if (tableBody.children().hasClass('form__table-no-element')) {
@@ -153,7 +170,8 @@
                 const indexProducto = productoSelected.data('index');
 
                 if (productoSelected !== previousSelected) {
-                    tableBody.append(`
+                    if ($("#producto-" + valProducto).length === 0) {
+                        tableBody.append(`
                         <tr id="producto-${valProducto}" class="producto-table-row">
 
                             <td>
@@ -162,10 +180,10 @@
                             </td>
 
                             <td>
-                                <input type="number" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="${valProducto}">
+                                <input type="number" class="input-cantidad" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="1">
                             </td>
 
-                            <td class="product-quantity">${costoProducto}</td>
+                            <td class="product-quantity" data-price="${costoProducto}">${costoProducto}</td>
 
                             <td class="producto-remove">
                                 <span class="btn-remove-requisito" data-delete="#producto-${valProducto}">
@@ -174,26 +192,19 @@
                             </td>
                         </tr>
                     `);
+                    }
+
                 }
 
                 previousSelected = productoSelect.find(':selected');
                 
             }
 
-            function addNoRequisito() {
-                const type = requisitoSelect.data('type');
-                tableBody.append('<tr class="form__table-row form__table-no-element"><td class="form__table-no-element">No se han agregado ' + type + '</td></tr>');
-            }
-
             function removeRequisito(e) {
-                const thisEL = e.target.parentNode;
-                const dataRemove = thisEL.dataset.delete;
-                console.log(dataRemove);
-                $(dataRemove).remove();
+                const thisEl = $(this);
+                const parent = thisEl.parent().parent();
+                parent.remove();
 
-                if (tableBody.children().length < 1) {
-                    addNoRequisito();
-                }
             }
 
             function quantityLogic() {
@@ -201,12 +212,32 @@
                 const cantidadBase = thisEl.data('cantidad');
                 const costo = thisEl.data('costoprod');
                 const value = thisEl.val();
-                const parent = thisEl.parent().parent().parent().parent();
-                
-                if (cantidadBase === value) {
-                    
-                }
+                const parent = thisEl.parent().parent();
+                const valueShow = parent.find('.product-quantity');
 
+                if (cantidadBase !== value) {
+                    const costoMultiplied = costo * value;  
+                    thisEl.data('cantidad', value);
+                    valueShow.data('price', costoMultiplied);
+                    valueShow.text('');
+                    valueShow.text(costoMultiplied);
+                }
+            }
+
+            function totalQuantity() {
+                const costos = $('.product-quantity').toArray();
+                const totalCosto = $('#total-costo');
+                let costosArr = [];
+                costos.forEach(function(el, index) {
+                    const precio = $(el).data('price');
+                    costosArr.push(precio)
+                });
+                const sum = costosArr.reduce(function(a, b) {
+                    return a + b
+                });
+
+                totalCosto.text('');
+                totalCosto.text(sum);
             }
 
         });
