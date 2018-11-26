@@ -48,7 +48,7 @@
                 
                             <th>Estado</th>
                 
-                            <th>Consumo</th>
+                            <th>Costo consumo</th>
                 
                             <th>Cliente</th>
                 
@@ -57,8 +57,10 @@
                             <th>Auto</th>
                 
                             <th>Habitacion</th>
+
+                            <th>Costo Habitacion</th>
                 
-                            <th>Costo</th>
+                            <th>Costo Total</th>
                 
                             <th>Acción</th>
                         </tr>
@@ -78,13 +80,15 @@
                             @endif
                             </th>
                 
-                            <th>511</th>
+                            <th>{{ $reservacion->cliente1->ci }}</th>
                 
-                            <th>125</th>
+                            <th>{{ $reservacion->cliente2->ci }}</th>
                 
-                            <th>15314</th>
+                            <th>{{ $reservacion->auto->placa }}</th>
                 
                             <th>{{ $reservacion->habitacion->habitacion }}</th>
+
+                            <th>{{ $reservacion->costo_hab }}</th>
                 
                             <th>{{ $reservacion->costo }}</th>
                 

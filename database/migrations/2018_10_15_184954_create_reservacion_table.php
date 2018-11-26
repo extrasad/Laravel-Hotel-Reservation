@@ -21,7 +21,7 @@ class CreateReservacionTable extends Migration
             $table->integer('cliente2_id')->nullable();
             $table->float('costo')->nullable();
             $table->float('costo_hab')->nullable();
-            $table->date('fecha_salida')->nullable();
+            $table->datetime('fecha_salida')->nullable();
             $table->string('observacion')->nullable();
             $table->enum('estado', array('Activa', 'Inactiva'));
             $table->timestamps();

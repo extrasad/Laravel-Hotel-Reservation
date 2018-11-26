@@ -127,6 +127,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-12">
+                                            <label for="searchCliente">Estado:</label>
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                {!! Form::select('estado', ['Solicitado' => 'Solicitado', 'Advertencia' => 'Advertencia']); !!}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

@@ -373,21 +373,21 @@ class ReservacionController extends Controller
             $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
             DB::table('consumo_producto')->where('consumo_id',$consumo->id)
             ->where('producto_id', $producto_id_find)
-            ->insert([
+            ->update([
                 'cantidad' => $producto['cantidad']
             ]);
         }
         $consumo->reservacion()->associate($reservacion->id);
         $consumo->save();
         $precio = $reservacion->costo_hab + $consumo->costo;
-        #$reservacion->update([
-        #    'estado' => 'Inactiva',
-        #    'fecha_salida'=> $fecha,
-        #     'costo' => $precio
-        #]);
-        #$habitacion->update([
-        #    'estado' => 'En limpieza'
-        #]);
+        $reservacion->update([
+            'estado' => 'Inactiva',
+            'fecha_salida'=> $fecha,
+            'costo' => $precio
+        ]);
+        $habitacion->update([
+            'estado' => 'En limpieza'
+        ]);
         
     return redirect()->route('home')
 

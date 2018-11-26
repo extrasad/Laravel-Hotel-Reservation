@@ -18,6 +18,7 @@ class Reservacion extends Model
     protected $fillable = [
         'costo', 'hora_entrada', 'fecha_entrada', 'fecha_salida', 'observacion', 'estado', 'costo_hab'
     ];
+    protected $dates = ['fecha_salida'];
     public function habitacion(){
     	return $this->belongsTo(Habitacion::class);
     }
