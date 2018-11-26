@@ -176,7 +176,7 @@
 
                             <td>
                                 <label for="productos[${indexProducto}][${nombreProducto}]" >${nombreProducto}</label>
-                                <input type="text" id="productos[${indexProducto}][${nombreProducto}]" name="${indexProducto}[nombre][${nombreProducto}]" value="${valProducto}" hidden>
+                                <input type="text" id="productos[${indexProducto}][${nombreProducto}]" name="${indexProducto}[nombre]" value="${nombreProducto}" hidden>
                             </td>
 
                             <td>

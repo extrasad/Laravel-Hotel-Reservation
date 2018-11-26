@@ -4,7 +4,7 @@
         <!-- User Info -->
         <div class="user-info" style="background-image: url({{ asset('images/vendor/adminbsb-materialdesign/user-img-background.jpg') }});">
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</div>
                 <div class="email">john.doe@example.com</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
