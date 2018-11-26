@@ -36,6 +36,7 @@
                                 <strong class="font-bold col-orange">Placa auto:</strong> {{ $reservacion->auto->placa }}
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <strong class="font-bold col-orange">Nacionalidad cliente:</strong> {{ $reservacion->cliente1->nacionalidad }}
                             </div>
                         </div>
                     </div>
@@ -85,24 +86,25 @@
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Cantidad</th>
-                                            <th>Costo</th>
-                                            <th>Accion</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table__body producto-table-body">
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td>Costo Total:</td>
-                                            <th id="total-costo"></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Subtotal</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table__body producto-table-body">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Costo Total:</td>
+                                        <th id="total-costo"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -194,6 +196,9 @@
                             <td>
                                 <input type="number" class="input-cantidad" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="1">
                             </td>
+
+                            <td>${costoProducto}</td>
+                            
 
                             <td class="product-quantity" data-price="${costoProducto}">${costoProducto}</td>
 

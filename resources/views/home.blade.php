@@ -60,13 +60,15 @@
                 
             </div>
             <div class="body">
-                <form>
+                <form action="{{ route('reporte_dashboard.pdf')}}" method="POST">
+                    @csrf
+                    
                     <div class="row clearfix">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                             <label>Desde:</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" placeholder="Email Address">
+                                    <input type="date" class="form-control" name="fecha_inicio" value="{{ date('Y-m-d') }}" placeholder="Email Address">
                                 </div>
                             </div>
                         </div>
@@ -74,12 +76,12 @@
                             <label>Hasta:</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" placeholder="Password">
+                                    <input type="date" class="form-control" name="fecha_fin" value="{{ date('Y-m-d') }}" placeholder="Password">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <button type="button" class="btn btn-primary btn-lg m-l-15 waves-effect">ENVIAR</button>
+                            <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">ENVIAR</button>
                         </div>
                     </div>
                 </form>

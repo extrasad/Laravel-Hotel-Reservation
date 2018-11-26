@@ -345,12 +345,25 @@ class ReservacionController extends Controller
                     ]);
 
         }
+        $reservacion->update([
+            'estado' => 'Inactiva',
+            'fecha_salida'=> $fecha,
+        ]);
+        $habitacion->update([
+            'estado' => 'En limpieza'
+        ]);
+        
+    return redirect()->route('home')
+
+        ->with('success','Reservacion cerrada satisfactoriamente');
+    }
+    
+    public function agregar_consumo(Request $request, $reservacion)
+    {        
+        $reservacion = Reservacion::findOrFail($reservacion);
         $productos = $request->input('productos');
-
         $costo = array();
-
         $product_list = array();
-
         foreach($productos as $producto){
             $producto_id = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
             $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
@@ -364,7 +377,7 @@ class ReservacionController extends Controller
             [
                 'costo' => $total,
 
-                'estado' => 'Cancelado'
+                'estado' => 'Pendiente por pagar'
             ]
         );
         $producto_find = Producto::find($product_list);
@@ -381,20 +394,79 @@ class ReservacionController extends Controller
         $consumo->save();
         $precio = $reservacion->costo_hab + $consumo->costo;
         $reservacion->update([
-            'estado' => 'Inactiva',
-            'fecha_salida'=> $fecha,
             'costo' => $precio
         ]);
-        $habitacion->update([
-            'estado' => 'En limpieza'
-        ]);
+        $data = [
+            "Success" => "Consumo agregado exitosamente"
+        ];
         
-    return redirect()->route('home')
-
-        ->with('success','Reservacion cerrada satisfactoriamente');
+    return response()->json($data);
     }
-    
 
+    public function editar_consumo(Request $request, $reservacion)
+    {        
+        $reservacion = Reservacion::findOrFail($reservacion);
+        $productos = $request->input('productos');
+        $costo = array();
+        $product_list = array();
+        foreach($productos as $producto){
+            $producto_id = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
+            $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
+            $cantidad = $producto['cantidad'];
+            $costo_total = $producto_costo * $cantidad;
+            array_push($costo, $costo_total);
+            array_push($product_list, $producto_id);
+        }
+        $total = array_sum($costo);
+        $consumo = Consumo::findOrFail($reservacion->consumo->id);
+        $consumo->update(
+            [
+                'costo' => $total
+            ]
+        );
+        $producto_find = Producto::find($product_list);
+        $consumo->producto()->detach();
+        $consumo->reservacion()->dissociate();
+        $consumo->save();
+        $consumo->reservacion()->associate($reservacion->id);
+        $consumo->producto()->attach($producto_find);
+        foreach($productos as $producto){
+            $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
+            DB::table('consumo_producto')->where('consumo_id',$consumo->id)
+            ->where('producto_id', $producto_id_find)
+            ->update([
+                'cantidad' => $producto['cantidad']
+            ]);
+        }
+        $consumo->save();
+        $precio = $reservacion->costo_hab + $consumo->costo;
+        $reservacion->update([
+            'costo' => $precio
+        ]);
+        $data = [
+            "Success" => "Consumo editado exitosamente"
+        ];  
+    return response()->json($data);
+    }
+
+    public function cancelar_reservacion(Request $request, $reservacion){
+        $reservacion = Reservacion::findOrFail($reservacion);
+        $habitacion = Habitacion::findOrFail($reservacion->habitacion->id);
+        $reservacion->update([
+            'estado' => 'Cancelada',
+            'observacion' => $request->input('observacion')
+            ]);
+        $habitacion->update([
+            'estado' => 'Disponible'
+        ]);
+    }
+    public function consumo_cancelado(Request $request, $reservacion){
+        $reservacion = Reservacion::findOrFail($reservacion);
+        $consumo = Consumo::findOrFail($reservacion->consumo->id);
+        $consumo->update([
+            'estado' => 'Cancelado'
+            ]);
+    }
     /**
 
      * Show the form for editing the specified resource.
@@ -414,9 +486,11 @@ class ReservacionController extends Controller
         $get_reservacion = Reservacion::where('habitacion_id', $habitacion)->where('estado', 'Activa')->value('id');
         $reservacion = Reservacion::findOrFail($get_reservacion);
         $productos = Producto::all();
+        $consumo = Consumo::findOrFail($reservacion->consumo->id);
         return view('reservacion.edit',compact(
             'reservacion',
             'habitaciones',
+            'consumo',
             'productos'
         ));
 
