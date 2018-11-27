@@ -27,6 +27,17 @@
 
     <!-- Jquery Core Js -->
     <script src="{{ asset('js/plugins/jquery/jquery.min.js')}}"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });   
+        });
+
+    </script>
     
 </head>
     <body class="theme-red">
@@ -49,9 +60,7 @@
             const APP_URL = {!! json_encode(url('/')) !!};
         </script>
         
-        <script type="text/javascript">
-            $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-        </script>
+
 
         <!-- Bootstrap Core Js -->
         <script src="{{ asset('js/plugins/bootstrap/js/bootstrap.js')}}"></script>

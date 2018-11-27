@@ -97,6 +97,9 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table__body producto-table-body">
+                                    @if($reservacion->consumo)
+                                        {{ $consumo }}
+                                    @endif
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -113,6 +116,13 @@
             <div class="row clearfix m-b-20">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cerrarModal">CERRAR HABITACION</button>
+                    @if(!$reservacion->consumo)
+                        <button id="create-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
+                    @else
+                        <button id="edit-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
+                        <button id="edit-consumo"  type="button" data-toggle="modal" data-target="#pagarModal" class="btn btn-default waves-effect m-r-20">PAGAR CONSUMO</button>
+                    @endif
+                    <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cancelarModal">CANCELAR RESERVACION</button>
                     <div class="modal fade" id="cerrarModal" tabindex="-1" role="dialog" style="display: none;">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -149,6 +159,51 @@
                 </div>
             </div>
         </form>
+        <div class="modal fade" id="cancelarModal" tabindex="-1" role="dialog" style="display: none;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">¿Desea cancelar esta habitación?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="cancelarReserva" action="{{ route('reservacion.cancelar', $reservacion->id) }}" method="POST"></form>
+                                @csrf
+                                @method('PUT')
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <label for="searchCliente">Observación:</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea rows="4" class="form-control no-resize" name="observacion" placeholder="Escribe una observación..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="submit-cancelar" type="button" data-selector="#cancelarReserva" class="btn btn-link waves-effect">CONFIRMAR</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="modal fade" id="pagarModal" tabindex="-1" role="dialog" style="display: none;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="defaultModalLabel">¿Desea pagar el consumo?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        @if($reservacion->consumo)
+                        <button id="pagar-consumo" type="button" data-consumo="{{ $consumo->id }}" data-selector="#reservacionForm" class="btn btn-link waves-effect">CONFIRMAR</button>
+                        @endif
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -160,6 +215,10 @@
             const tableRow = $('.producto-table-row');
             const productoSelect = $('#productoSelect');
             const submitBtn = $('#submit-form');
+            const consumoBtn = $('#create-consumo')
+            const consumoEditBtn = $('#edit-consumo');
+            const pagarBtn = $('#pagar-consumo');
+            const cancelarBtn = $('#submit-cancelar');
             let previousSelected;
 
             // Events
@@ -169,6 +228,10 @@
             addProductoBtn.on('click', totalQuantity);
             tableBody.on('keyup mouseup', '.input-cantidad', totalQuantity);
             submitBtn.on('click', submitForm);
+            consumoBtn.on('click',sendConsumoForm);
+            consumoEditBtn.on('click', editConsumoForm);
+            cancelarBtn.on('click', cancelarReservacion);
+            pagarBtn.on('click', pagarConsumo);
 
             function addRequisito() {
                 if (tableBody.children().hasClass('form__table-no-element')) {
@@ -188,11 +251,11 @@
 
                             <td>
                                 <label for="productos[${indexProducto}][${nombreProducto}]" >${nombreProducto}</label>
-                                <input type="text" id="productos[${indexProducto}][${nombreProducto}]" name="productos[${indexProducto}][nombre]" value="${nombreProducto}" hidden>
+                                <input class="input-producto" type="text" id="productos[${indexProducto}][${nombreProducto}]" name="productos[${indexProducto}][nombre]" value="${nombreProducto}" hidden>
                             </td>
 
                             <td>
-                                <input type="number" class="input-cantidad" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="1">
+                                <input  type="number" class="form-control input-cantidad" data-costoprod="${costoProducto}" data-cantidad="1" id="productos[${indexProducto}][cantidad]" name="productos[${indexProducto}][cantidad]" value="1">
                             </td>
 
                             <td>${costoProducto}</td>
@@ -210,9 +273,127 @@
                     }
 
                 }
-
                 previousSelected = productoSelect.find(':selected');
                 
+            }
+
+            function pagarConsumo() {
+                const thisEl = $(this);
+                const table = $('.table-responsive');
+                const consumoId = thisEl.data('consumo');
+                thisEl.prop('disabled',true);
+                
+
+                $.ajax({ 
+                    type : 'POST',
+                    url : APP_URL + '/pagar-consumo/' + consumoId,
+                    data: {},
+                    success:function(data){
+                        thisEl.prop('disabled',false);
+                        window.location.reload();
+                    },
+                    error: function( jqXHR ,  textStatus,  errorThrown ) {
+                        table.append(`
+                            <div class="alert bg-pink alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                No hay productos para consumir
+                            </div>
+                        `);
+                    }
+                });
+            }
+
+            function editConsumoForm() {
+                const thisEl = $(this);
+                const table = $('.table-responsive');
+                const inputsProduct = $('.producto-table-row');
+                const reservacionId = $(this).data('reservacion');
+                let productosArr = [];
+                thisEl.prop('disabled',true);
+                
+                inputsProduct.each(function(index) {
+                    const inputProduct = $(this).find('.input-producto');
+                    const inputCantidad = $(this).find('.input-cantidad');
+                    const a = {
+                        'nombre': inputProduct.val(),
+                        'cantidad': inputCantidad.val()
+                    };
+                    productosArr.push(a);
+                });
+
+                console.log(productosArr);
+
+                $.ajax({ 
+                    type : 'POST',
+                    url : APP_URL + '/editar-consumo/' + reservacionId,
+                    dataType: 'json',
+                    data: {
+                        productos: productosArr
+                    },
+                    success:function(data){
+                        thisEl.prop('disabled',false);
+                        window.location.reload();
+                    },
+                    error: function( jqXHR ,  textStatus,  errorThrown ) {
+                        table.append(`
+                            <div class="alert bg-pink alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                No hay productos para consumir
+                            </div>
+                        `);
+                    }
+                });
+            }
+
+            function sendConsumoForm() {
+                const thisEl = $(this);
+                const table = $('.table-responsive');
+                const inputsProduct = $('.producto-table-row');
+                const reservacionId = $(this).data('reservacion');
+                let productosArr = [];
+                thisEl.prop('disabled',true);
+                
+                inputsProduct.each(function(index) {
+                    const inputProduct = $(this).find('.input-producto');
+                    const inputCantidad = $(this).find('.input-cantidad');
+
+                    const a = {
+                        'nombre': inputProduct.val(),
+                        'cantidad': inputCantidad.val()
+                    };
+                    productosArr.push(a);
+                });
+
+                console.log(productosArr);
+
+                $.ajax({ 
+                    type : 'POST',
+                    url : APP_URL + '/agregar-consumo/' + reservacionId,
+                    dataType: 'json',
+                    data: {
+                        productos: productosArr
+                    },
+                    success:function(data){
+                        thisEl.prop('disabled',false);
+                        window.location.reload();
+                    },
+                    error: function( jqXHR ,  textStatus,  errorThrown) {
+                        table.append(`
+                            <div class="alert bg-pink alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                No ha insertado ningún producto para consumir
+                            </div>
+                        `);
+                    }
+                });
+
+            }
+
+            function cancelarReservacion() {
+                const thisEl = $(this);
+                const selector = thisEl.data('selector');
+
+                $(selector).submit();
             }
 
             function submitForm() {

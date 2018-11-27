@@ -390,7 +390,7 @@ class ReservacionController extends Controller
     public function agregar_consumo(Request $request, $reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
-        $productos = $request->input('productos');
+        $productos = $request->productos;
         $costo = array();
         $product_list = array();
         foreach($productos as $producto){
