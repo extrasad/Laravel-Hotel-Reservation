@@ -44,17 +44,44 @@ class HomeController extends Controller
     }
     public function reporte_pdf(Request $request)
     {
-        $fecha_inicio = date($request->input('fecha_inicio'));
-        $fecha_fin = date($request->input('fecha_fin'));           
-        $reservaciones = Reservacion::whereBetween('created_at', array($fecha_inicio, $fecha_fin))->get();
-        $fpdf = new Fpdf;
-        $fpdf->AddPage();
-        $fpdf->SetFont('Courier', 'B', 18);
+        $fecha_inicio = date($request->input('fecha_inicio').' '.$request->input('hora_inicio'));
+        $fecha_fin = date($request->input('fecha_fin').' '.$request->input('hora_fin'));    
+        $reservaciones = Reservacion::whereBetween('created_at', array($fecha_inicio, $fecha_fin))
+        ->get();
+
+        $pdf = new FPDF;
+        $pdf->AliasNbPages();
+        $pdf->AddPage('L','A4',0);
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(270, 5, 'Generador de Reporte - Afrodita',0,0,'C');
+        $pdf->Ln();
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(270,10,'Reporte rapido',0,0,'C');
+        $pdf->Ln(20);
+
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->SetX(32);
+        $pdf->Cell(30,10,'Habitacion',1,0,'C');
+        $pdf->Cell(40,10,'Cliente',1,0,'C');
+        $pdf->Cell(40,10,'Cliente 2',1,0,'C');
+        $pdf->Cell(30,10,'Costo',1,0,'C');
+        $pdf->Cell(40,10,'Costo consumo',1,0,'C');
+        $pdf->Cell(40,10,'Costo total',1,0,'C');
+        $pdf->Ln();
+
         foreach($reservaciones as $reservacion){
-            $fpdf->Cell(50, 25, $reservacion->id);
-            $fpdf->Cell(50, 25, $reservacion->cliente1->ci);
+            $pdf->SetFont('Times','',12);
+            $pdf->SetX(32);
+            $pdf->Cell(30,10,$reservacion->habitacion->habitacion,1,0,'C');
+            $pdf->Cell(40,10,$reservacion->cliente1->ci,1,0,'C');
+            $pdf->Cell(40,10,$reservacion->cliente2->ci,1,0,'C');
+            $pdf->Cell(30,10,$reservacion->costo_hab,1,0,'C');
+            $pdf->Cell(40,10,$reservacion->consumo->costo,1,0,'C');
+            $pdf->Cell(40,10,$reservacion->costo,1,0,'C');
         }
-        $fpdf->Output();
+
+
+        $pdf->Output();
         exit;
     }
     public function habitacion_cambio(Request $request, $habitacion)

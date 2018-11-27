@@ -520,9 +520,11 @@ class ReservacionController extends Controller
         if($reservacion->consumo){
             $consumo = Consumo::findOrFail($reservacion->consumo->id);
             foreach($consumo->producto as $producto){
-                    array_push($productos_consumo, $producto);
+                    $cantidad = DB::table('consumo_producto')
+                    ->where('consumo_id', $consumo->id)
+                    ->where('producto_id', $producto->id)->value('cantidad');
+                    $productos_consumo[$cantidad] = $producto;
             }
-            
         }
 
         

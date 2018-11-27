@@ -86,6 +86,28 @@
                             </h2>
                         </div>
                         <div class="body table-responsive">
+                            @if(!$reservacion->consumo)
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Subtotal</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table__body producto-table-body">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Costo Total: </td>
+                                        <th id="total-costo"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            @else
+                            @if($reservacion->consumo->estado !== 'Cancelado')
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -98,19 +120,58 @@
                                 </thead>
                                 <tbody class="table__body producto-table-body">
                                     @if($reservacion->consumo)
-                                        {{ $consumo }}
-                                        @foreach($productos_consumo as $productos)
-                                            {{ $productos }}
+                                        @foreach($productos_consumo as $key => $productos)
+                                            <tr id="producto-{{ $productos->id }}" class="producto-table-row">
+
+                                                <td>
+                                                    <label for="productos[{{ $productos->id }}][{{ $productos->descripcion }}]">{{ $productos->descripcion }}</label>
+                                                    <input class="input-producto" type="text" id="productos[{{ $productos->id }}][{{ $productos->descripcion }}]" name="productos[{{ $productos->id }}][nombre]" value="{{ $productos->descripcion }}" hidden>
+                                                </td>
+                    
+                                                <td>
+                                                    <input  type="number" class="form-control input-cantidad" data-costoprod="{{ $productos->costo }}" data-cantidad="1" id="productos[{{ $productos->id }}][cantidad]" name="productos[{{ $productos->id }}][cantidad]" value="{{ $key }}">
+                                                </td>
+                    
+                                                <td>{{ $productos->costo}}</td>
+                                                
+                    
+                                                <td class="product-quantity" data-price="{{ $productos->costo * $key }}">{{ $productos->costo * $key }}</td>
+                    
+                                                <td class="producto-remove">
+                                                    <span class="btn-remove-requisito" data-delete="#producto-{{ $productos->id }}">
+                                                        x
+                                                    </span>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     @endif
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td>Costo Total:</td>
-                                        <th id="total-costo"></th>
+                                        <td>Costo Total: 
+                                            @if($reservacion->consumo)
+                                                @php
+                                                    $total = 0;
+                                                    foreach($productos_consumo as $key => $productos) {
+                                                        $subtotal = $key * $productos->costo;
+                                                        $total = $subtotal + $total;
+                                                    }
+                                                @endphp
+
+                                            @endif
+                                        </td>
+                                        <th id="total-costo">{{ $total }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
+                            @else
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <p>El consumo ha sido cancelado.</p>
+                                </div>
+                            </div>
+                            @endif
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -122,8 +183,10 @@
                     @if(!$reservacion->consumo)
                         <button id="create-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
                     @else
-                        <button id="edit-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
-                        <button id="edit-consumo"  type="button" data-toggle="modal" data-target="#pagarModal" class="btn btn-default waves-effect m-r-20">PAGAR CONSUMO</button>
+                        @if($reservacion->consumo->estado !== 'Cancelado')
+                            <button id="edit-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
+                            <button id="edit-consumo"  type="button" data-toggle="modal" data-target="#pagarModal" class="btn btn-default waves-effect m-r-20">PAGAR CONSUMO</button>
+                        @endif
                     @endif
                     <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cancelarModal">CANCELAR RESERVACION</button>
                     <div class="modal fade" id="cerrarModal" tabindex="-1" role="dialog" style="display: none;">
@@ -146,7 +209,7 @@
                                             <label for="searchCliente">Estado:</label>
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                {!! Form::select('estado', ['Solicitado' => 'Solicitado', 'Advertencia' => 'Advertencia']); !!}
+                                                {!! Form::select('estado', ['Solicitado' => 'Solicitado', 'Advertencia' => 'Advertencia'],'' ,array('class' => 'form-control')); !!}
                                                 </div>
                                             </div>
                                         </div>

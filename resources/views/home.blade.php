@@ -22,18 +22,18 @@
                                 {{ $habitacion->habitacion }}
                             </a>
                         @elseif( $habitacion->estado === 'Dañada')
-                        <button type="button" class="btn btn-danger waves-effect">
+                        <a href="{{ route('habitacion.edit', $habitacion->id)}}"class="btn btn-danger waves-effect">
                             {{ $habitacion->habitacion }}
-                        </button>
+                        </a>
 
                         @elseif( $habitacion->estado === 'Ocupada')
                             <a href="{{ route('reservacion.edit', $habitacion->id)}}" class="btn btn-primary waves-effect">
                                 {{ $habitacion->habitacion }}
                             </a>
                         @else
-                        <button type="button" class="btn btn-warning waves-effect">
+                        <a href="{{ route('habitacion.edit', $habitacion->id)}}" class="btn btn-warning waves-effect">
                             {{ $habitacion->habitacion }}
-                        </button>
+                        </a>
                         @endif
                     @endforeach
                 </div>
@@ -64,23 +64,43 @@
                     @csrf
                     
                     <div class="row clearfix">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-6">
                             <label>Desde:</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="date" class="form-control" name="fecha_inicio" value="{{ date('Y-m-d') }}" placeholder="Email Address">
+                                    <input type="date" class="form-control" name="fecha_inicio" value="{{ date('Y-m-d') }}" placeholder="Fecha inicio">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-6">
                             <label>Hasta:</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="date" class="form-control" name="fecha_fin" value="{{ date('Y-m-d') }}" placeholder="Password">
+                                    <input type="date" class="form-control" name="fecha_fin" value="{{ date('Y-m-d') }}" placeholder="Fecha fin">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <label>Desde:</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="time" class="form-control" name="hora_inicio" value="{{ date("H:i") }}" placeholder="Hora Inicio">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Hasta:</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="time" class="form-control" name="hora_fin" value="{{ date("H:i") }}" placeholder="Hora fin">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
                             <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">ENVIAR</button>
                         </div>
                     </div>
@@ -89,7 +109,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -131,7 +150,7 @@
                 <i class="material-icons">brightness_low</i>
             </div>
             <div class="content">
-                <div class="text">CLTS REGISTRADOS</div>
+                <div class="text">CLIENTES</div>
                 <div class="number">{{ $clientesMeta }}</div>
             </div>
         </div>
