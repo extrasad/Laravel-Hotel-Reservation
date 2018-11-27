@@ -107,7 +107,7 @@
                     <label>Habitación</label>
                     <div class="form-group">
                         <div class="form-line">
-                            {!! Form::select('habitacion', $habitaciones, array('class' => 'form-control')); !!}
+                            {!! Form::select('habitacion', $habitaciones, $habitacion_find); !!}
                         </div>
                     </div>
                     <div class="form-group">

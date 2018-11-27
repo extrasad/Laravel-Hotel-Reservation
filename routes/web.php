@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
-
 Auth::routes();
 
 Route::auth();
@@ -23,10 +19,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
+Route::get('/', function () {
+    return redirect()->route('home');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Router::post('habitacion-cambio/{id}', 'HomeController@habitacion_cambio')->name('habitacion_cambio');
+Route::post('habitacion-cambio/{id}', 'HomeController@habitacion_cambio')->name('habitacion_cambio');
 
 Route::get('descargar-factura/{id}', 'ReservacionController@pdf')->name('reservacion.pdf');
 

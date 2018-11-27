@@ -34,7 +34,9 @@ class HomeController extends Controller
     public function index()
     {
         $habitaciones = Habitacion::all();
-        $clientes = Cliente::with('reservacion')->where('estado', 'Activa')->count();
+        $clientes1 = Reservacion::where('estado', 'Activa')->count('cliente1_id');
+        $clientes2 = Reservacion::where('estado', 'Activa')->count('cliente2_id');
+        $clientes = $clientes1 + $clientes2;
         $habOcupadas = Habitacion::where('estado', 'Ocupada')->count();
         $habActivas = Habitacion::where('estado', 'Disponible')->count();
         $clientesMeta = Cliente::all()->count();
