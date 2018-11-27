@@ -34,7 +34,7 @@ Route::post('/editar-consumo/{id}', 'ReservacionController@editar_consumo')->nam
 
 Route::post('/pagar-consumo/{id}', 'ReservacionController@consumo_cancelado')->name('reservacion.pagar_consumo');
 
-Route::post('/cancelar-reservacion/{id}', 'ReservacionController@cancelar_reservacion')->name('reservacion.cancelar');
+Route::post('/cancelar-reservacion/{id}', 'ReservacionController@cancelar_reservacion')->name('reservacion.cancelar_reservacion');
 
 Route::post('descargar-reporte/', 'HomeController@reporte_pdf')->name('reporte_dashboard.pdf');
 

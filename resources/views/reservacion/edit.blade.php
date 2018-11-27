@@ -99,6 +99,9 @@
                                 <tbody class="table__body producto-table-body">
                                     @if($reservacion->consumo)
                                         {{ $consumo }}
+                                        @foreach($productos_consumo as $productos)
+                                            {{ $productos }}
+                                        @endforeach
                                     @endif
                                 </tbody>
                                 <tfoot>
@@ -163,13 +166,10 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">¿Desea cancelar esta habitación?</h4>
+                            <h4 class="modal-title" id="defaultModalLabel">¿Desea cancelar esta reservación?</h4>
                         </div>
                         <div class="modal-body">
-                            <form id="cancelarReserva" action="{{ route('reservacion.cancelar', $reservacion->id) }}" method="POST"></form>
-                                @csrf
-                                @method('PUT')
-
+                            <form id="cancelarReserva" action="{{ route('reservacion.cancelar_reservacion', $reservacion->id) }}" method="POST"></form>
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
                                         <label for="searchCliente">Observación:</label>
@@ -180,7 +180,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                         <div class="modal-footer">
                             <button id="submit-cancelar" type="button" data-selector="#cancelarReserva" class="btn btn-link waves-effect">CONFIRMAR</button>
@@ -189,6 +188,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         <div class="modal fade" id="pagarModal" tabindex="-1" role="dialog" style="display: none;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -197,7 +197,7 @@
                     </div>
                     <div class="modal-footer">
                         @if($reservacion->consumo)
-                        <button id="pagar-consumo" type="button" data-consumo="{{ $consumo->id }}" data-selector="#reservacionForm" class="btn btn-link waves-effect">CONFIRMAR</button>
+                        <button id="pagar-consumo" type="button" data-consumo="{{ $reservacion->id }}" data-selector="#reservacionForm" class="btn btn-link waves-effect">CONFIRMAR</button>
                         @endif
                         <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
                     </div>

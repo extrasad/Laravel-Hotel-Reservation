@@ -102,7 +102,7 @@ class ReservacionController extends Controller
     public function custom_create($habitacion)
 
     {
-        $habitacion_find = Habitacion::findOrFail($habitacion)->pluck('habitacion', 'habitacion');
+        $habitacion_find = Habitacion::findOrFail($habitacion);
 
         $habitaciones = Habitacion::all()->pluck('habitacion', 'habitacion');
 
@@ -488,6 +488,7 @@ class ReservacionController extends Controller
         $habitacion->update([
             'estado' => 'Disponible'
         ]);
+        return redirect()->route('home')->with('success','Reservacion cancelada satisfactoriamente');
     }
     public function consumo_cancelado(Request $request, $reservacion){
         $reservacion = Reservacion::findOrFail($reservacion);
@@ -515,15 +516,22 @@ class ReservacionController extends Controller
         $get_reservacion = Reservacion::where('habitacion_id', $habitacion)->where('estado', 'Activa')->value('id');
         $reservacion = Reservacion::findOrFail($get_reservacion);
         $productos = Producto::all();
+        $productos_consumo = array();
         if($reservacion->consumo){
             $consumo = Consumo::findOrFail($reservacion->consumo->id);
+            foreach($consumo->producto as $producto){
+                    array_push($productos_consumo, $producto);
+            }
+            
         }
+
         
         return view('reservacion.edit',compact(
             'reservacion',
             'habitaciones',
             'consumo',
-            'productos'
+            'productos',
+            'productos_consumo'
         ));
 
     }
