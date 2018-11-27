@@ -44,9 +44,9 @@ class HomeController extends Controller
     }
     public function reporte_pdf(Request $request)
     {
-        $fecha_inicio = $request->input('fecha_inicio');
-        $fecha_fin = $request->input('fecha_fin');           
-        $reservaciones = Reservacion::whereBetween('created_at', [$fecha_inicio, $fecha_fin]);
+        $fecha_inicio = date($request->input('fecha_inicio'));
+        $fecha_fin = date($request->input('fecha_fin'));           
+        $reservaciones = Reservacion::whereBetween('created_at', array($fecha_inicio, $fecha_fin))->get();
         $fpdf = new Fpdf;
         $fpdf->AddPage();
         $fpdf->SetFont('Courier', 'B', 18);
