@@ -298,7 +298,7 @@ class ReservacionController extends Controller
 
         {
 
-            $clientes=DB::table('clientes')->where('ci','LIKE',$request->search."%")->get();
+            $clientes=DB::table('clientes')->where('ci',$request->search)->get();
 
             if($clientes){
                 return response()->json($clientes);
@@ -314,7 +314,7 @@ class ReservacionController extends Controller
 
         {
 
-            $autos=DB::table('autos')->where('placa','LIKE',$request->search."%")->get();
+            $autos=DB::table('autos')->where('placa',$request->search)->get();
 
             if($autos){
                 return response()->json($autos);
@@ -520,6 +520,82 @@ class ReservacionController extends Controller
      * @return \Illuminate\Http\Response
 
      */
+
+    public function create_cliente(Request $request){
+
+        $this->validate($request, [
+
+            'ci' => 'required|unique:clientes,ci',
+
+            'nombre' => 'required',
+
+            'nacionalidad' => 'required'
+
+        ]);
+
+        $estado = Diex::where('ci', $request->input('ci'))->value('estado');
+
+        $observacion = Diex::where('ci', $request->input('ci'))->value('observacion');
+
+        if($estado == null){
+            $estado = 'Activo';
+        }
+
+        $cliente = Cliente::create(
+            [
+
+            'ci' => $request->input('ci'),
+
+            'nombre' => $request->input('nombre'),
+
+            'nacionalidad' => $request->input('nacionalidad'),
+
+            'observacion' => $observacion,
+
+            'estado' => $estado
+            
+            ]);
+        
+        return response()->json($cliente);
+    }
+
+    public function create_auto(Request $request){
+        
+        $this->validate($request, [
+
+            'placa' => 'required|unique:autos,placa',
+
+            'modelo' => 'required',
+
+            'color' => 'required'
+        ]);
+
+        $estado = Diex::where('placa', $request->input('placa'))->value('estado');
+
+        $observacion = Diex::where('placa', $request->input('placa'))->value('observacion');
+
+        if($estado == null){
+            $estado = 'Activo';
+        }
+
+        $auto = Auto::create(
+            [
+
+            'placa' => $request->input('placa'),
+
+            'modelo' => $request->input('modelo'),
+
+            'color' => $request->input('color'),
+
+            'observacion' => $observacion,
+
+            'estado' => $estado
+            
+            ]);
+
+        return response()->json($auto);
+        
+    }
 
     public function edit($habitacion)
 
