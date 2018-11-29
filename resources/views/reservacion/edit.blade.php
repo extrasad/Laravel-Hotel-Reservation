@@ -46,8 +46,6 @@
                 </div>
             </div>
         </div>
-        <form id="reservacionForm" action="{{ route('reservacion.cerrar', $reservacion->id) }}" method="POST">
-            @csrf
 
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -79,6 +77,8 @@
                     </div>
                 </div>
             </div>
+            {{-- {{ dump($consumo) }}
+            {{ dump($productos_consumo) }} --}}
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
@@ -89,7 +89,6 @@
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                            @if(!$consumo)
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -109,72 +108,6 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            @else
-                            <!-- cambiar esto ya que ahora consumo es un array de consumos@if($consumo->estado !== 'Cancelado') -->
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Subtotal</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table__body producto-table-body">
-                                    @if($consumo)
-                                        @foreach($productos_consumo as $key => $productos)
-                                            <tr id="producto-{{ $productos->id }}" class="producto-table-row">
-
-                                                <td>
-                                                    <label for="productos[{{ $productos->id }}][{{ $productos->descripcion }}]">{{ $productos->descripcion }}</label>
-                                                    <input class="input-producto" type="text" id="productos[{{ $productos->id }}][{{ $productos->descripcion }}]" name="productos[{{ $productos->id }}][nombre]" value="{{ $productos->descripcion }}" hidden>
-                                                </td>
-                    
-                                                <td>
-                                                    <input  type="number" class="form-control input-cantidad" data-costoprod="{{ $productos->costo }}" data-cantidad="1" id="productos[{{ $productos->id }}][cantidad]" name="productos[{{ $productos->id }}][cantidad]" value="{{ $key }}">
-                                                </td>
-                    
-                                                <td>{{ $productos->costo}}</td>
-                                                
-                    
-                                                <td class="product-quantity" data-price="{{ $productos->costo * $key }}">{{ $productos->costo * $key }}</td>
-                    
-                                                <td class="producto-remove">
-                                                    <span class="btn-remove-requisito" data-delete="#producto-{{ $productos->id }}">
-                                                        x
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>Costo Total: 
-                                            @if($reservacion->consumo)
-                                                @php
-                                                    $total = 0;
-                                                    foreach($productos_consumo as $key => $productos) {
-                                                        $subtotal = $key * $productos->costo;
-                                                        $total = $subtotal + $total;
-                                                    }
-                                                @endphp
-
-                                            @endif
-                                        </td>
-                                        <th id="total-costo">{{ $total }}</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <!-- fix @else -->
-                            <div class="row clearfix">
-                                <div class="col-md-12">
-                                    <p>El consumo ha sido cancelado.</p>
-                                </div>
-                            </div>
-                            @endif
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -183,15 +116,9 @@
             <div class="row clearfix m-b-20">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cerrarModal">CERRAR HABITACION</button>
-                    @if(!$reservacion->consumo)
-                        <button id="create-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
-                    @else
-                        @if($reservacion->consumo->estado !== 'Cancelado')
-                            <button id="edit-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
-                            <button id="edit-consumo"  type="button" data-toggle="modal" data-target="#pagarModal" class="btn btn-default waves-effect m-r-20">PAGAR CONSUMO</button>
-                        @endif
-                    @endif
+                    <button id="create-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
                     <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cancelarModal">CANCELAR RESERVACION</button>
+                    
                     <div class="modal fade" id="cerrarModal" tabindex="-1" role="dialog" style="display: none;">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -199,24 +126,27 @@
                                     <h4 class="modal-title" id="defaultModalLabel">¿Desea cerrar esta habitación?</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12">
-                                            <label for="searchCliente">Observación:</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <textarea rows="4" class="form-control no-resize" name="observacion" placeholder="Escribe una observación..."></textarea>
+                                    <form id="reservacionForm" action="{{ route('reservacion.cerrar', $reservacion->id) }}" method="POST">
+                                            @csrf
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <label for="searchCliente">Observación:</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <textarea rows="4" class="form-control no-resize" name="observacion" placeholder="Escribe una observación..."></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label for="searchCliente">Estado:</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                    {!! Form::select('estado', ['Solicitado' => 'Solicitado', 'Advertencia' => 'Advertencia'],'' ,array('class' => 'form-control')); !!}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <label for="searchCliente">Estado:</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                {!! Form::select('estado', ['Solicitado' => 'Solicitado', 'Advertencia' => 'Advertencia'],'' ,array('class' => 'form-control')); !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button id="submit-form" type="button" data-selector="#reservacionForm" class="btn btn-link waves-effect">CONFIRMAR</button>
@@ -227,34 +157,33 @@
                     </div>
                 </div>
             </div>
-        </form>
         <div class="modal fade" id="cancelarModal" tabindex="-1" role="dialog" style="display: none;">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">¿Desea cancelar esta reservación?</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="cancelarReserva" action="{{ route('reservacion.cancelar_reservacion', $reservacion->id) }}" method="POST"></form>
-                                <div class="row clearfix">
-                                    <div class="col-sm-12">
-                                        <label for="searchCliente">Observación:</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <textarea rows="4" class="form-control no-resize" name="observacion" placeholder="Escribe una observación..."></textarea>
-                                            </div>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="defaultModalLabel">¿Desea cancelar esta reservación?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="cancelarReserva" action="{{ route('reservacion.cancelar_reservacion', $reservacion->id) }}" method="POST"></form>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <label for="searchCliente">Observación:</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <textarea rows="4" class="form-control no-resize" name="observacion" placeholder="Escribe una observación..."></textarea>
                                         </div>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="submit-cancelar" type="button" data-selector="#cancelarReserva" class="btn btn-link waves-effect">CONFIRMAR</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
-                        </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="submit-cancelar" type="button" data-selector="#cancelarReserva" class="btn btn-link waves-effect">CONFIRMAR</button>
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
                     </div>
                 </div>
             </div>
-            </form>
+        </div>
         <div class="modal fade" id="pagarModal" tabindex="-1" role="dialog" style="display: none;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

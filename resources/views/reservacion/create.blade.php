@@ -224,6 +224,8 @@
                 dataType: 'json',
                 success:function(data){
                     console.log(data);
+                    $('.cliente-1-inputs').remove();
+                    inputFeedBack.text('El cliente ' + data.nombre + ' ha sido creado');
                 }
             });
         }
@@ -278,6 +280,8 @@
                 dataType: 'json',
                 success:function(data){
                     console.log(data);
+                    inputFeedBack2.text('El cliente ' + data.nombre + ' ha sido creado');
+                    $('.cliente-2-inputs').remove();
                 }
             });
         }
@@ -378,6 +382,8 @@
                 dataType: 'json',
                 success:function(data){
                     console.log(data);
+                    $('.auto-inputs').remove();
+                    inputFeedBack3.text('El auto ' + data.placa + ' ha sido creado');
                 }
             });
         }
