@@ -209,18 +209,19 @@
         }
 
         function registerClient1() {
-            const cedulaCliente = $('#cedula-cliente').val();
+            const cedulaCliente = searchField.val();
             const nombreCliente = $('#nombre-cliente').val();
             const nacionalidadCliente = $('#nacionalidad-cliente').val();
 
             $.ajax({
-                type: 'get',
-                url: '{{ URL::to('search-cliente-reservacion') }}',
+                type: 'POST',
+                url: '{{ URL::to('create-cliente') }}',
                 data: { 
                     'ci': cedulaCliente,
                     'nombre': nombreCliente,
                     'nacionalidad': nacionalidadCliente
                 },
+                dataType: 'json',
                 success:function(data){
                     console.log(data);
                 }
@@ -262,18 +263,19 @@
         }
 
         function registerClient2() {
-            const cedulaCliente = $('#cedula-cliente-2').val();
-            const nombreCliente = $('#nombre-cliente-2').val();
-            const nacionalidadCliente = $('#nacionalidad-cliente-2').val();
+            const cedulaCliente = searchField2.val();
+            const nombreCliente = $('#nombre-cliente2').val();
+            const nacionalidadCliente = $('#nacionalidad-cliente2').val();
 
             $.ajax({
-                type: 'get',
-                url: '{{ URL::to('search-cliente-reservacion') }}',
+                type: 'POST',
+                url: '{{ URL::to('create-cliente') }}',
                 data: { 
                     'ci': cedulaCliente,
                     'nombre': nombreCliente,
                     'nacionalidad': nacionalidadCliente
                 },
+                dataType: 'json',
                 success:function(data){
                     console.log(data);
                 }
@@ -361,18 +363,19 @@
         }
 
         function registerAuto() {
-            const placaAuto = $('#placa-auto').val();
+            const placaAuto = searchField3.val();
             const modeloAuto = $('#modelo-auto').val();
             const colorAuto = $('#color-auto').val();
 
             $.ajax({
-                type: 'get',
-                url: x,
+                type: 'POST',
+                url: '{{ URL::to('create-auto') }}',
                 data: { 
                     'placa': placaAuto,
                     'modelo': modeloAuto,
                     'color': colorAuto
                 },
+                dataType: 'json',
                 success:function(data){
                     console.log(data);
                 }
