@@ -26,6 +26,10 @@ Route::get('/', function () {
 
 Route::post('habitacion-cambio/{id}', 'HomeController@habitacion_cambio')->name('habitacion_cambio');
 
+Route::post('create-auto', 'ReservacionController@create_auto')->name('create_auto');
+
+Route::post('create-cliente', 'ReservacionController@create_cliente')->name('create_cliente');
+
 Route::get('descargar-factura/{id}', 'ReservacionController@pdf')->name('reservacion.pdf');
 
 Route::post('/agregar-consumo/{id}', 'ReservacionController@agregar_consumo')->name('reservacion.agregar_consumo');
