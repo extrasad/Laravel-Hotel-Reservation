@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="body table-responsive">
+
+                @if ($message = Session::get('error'))
+
+                    <div class="alert alert-warning">
+            
+                        <p>{{ $message }}</p>
+            
+                    </div>
+            
+                @endif
 <div class="block-header">
     <h2>DASHBOARD</h2>
 </div>

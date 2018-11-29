@@ -144,9 +144,9 @@ class ReservacionController extends Controller
         $cliente1_find = Cliente::where('ci', $request->input('cliente1'))->value('id');
         $cliente2_find = Cliente::where('ci', $request->input('cliente2'))->value('id');
         $cliente1_check = Reservacion::where('cliente1_id', $cliente1_find)
-        ->orWhere('cliente2_id', $cliente1_find)->where('estado', 'Activa');
+        ->orWhere('cliente2_id', $cliente1_find)->where('estado', 'Activa')->value('id');
         $cliente2_check = Reservacion::where('cliente1_id', $cliente2_find)
-        ->orWhere('cliente2_id', $cliente2_find)->where('estado', 'Activa');
+        ->orWhere('cliente2_id', $cliente2_find)->where('estado', 'Activa')->value('id');
         if($cliente1_check or $cliente2_check){
             return redirect()->route('home')
                         ->with('error','Uno de los clientes se encuentra hospedado ya.');
