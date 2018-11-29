@@ -5,7 +5,7 @@
         <div class="user-info" style="background-image: url({{ asset('images/vendor/adminbsb-materialdesign/user-img-background.jpg') }});">
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $userName = isset(auth()->user()->name) ? auth()->user()->name : ''  }}</div>
-                <div class="email"></div>
+                <div class="email">{{ auth()->user()->userRole(auth()->user()->id) }}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">

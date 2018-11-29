@@ -139,29 +139,21 @@ class ConsumoController extends Controller
             $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
             $cantidad = $producto['cantidad'];
             $costo_total = $producto_costo * $cantidad;
-            array_push($costo, $costo_total);
-            array_push($product_list, $producto_id);
-        }
-        $total = array_sum($costo);
-        $consumo = Consumo::create(
-            [
-                'costo' => $total,
+            $consumo = Consumo::create(
+                [
+                    'costo_consumo' => $costo_total,
 
-                'estado' => 'Cancelado'
-            ]
-        );
-        $producto_find = Producto::find($product_list);
-        $consumo->producto()->attach($producto_find);
-        foreach($productos as $producto){
-            $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
-            DB::table('consumo_producto')->where('consumo_id',$consumo->id)
-            ->where('producto_id', $producto_id_find)
-            ->update([
-                'cantidad' => $producto['cantidad']
-            ]);
+                    'cantidad' => $cantidad,
+
+                    'costo_producto' => $producto_costo,
+    
+                    'estado' => 'Pendiente por pagar'
+                ]
+            );
+            $consumo->reservacion()->associate($reservacion->id);
+            $consumo->producto()->associate($producto_id);
+            $consumo->save();
         }
-        $consumo->reservacion()->associate($reservacion->id);
-        $consumo->save();
 
         return redirect()->route('reservacion.edit');
     }

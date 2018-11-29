@@ -104,7 +104,7 @@ class ReservacionController extends Controller
     {
         $habitacion_find = Habitacion::findOrFail($habitacion);
 
-        $habitaciones = Habitacion::all()->pluck('habitacion', 'habitacion');
+        $habitaciones = Habitacion::where('estado', 'Disponible')->pluck('habitacion', 'habitacion');
 
         return view('reservacion.create',compact('habitaciones', 'habitacion_find'));
 
@@ -141,8 +141,18 @@ class ReservacionController extends Controller
 
         $habitacion = Habitacion::where('habitacion', ($request->input('habitacion')));
         $estado = Habitacion::where('habitacion', ($request->input('habitacion')))->value('estado');
+        $cliente1_find = Cliente::where('ci', $request->input('cliente1'))->value('id');
+        $cliente2_find = Cliente::where('ci', $request->input('cliente2'))->value('id');
+        $cliente1_check = Reservacion::where('cliente1_id', $cliente1_find)
+        ->orWhere('cliente2_id', $cliente1_find)->where('estado', 'Activa');
+        $cliente2_check = Reservacion::where('cliente1_id', $cliente2_find)
+        ->orWhere('cliente2_id', $cliente2_find)->where('estado', 'Activa');
+        if($cliente1_check or $cliente2_check){
+            return redirect()->route('home')
+                        ->with('error','Uno de los clientes se encuentra hospedado ya.');
+        }
         if($estado != 'Disponible'){
-            return redirect()->route('reservacion.index')
+            return redirect()->route('home')
                         ->with('success','Habitacion no disponible');
         }
         $habitacion->update(
@@ -164,8 +174,6 @@ class ReservacionController extends Controller
             ]);
 
         $auto_find = Auto::where('placa', $request->input('auto'))->value('id');
-        $cliente1_find = Cliente::where('ci', $request->input('cliente1'))->value('id');
-        $cliente2_find = Cliente::where('ci', $request->input('cliente2'))->value('id');
         $habitacion_find = Habitacion::where('habitacion', $request->input('habitacion'))->value('id');
         $reservacion_find = Reservacion::find($reservacion->id);
         $reservacion_find->habitacion()->associate($habitacion_find);
@@ -215,6 +223,7 @@ class ReservacionController extends Controller
     public function pdf($reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
+        $consumo_costo = Consumo::where('reservacion_id', $reservacion->id)->sum('costo_total');
         $pdf = new FPDF;
         $pdf->AliasNbPages();
         $pdf->AddPage('L','A4',0);
@@ -230,7 +239,9 @@ class ReservacionController extends Controller
         $pdf->Cell(30,10,'Habitacion',1,0,'C');
         $pdf->Cell(40,10,'Cliente',1,0,'C');
         $pdf->Cell(40,10,'Cliente 2',1,0,'C');
-        $pdf->Cell(60,10,'Costo',1,0,'C');
+        $pdf->Cell(60,10,'Costo de la habitacion',1,0,'C');
+        $pdf->Cell(60,10,'Costo del consumo',1,0,'C');
+        $pdf->Cell(60,10,'Costo total',1,0,'C');
         $pdf->Cell(36,10,'Observacion',1,0,'C');
         $pdf->Cell(36,10,'Estado',1,0,'C');
         $pdf->Ln();
@@ -241,6 +252,8 @@ class ReservacionController extends Controller
         $pdf->Cell(40,10,$reservacion->cliente1->nombre,1,0,'C');
         $pdf->Cell(40,10,$reservacion->cliente2->nombre,1,0,'C');
         $pdf->Cell(60,10,$reservacion->costo_hab,1,0,'C');
+        $pdf->Cell(60,10,$reservacion->consumo_costo,1,0,'C');
+        $pdf->Cell(60,10,$reservacion->costo,1,0,'C');
         $pdf->Cell(36,10,$reservacion->observacion,1,0,'C');
         $pdf->Cell(36,10,$reservacion->estado,1,0,'C');
 
@@ -374,6 +387,13 @@ class ReservacionController extends Controller
                     ]);
 
         }
+        if(!isset($reservacion->costo)){
+            $reservacion->update([
+                'estado' => 'Inactiva',
+                'fecha_salida'=> $fecha,
+                'costo' => $reservacion->costo_hab
+            ]);
+        }
         $reservacion->update([
             'estado' => 'Inactiva',
             'fecha_salida'=> $fecha,
@@ -391,37 +411,29 @@ class ReservacionController extends Controller
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
         $productos = $request->productos;
-        $costo = array();
-        $product_list = array();
+
         foreach($productos as $producto){
             $producto_id = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
             $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
             $cantidad = $producto['cantidad'];
             $costo_total = $producto_costo * $cantidad;
-            array_push($costo, $costo_total);
-            array_push($product_list, $producto_id);
-        }
-        $total = array_sum($costo);
-        $consumo = Consumo::create(
-            [
-                'costo' => $total,
+            $consumo = Consumo::create(
+                [
+                    'costo_total' => $costo_total,
 
-                'estado' => 'Pendiente por pagar'
-            ]
-        );
-        $producto_find = Producto::find($product_list);
-        $consumo->producto()->attach($producto_find);
-        foreach($productos as $producto){
-            $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
-            DB::table('consumo_producto')->where('consumo_id',$consumo->id)
-            ->where('producto_id', $producto_id_find)
-            ->update([
-                'cantidad' => $producto['cantidad']
-            ]);
+                    'cantidad' => $cantidad,
+
+                    'costo_producto' => $producto_costo,
+    
+                    'estado' => 'Pendiente por pagar'
+                ]
+            );
+            $consumo->reservacion()->associate($reservacion->id);
+            $consumo->producto()->associate($producto_id);
+            $consumo->save();
         }
-        $consumo->reservacion()->associate($reservacion->id);
-        $consumo->save();
-        $precio = $reservacion->costo_hab + $consumo->costo;
+        $consumo_costo = Consumo::where('reservacion_id', $reservacion->id)->sum('costo_total');
+        $precio = $reservacion->costo_hab + $consumo_costo;
         $reservacion->update([
             'costo' => $precio
         ]);
@@ -517,13 +529,11 @@ class ReservacionController extends Controller
         $reservacion = Reservacion::findOrFail($get_reservacion);
         $productos = Producto::all();
         $productos_consumo = array();
-        if($reservacion->consumo){
-            $consumo = Consumo::findOrFail($reservacion->consumo->id);
-            foreach($consumo->producto as $producto){
-                    $cantidad = DB::table('consumo_producto')
-                    ->where('consumo_id', $consumo->id)
-                    ->where('producto_id', $producto->id)->value('cantidad');
-                    $productos_consumo[$cantidad] = $producto;
+        $consumo = Consumo::where('reservacion_id', $reservacion->id);
+        if($consumo){
+            foreach($consumo as $producto){
+                    $producto_find = Producto::findOrFail($producto->producto_id);
+                    $productos_consumo[$producto->cantidad] = $producto_find;
             }
         }
 

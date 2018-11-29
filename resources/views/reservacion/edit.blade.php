@@ -25,10 +25,10 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Ci cliente:</strong> {{ $reservacion->cliente2->ci }}
+                                <strong class="font-bold col-orange">Ci Acompañante:</strong> {{ $reservacion->cliente2->ci }}
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Nombre cliente:</strong> {{ $reservacion->cliente2->nombre }}
+                                <strong class="font-bold col-orange">Nombre Acompañante:</strong> {{ $reservacion->cliente2->nombre }}
                             </div>
                         </div>
                         <div class="row">
@@ -37,6 +37,9 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <strong class="font-bold col-orange">Nacionalidad cliente:</strong> {{ $reservacion->cliente1->nacionalidad }}
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <strong class="font-bold col-orange">Nacionalidad acompañante:</strong> {{ $reservacion->cliente2->nacionalidad }}
                             </div>
                         </div>
                     </div>
@@ -86,7 +89,7 @@
                             </h2>
                         </div>
                         <div class="body table-responsive">
-                            @if(!$reservacion->consumo)
+                            @if(!$consumo)
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -107,7 +110,7 @@
                                 </tfoot>
                             </table>
                             @else
-                            @if($reservacion->consumo->estado !== 'Cancelado')
+                            <!-- cambiar esto ya que ahora consumo es un array de consumos@if($consumo->estado !== 'Cancelado') -->
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -119,7 +122,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table__body producto-table-body">
-                                    @if($reservacion->consumo)
+                                    @if($consumo)
                                         @foreach($productos_consumo as $key => $productos)
                                             <tr id="producto-{{ $productos->id }}" class="producto-table-row">
 
@@ -164,7 +167,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            @else
+                            <!-- fix @else -->
                             <div class="row clearfix">
                                 <div class="col-md-12">
                                     <p>El consumo ha sido cancelado.</p>
@@ -395,7 +398,6 @@
                     },
                     success:function(data){
                         thisEl.prop('disabled',false);
-                        window.location.reload();
                     },
                     error: function( jqXHR ,  textStatus,  errorThrown ) {
                         table.append(`
@@ -438,7 +440,6 @@
                     },
                     success:function(data){
                         thisEl.prop('disabled',false);
-                        window.location.reload();
                     },
                     error: function( jqXHR ,  textStatus,  errorThrown) {
                         table.append(`

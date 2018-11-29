@@ -15,9 +15,12 @@ class CreateConsumoTable extends Migration
     {
         Schema::create('consumos', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('costo');
+            $table->float('costo_total');
+            $table->float('costo_producto');
             $table->integer('reservacion_id')->nullable();
+            $table->integer('producto_id')->nullable();
             $table->enum('estado', array('Pendiente por pagar', 'Cancelado'));
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

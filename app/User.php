@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Spatie\Permission\Traits\HasRoles;
 
+use DB;
+
+use App\Role;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -47,7 +51,12 @@ class User extends Authenticatable
         }
         return false;
     }
-
+    public function userRole(string $id)
+    {
+        $user = DB::table('model_has_roles')->where('model_id', $id)->value('role_id');
+        $role = Role::findOrFail($user);
+        return $role->name;
+    }
     public function isRecepcionista()
     {
         return $this->hasRoles(['Recepcionista']);

@@ -33,6 +33,10 @@ class Reservacion extends Model
     }
     public function consumo()
     {
-        return $this->hasOne(Consumo::class);
+        return $this->hasMany(Consumo::class);
+    }
+    public function get_consumo($id){
+        $consumo_costo = Consumo::where('reservacion_id', $id)->sum('costo_total');
+        return $consumo_costo;
     }
 }

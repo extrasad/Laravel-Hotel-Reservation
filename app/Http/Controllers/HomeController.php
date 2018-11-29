@@ -51,6 +51,7 @@ class HomeController extends Controller
 
         $pdf = new FPDF;
         $pdf->AliasNbPages();
+        $pdf->Write(5, iconv('UTF-8', 'windows-1252', html_entity_decode($str)));
         $pdf->AddPage('L','A4',0);
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(270, 5, 'Generador de Reporte - Afrodita',0,0,'C');
@@ -70,14 +71,16 @@ class HomeController extends Controller
         $pdf->Ln();
 
         foreach($reservaciones as $reservacion){
+            $costo_total = isset($reservacion->consumo->costo) ? $reservacion->consumo->costo : ''; 
             $pdf->SetFont('Times','',12);
             $pdf->SetX(32);
             $pdf->Cell(30,10,$reservacion->habitacion->habitacion,1,0,'C');
             $pdf->Cell(40,10,$reservacion->cliente1->ci,1,0,'C');
             $pdf->Cell(40,10,$reservacion->cliente2->ci,1,0,'C');
             $pdf->Cell(30,10,$reservacion->costo_hab,1,0,'C');
-            $pdf->Cell(40,10,$reservacion->consumo->costo,1,0,'C');
+            $pdf->Cell(40,10,$costo_total ,1,0,'C');
             $pdf->Cell(40,10,$reservacion->costo,1,0,'C');
+            $pdf->Ln();
         }
 
 

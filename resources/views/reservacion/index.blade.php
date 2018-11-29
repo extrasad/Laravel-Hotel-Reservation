@@ -16,6 +16,8 @@
                 </h2>
             </div>
 
+            {!! $reservaciones->links() !!}
+
 
             <div class="body table-responsive">
 
@@ -39,7 +41,7 @@
                     </div>
 
                 @endcan
-
+                
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -75,10 +77,7 @@
                 
                             <th>{{ $reservacion->estado }}</th>
                 
-                            <th>@if(isset($reservacion->consumo->costo))
-                            {{ $reservacion->consumo->costo}}
-                            @endif
-                            </th>
+                            <th>{{ $reservacion->get_consumo($reservacion->id) }}</th>
                 
                             <th>{{ $reservacion->cliente1->ci }}</th>
                 
@@ -131,8 +130,6 @@
         </div>
     </div>
 </div>
-
-{!! $reservaciones->links() !!}
 
 <script type="text/javascript">
  
