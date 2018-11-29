@@ -50,187 +50,67 @@
             
                 @endif
 
-                {!! Form::open(array('route' => 'reservacion.store','method'=>'POST')) !!}
-                    @csrf
-                    <div class="row clearfix">
-                        <div class="col-sm-6">
-                            <label for="searchCliente">CI Cliente</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="number" id="searchCliente" class="form-control" name="cliente1"></input>
+                {!! Form::open(array('route' => 'reservacion.store','method'=>'POST', 'id' => 'create-reservacion')) !!}
+                    <div class="cliente-1">
+                        <div id="cliente-1-form" class="row clearfix">
+                            <div class="col-sm-3">
+                                <label for="searchCliente">CI Cliente:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="number" id="searchCliente" name="cliente1" class="form-control search-cliente"></input>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="clientes-block">
-                                <div id="clienteLista1" class="list-group text-center">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row clearfix">
-                        <div class="col-sm-6">
-                            <label for="searchCliente2">CI Acompañante</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="number" id="searchCliente2" class="form-control" name="cliente2"></input>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="clientes-block">
-                                <div id="clienteLista2" class="list-group">
-
-                                </div>
+                                <span class="input-feedback1"></span>
                             </div>
                         </div>
                     </div>
 
+                    <div class="cliente-2">
+                        <div id="cliente-2-form" class="row clearfix">
+                            <div class="col-sm-3">
+                                <label for="searchCliente2">CI Cliente</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="number" id="searchCliente2" name="cliente2" class="form-control search-cliente"></input>
+                                    </div>
+                                </div>
+                                <span class="input-feedback2"></span>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="auto-vehiculo">
+                        <div id="auto-form" class="row clearfix">
+                            <div class="col-sm-3">
+                                <label for="searchAuto">Placa:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="searchAuto" name="auto" class="form-control placa-auto"></input>
+                                    </div>
+                                </div>
+                                <span class="input-feedback3"></span>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <div class="row clearfix">
-                        <div class="col-sm-6">
-                            <label for="searchAuto">Placa</label>
+                        <div class="col-md-6">
+                            <label>Habitación</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" id="searchAuto" class="form-control" name="auto"></input>
+                                    {!! Form::select('habitacion', $habitaciones, $habitacion_find->habitacion, array('class' => 'form-control')); !!}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="clientes-block">
-                                <div id="clienteAuto" class="list-group">
-                                    
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button id="submit-form" type="button" data-selector="#create-reservacion" class="btn btn-primary waves-effect">Enviar</button>
                             </div>
                         </div>
-                    </div>
-                    <label>Habitación</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            {!! Form::select('habitacion', $habitaciones, $habitacion_find->habitacion, array('class' => 'form-control')); !!}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary waves-effect">Enviar</button>
                     </div>
                 {!! Form::close() !!}
-            </div>
-            <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" style="display: none;">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">Cliente1 title</h4>
-                        </div>
-                        <div class="modal-body">
-                        <form action="{{ route('clientes.store') }}" method="POST">
-                            @csrf
-
-                            <label for="ci">Cédula de identidad</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="ci" name="ci" class="form-control" placeholder="Cedula de Identidad">
-                                </div>
-                            </div>
-                            <label for="nombre">Nombre</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
-                                </div>
-                            </div>
-                            <label for="nacionalidad">Nacionalidad</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" placeholder="Nacionalidad">
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#clienteModal">MODAL - DEFAULT SIZE</button>
-            </div>
-            <div class="modal fade" id="clienteModal2" tabindex="-1" role="dialog" style="display: none;">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">Cliente2 title</h4>
-                        </div>
-                        <div class="modal-body">
-                        <form action="{{ route('clientes.store') }}" method="POST">
-                            @csrf
-
-                            <label for="ci">Cédula de identidad</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="ci" name="ci" class="form-control" placeholder="Cedula de Identidad">
-                                </div>
-                            </div>
-                            <label for="nombre">Nombre</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
-                                </div>
-                            </div>
-                            <label for="nacionalidad">Nacionalidad</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="nacionalidad" name="nacionalidad" class="form-control" placeholder="Nacionalidad">
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#clienteModal2">MODAL - DEFAULT SIZE</button>
-            </div>
-            <div class="modal fade" id="autoModal" tabindex="-1" role="dialog" style="display: none;">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">Auto title</h4>
-                        </div>
-                        <div class="modal-body">
-                        <form action="{{ route('autos.store') }}" method="POST">
-                            @csrf
-
-                            <label for="placa">Placa</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="placa" name="placa" class="form-control" placeholder="Placa">
-                                </div>
-                            </div>
-                            <label for="modelo">Modelo</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Modelo">
-                                </div>
-                            </div>
-                            <label for="color">Color</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" id="color" name="color" class="form-control" placeholder="Color">
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#autoModal">MODAL - DEFAULT SIZE</button>
             </div>
         </div>
     </div>
@@ -239,58 +119,14 @@
 
     jQuery(document).ready(function($) {
 
-        const searchField = $('#searchCliente');
-        const lista1 = $('#clienteLista1');
-        let previousValue;
-        let typingTimer;
+        const form = $('#create-reservacion');
+        const submitBtn = $('#submit-form');
 
         // events 
-        searchField.on("keyup", typingLogic);
+        submitBtn.on("click", submitForm);
 
-        lista1.on('click', '.clientes1', function(){
-            const thisEl = $(this);
-            const val = thisEl.val();
-
-            searchField.val('');
-            searchField.val(val);
-        });
-
-        function typingLogic() {
-
-            if (searchField.val() != previousValue) {
-                clearTimeout(typingTimer);
-
-                if (searchField.val()) {
-                    typingTimer = setTimeout(getClientsResults2(searchField.val()), 750);
-                } else {
-                    lista1.html('');
-                }
-            }
-
-            previousValue = searchField.val();
-        }
-
-        function getClientsResults2(value) {
-            const searchVal = value;
-            lista1.html('');
-
-            $.ajax({
-                type: 'get',
-                url: '{{ URL::to('search-cliente-reservacion') }}',
-                data: { 'search': searchVal },
-                success:function(data){
-                    console.log(data);
-
-                    if (data.length < 1) {
-                        lista1.append(`<button type="button" class="btn btn-default waves-effect m-l-20" data-toggle="modal" data-target="#clienteModal">CREAR CLIENTE</button>`);
-                    } else {
-                        data.map(function(cliente, index) {
-                            lista1.append(`<button type="button" class="list-group-item clientes1" value="${cliente.ci}">${cliente.nombre}</button>`);
-                        });
-                    }
-
-                }
-            });
+        function submitForm() {
+            form.submit();
         }
 
     });
@@ -300,58 +136,191 @@
 
     jQuery(document).ready(function($) {
 
-        const searchField2 = $('#searchCliente2');
-        const lista2 = $('#clienteLista2');
-        let previousValue2;
-        let typingTimer2;
+        const searchField = $('#searchCliente');
+        const inputFeedBack = $('.input-feedback1');
+        const cliente1Form = $('#cliente-1-form');
+        let previousValue;
+        let typingTimer;
 
         // events 
-        searchField2.on("keyup", typingLogic2);
+        searchField.on("keypress", typingLogic);
+        cliente1Form.on('click', '#registrar-cliente-1', registerClient1);
 
-        lista2.on('click', '.clientes2', function(){
-            const thisEl = $(this);
-            const val = thisEl.val();
+        function typingLogic(e) {
 
-            searchField2.val('');
-            searchField2.val(val);
-        });
+            if(e.which == 13){
+                inputFeedBack.text('');
+                if (searchField.val() != previousValue) {
+                    clearTimeout(typingTimer);
 
-        function typingLogic2() {
-
-            if (searchField2.val() != previousValue2) {
-                clearTimeout(typingTimer2);
-
-                if (searchField2.val()) {
-                    typingTimer2 = setTimeout(getClientsResults(searchField2.val()), 750);
-                } else {
-                    lista2.html('');
+                    if (searchField.val()) {
+                        typingTimer = setTimeout(getClientsResults2(searchField.val()), 750);
+                    } else {
+                        inputFeedBack.text('Este campo es requerido');
+                    }
                 }
             }
 
-            previousValue2 = searchField2.val();
+            previousValue = searchField.val();
         }
 
-        function getClientsResults(value) {
+        function getClientsResults2(value) {
             const searchVal = value;
-            lista2.html('');
+
+            if ($('.cliente-1-inputs').length > 0) {
+                $('.cliente-1-inputs').remove();
+            }
 
             $.ajax({
                 type: 'get',
                 url: '{{ URL::to('search-cliente-reservacion') }}',
                 data: { 'search': searchVal },
                 success:function(data){
-                    console.log(data);
-
-                    if (data.length < 1) {
-                        lista2.append(`<button type="button" class="btn btn-default waves-effect m-l-20" data-toggle="modal" data-target="#clienteModal2">CREAR CLIENTE</button>`);
+                    if (data.length > 0) {
+                        console.log(data);
+                        inputFeedBack.text(data[0].nombre + ' está registrado');
                     } else {
-                        data.map(function(cliente, index) {
-                            lista2.append(`<button type="button" class="list-group-item clientes2" value="${cliente.ci}">${cliente.nombre}</button>`);
-                        });
+                        inputFeedBack.text('La cédula no concuerda, registre el cliente')
+                        cliente1Form.append(`
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <label for="nombre-cliente">Nombre:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="nombre-cliente" class="form-control nombre-cliente"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <label for="nacionalidad-cliente">Nacionalidad:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="nacionalidad-cliente" class="form-control nacionalidad-cliente"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <button id="registrar-cliente-1" type="button" class="btn btn-link waves-effect">REGISTRAR CLIENTE</button>
+                            </div>
+                        `);
                     }
 
+                }
+            });
+        }
 
+        function registerClient1() {
+            const cedulaCliente = $('#cedula-cliente').val();
+            const nombreCliente = $('#nombre-cliente').val();
+            const nacionalidadCliente = $('#nacionalidad-cliente').val();
 
+            $.ajax({
+                type: 'get',
+                url: '{{ URL::to('search-cliente-reservacion') }}',
+                data: { 
+                    'ci': cedulaCliente,
+                    'nombre': nombreCliente,
+                    'nacionalidad': nacionalidadCliente
+                },
+                success:function(data){
+                    console.log(data);
+                }
+            });
+        }
+    });
+    
+</script>
+<script type="text/javascript">
+
+    jQuery(document).ready(function($) {
+
+        const searchField2 = $('#searchCliente2');
+        const inputFeedBack2 = $('.input-feedback2');
+        const cliente2Form = $('#cliente-2-form');
+        let previousValue2;
+        let typingTimer2;
+
+        // events 
+        searchField2.on("keypress", typingLogic2);
+        cliente2Form.on('click', '#registrar-cliente-2', registerClient2);
+
+        function typingLogic2(e) {
+            
+            if(e.which == 13) {
+                inputFeedBack2.text('');
+                if (searchField2.val() != previousValue2) {
+                    clearTimeout(typingTimer2);
+
+                    if (searchField2.val()) {
+                        typingTimer2 = setTimeout(getClientsResults(searchField2.val()), 750);
+                    } else {
+                        inputFeedBack2.text('Este campo es requerido');
+                    }
+                }
+            }
+
+            previousValue2 = searchField2.val();
+        }
+
+        function registerClient2() {
+            const cedulaCliente = $('#cedula-cliente-2').val();
+            const nombreCliente = $('#nombre-cliente-2').val();
+            const nacionalidadCliente = $('#nacionalidad-cliente-2').val();
+
+            $.ajax({
+                type: 'get',
+                url: '{{ URL::to('search-cliente-reservacion') }}',
+                data: { 
+                    'ci': cedulaCliente,
+                    'nombre': nombreCliente,
+                    'nacionalidad': nacionalidadCliente
+                },
+                success:function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+        function getClientsResults(value) {
+            const searchVal = value;
+
+            if ($('.cliente-2-inputs').length > 0) {
+                $('.cliente-2-inputs').remove();
+            }
+
+            $.ajax({
+                type: 'get',
+                url: '{{ URL::to('search-cliente-reservacion') }}',
+                data: { 'search': searchVal },
+                success:function(data){
+                    if (data.length > 0) {
+                        console.log(data);
+                        inputFeedBack2.text(data[0].nombre + ' está registrado');
+
+                    } else {
+                        inputFeedBack2.text('La cédula no concuerda, registre el cliente')
+
+                        cliente2Form.append(`
+                            <div class="col-sm-3 cliente-2-inputs">
+                                <label for="nombre-cliente2">Nombre</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="nombre-cliente2" class="form-control nombre-cliente"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 cliente-2-inputs">
+                                <label for="nacionalidad-cliente">Nacionalidad</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="nacionalidad-cliente2" class="form-control nacionalidad-cliente"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 cliente-2-inputs">
+                                <button id="registrar-cliente-2" type="button" class="btn btn-link waves-effect">REGISTRAR CLIENTE</button>
+                            </div>
+                        `);
+                    }
                 }
             });
         }
@@ -364,55 +333,93 @@
     jQuery(document).ready(function($) {
 
         const searchField3 = $('#searchAuto');
-        const lista3 = $('#clienteAuto');
+        const inputFeedBack3 = $('.input-feedback3');
+        const autoForm = $('#auto-form');
         let previousValue3;
         let typingTimer3;
 
         // events 
-        searchField3.on("keyup", typingLogic3);
+        searchField3.on("keypress", typingLogic3);
+        autoForm.on('click', '#registrar-auto', registerAuto);
 
-        lista3.on('click', '.autos', function(){
-            const thisEl = $(this);
-            const val = thisEl.val();
+        function typingLogic3(e) {
+            if(e.which == 13){//Enter key pressed
+                inputFeedBack3.text('');
 
-            searchField3.val('');
-            searchField3.val(val);
-        });
+                if (searchField3.val() != previousValue3) {
+                    clearTimeout(typingTimer3);
 
-        function typingLogic3() {
-
-            if (searchField3.val() != previousValue3) {
-                clearTimeout(typingTimer3);
-
-                if (searchField3.val()) {
-                    typingTimer3 = setTimeout(getClientsResults(searchField3.val()), 750);
-                } else {
-                    lista3.html('');
+                    if (searchField3.val()) {
+                        typingTimer3 = setTimeout(getClientsResults(searchField3.val()), 750);
+                    } else {
+                        inputFeedBack3.text('Este campo es requerido');
+                    }
                 }
-            }
 
-            previousValue3 = searchField3.val();
+                previousValue3 = searchField3.val();
+            }
+        }
+
+        function registerAuto() {
+            const placaAuto = $('#placa-auto').val();
+            const modeloAuto = $('#modelo-auto').val();
+            const colorAuto = $('#color-auto').val();
+
+            $.ajax({
+                type: 'get',
+                url: x,
+                data: { 
+                    'placa': placaAuto,
+                    'modelo': modeloAuto,
+                    'color': colorAuto
+                },
+                success:function(data){
+                    console.log(data);
+                }
+            });
         }
 
         function getClientsResults(value) {
             const searchVal = value;
-            lista3.html('');
+
+            if ($('.auto-inputs').length > 1) {
+                $('.auto-inputs').remove();
+            }
 
             $.ajax({
                 type: 'get',
                 url: '{{ URL::to('search-auto-reservacion') }}',
                 data: { 'search': searchVal },
                 success:function(data){
-                    console.log(data);
+                    if (data.length > 0) {
+                        console.log(data);
+                        inputFeedBack3.text(data[0].placa + ' está registrada');
 
-                    if (data.length < 1) {
-                        lista3.append(`<button type="button" class="btn btn-default waves-effect m-l-20" data-toggle="modal" data-target="#autoModal">CREAR AUTO</button>`);
                     } else {
-                        data.map(function(auto, index) {
-                            lista3.append(`<button type="button" class="list-group-item autos" value="${auto.placa}">${auto.placa}</button>`);
-                        });
-                    }
+                        inputFeedBack3.text('La placa no concuerda, registre el auto')
 
+                        autoForm.append(`
+                            <div class="col-sm-3 auto-inputs">
+                                <label for="modelo-auto">Modelo:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="modelo-auto" class="form-control modelo-auto"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 auto-inputs">
+                                <label for="color-auto">Color</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="color-auto" class="form-control color-auto"></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 auto-inputs">
+                                <button id="registrar-auto" type="button" class="btn btn-link waves-effect">REGISTRAR AUTO</button>
+                            </div>
+                        `);
+                    }
                 }
             });
         }
