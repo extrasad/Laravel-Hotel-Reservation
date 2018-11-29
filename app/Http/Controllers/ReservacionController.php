@@ -143,11 +143,15 @@ class ReservacionController extends Controller
         $estado = Habitacion::where('habitacion', ($request->input('habitacion')))->value('estado');
         $cliente1_find = Cliente::where('ci', $request->input('cliente1'))->value('id');
         $cliente2_find = Cliente::where('ci', $request->input('cliente2'))->value('id');
-        $cliente1_check = Reservacion::where('cliente1_id', $cliente1_find)
-        ->orWhere('cliente2_id', $cliente1_find)->where('estado', 'Activa')->value('id');
-        $cliente2_check = Reservacion::where('cliente1_id', $cliente2_find)
-        ->orWhere('cliente2_id', $cliente2_find)->where('estado', 'Activa')->value('id');
-        if($cliente1_check or $cliente2_check){
+        $cliente1_check = Reservacion::where('estado', 'Activa')
+        ->where('cliente2_id', $cliente1_find)->value('id');
+        $cliente1_recheck =  Reservacion::where('estado', 'Activa')
+        ->where('cliente1_id', $cliente1_find)->value('id');
+        $cliente2_check = Reservacion::where('estado', 'Activa')
+        ->where('cliente2_id', $cliente2_find)->value('id');
+        $cliente2_recheck =  Reservacion::where('estado', 'Activa')
+        ->where('cliente1_id', $cliente2_find)->value('id');
+        if($cliente1_check or $cliente2_check or $cliente1_recheck or $cliente2_recheck){
             return redirect()->route('home')
                         ->with('error','Uno de los clientes se encuentra hospedado ya.');
         }
