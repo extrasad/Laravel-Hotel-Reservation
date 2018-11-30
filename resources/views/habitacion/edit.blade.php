@@ -7,20 +7,20 @@
     <h2>EDITAR HABITACION</h2>
 </div>
 
-<div class="row">
-
-    <div class="col-lg-12 m-b-20">
-
-        <div class="pull-right">
-            
-            <a class="btn btn-primary" href="{{ route('habitacion.index') }}"> Atras</a>
-        
-        </div>
-
-    </div>
-
-</div>
 @if(auth()->user()->isRecepcionista())
+<div class="row m-b-20">
+
+        <div class="col-lg-12 m-b-20">
+    
+            <div class="pull-right">
+                
+                <a class="btn btn-primary" href="{{ route('home') }}"> Atras</a>
+            
+            </div>
+    
+        </div>
+    
+</div>
 <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -56,11 +56,15 @@
                         @if($habitacion->estado === 'Dañada')
 
                         <div class="form-group">
-                            {!! Form::select('estado', ['Disponible' => 'Disponible', 'En limpieza' => 'En limpieza']); !!}
+                            <div class="form-line">
+                                {!! Form::select('estado', ['Disponible' => 'Disponible', 'En limpieza' => 'En limpieza'],'' ,array('class' => 'form-control')); !!}
+                            </div>
                         </div>
                         @else
                         <div class="form-group">
-                            {!! Form::select('estado', ['Disponible' => 'Disponible', 'Dañada' => 'Dañada']); !!}
+                            <div class="form-line">
+                                {!! Form::select('estado', ['Disponible' => 'Disponible', 'Dañada' => 'Dañada'],'' ,array('class' => 'form-control')); !!}
+                            </div>
                         </div>
                         @endif
                         <br>
@@ -73,6 +77,19 @@
         </div>
     </div>
     @else
+    <div class="row">
+
+            <div class="col-lg-12 m-b-20">
+        
+                <div class="pull-right">
+                    
+                    <a class="btn btn-primary" href="{{ route('habitacion.index') }}"> Atras</a>
+                
+                </div>
+        
+            </div>
+        
+        </div>
     <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">

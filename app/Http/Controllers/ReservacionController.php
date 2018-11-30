@@ -238,15 +238,57 @@ class ReservacionController extends Controller
         $pdf->Ln();
         $pdf->SetFont('Times', '', 12);
         $pdf->Cell(270,10,'Factura',0,0,'C');
-        $pdf->Ln(50);
+        $pdf->Ln(20);
 
         $pdf->SetFont('Times', 'B',12);
-        $pdf->SetX(75);
-        $pdf->Cell(30,10,'Producto',1,0,'C');
-        $pdf->Cell(40,10,'Costo unitario',1,0,'C');
-        $pdf->Cell(40,10,'Cantidad',1,0,'C');
-        $pdf->Cell(40,10,'Subtotal',1,0,'C');
+        $pdf->Cell(30,10,'Nombre cliente:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(30,10,$reservacion->cliente1->nombre,0,0,'C');
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->Cell(20,10,'CI cliente:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(20,10,$reservacion->cliente1->ci,0,0,'C');
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->Cell(40,10,'Nacionalidad cliente:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(20,10,$reservacion->cliente1->nacionalidad,0,0,'C');
         $pdf->Ln();
+
+        if($reservacion->cliente2) {
+            $pdf->SetFont('Times', 'B',12);
+            $pdf->Cell(42,10,'Nombre acompanante:',0,0,'C');
+            $pdf->SetFont('Times', '',12);
+            $pdf->Cell(30,10,$reservacion->cliente2->nombre,0,0,'C');
+            $pdf->SetFont('Times', 'B',12);
+            $pdf->Cell(35,10,'CI acompanante:',0,0,'C');
+            $pdf->SetFont('Times', '',12);
+            $pdf->Cell(20,10,$reservacion->cliente2->ci,0,0,'C');
+            $pdf->SetFont('Times', 'B',12);
+            $pdf->Cell(55,10,'Nacionalidad acompanante:',0,0,'C');
+            $pdf->SetFont('Times', '',12);
+            $pdf->Cell(20,10,$reservacion->cliente2->nacionalidad,0,0,'C');
+        }
+        $pdf->Ln();
+
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->Cell(28,10,'Placa vehiculo:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(22,10,$reservacion->auto->placa,0,0,'C');
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->Cell(30,10,'Modelo vehiculo:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(22,10,$reservacion->auto->modelo,0,0,'C');
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->Cell(30,10,'Color vehiculo:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(22,10,$reservacion->auto->color,0,0,'C');
+        $pdf->Ln();
+
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->Cell(22,10,'Habitacion:',0,0,'C');
+        $pdf->SetFont('Times', '',12);
+        $pdf->Cell(10,10,$reservacion->habitacion->habitacion,0,0,'C');
+        $pdf->Ln(20);
 
         $pdf->SetFont('Times', 'B',12);
         $pdf->SetX(75);

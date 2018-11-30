@@ -34,7 +34,100 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
+                @if(Request::is('habitacion/*') )
+                <li>
+                    <a href="#">
+                        <i class="material-icons">hotel</i>
+                        <span>{{ $habitacion->habitacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">verified_user</i>
+                        <span>{{ $habitacion->estado }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">attach_money</i>
+                        <span>{{ $habitacion->costo }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">report</i>
+                        <span>{{ $habitacion->observacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">format_list_numbered</i>
+                        <span>{{ $habitacion->caracteristicas }}</span>
+                    </a>
+                </li>
+                @elseif(Request::is('reservacion-custom-create/*'))
+                <li>
+                    <a href="#">
+                        <i class="material-icons">hotel</i>
+                        <span>{{ $habitacion_find->habitacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">verified_user</i>
+                        <span>{{ $habitacion_find->estado }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">attach_money</i>
+                        <span>{{ $habitacion_find->costo }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">report</i>
+                        <span>{{ $habitacion_find->observacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">format_list_numbered</i>
+                        <span>{{ $habitacion_find->caracteristicas }}</span>
+                    </a>
+                </li>
+                @elseif(Request::is('reservacion/*'))
+                <li>
+                    <a href="#">
+                        <i class="material-icons">hotel</i>
+                        <span>{{ $habitaciones->habitacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">verified_user</i>
+                        <span>{{ $habitaciones->estado }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">attach_money</i>
+                        <span>{{ $habitaciones->costo }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">report</i>
+                        <span>{{ $habitaciones->observacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">format_list_numbered</i>
+                        <span>{{ $habitaciones->caracteristicas }}</span>
+                    </a>
+                </li>
+                @endif
                 @if(!auth()->user()->isRecepcionista())
 
                 <li {{ Request::is( 'users', 'users/*') ? 'class=active' : '' }}>

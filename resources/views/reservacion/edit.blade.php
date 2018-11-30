@@ -15,6 +15,19 @@
                 @endif
 
     @if(auth()->user()->isRecepcionista())
+        <div class="row">
+
+            <div class="col-lg-12 m-b-20">
+        
+                <div class="pull-right">
+                    
+                    <a class="btn btn-primary" href="{{ route('home') }}"> Atras</a>
+                
+                </div>
+        
+            </div>
+        
+        </div>
 
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -26,30 +39,33 @@
                     </div>
                     <div class="body">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-4">
                                 <strong class="font-bold col-orange">Ci cliente:</strong> {{ $reservacion->cliente1->ci }}
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-4">
                                 <strong class="font-bold col-orange">Nombre cliente:</strong> {{ $reservacion->cliente1->nombre }}
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Ci Acompañante:</strong> {{ $reservacion->cliente2->ci }}
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Nombre Acompañante:</strong> {{ $reservacion->cliente2->nombre }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <strong class="font-bold col-orange">Placa auto:</strong> {{ $reservacion->auto->placa }}
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-4">
                                 <strong class="font-bold col-orange">Nacionalidad cliente:</strong> {{ $reservacion->cliente1->nacionalidad }}
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong class="font-bold col-orange">Ci acompañante:</strong> {{ $reservacion->cliente2->ci }}
+                            </div>
+                            <div class="col-md-4">
+                                <strong class="font-bold col-orange">Nombre acompañante:</strong> {{ $reservacion->cliente2->nombre }}
+                            </div>
+                            <div class="col-md-4">
                                 <strong class="font-bold col-orange">Nacionalidad acompañante:</strong> {{ $reservacion->cliente2->nacionalidad }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong class="font-bold col-orange">Placa auto:</strong> {{ $reservacion->auto->placa }}
+                            </div>
+                            <div class="col-md-4">
+                                <strong class="font-bold col-orange">Tipo hab:</strong> {{ $reservacion->habitacion->tipo }}
                             </div>
                         </div>
                     </div>

@@ -51,7 +51,6 @@ class HomeController extends Controller
 
         $pdf = new FPDF;
         $pdf->AliasNbPages();
-        $pdf->Write(5, iconv('UTF-8', 'windows-1252', html_entity_decode($str)));
         $pdf->AddPage('L','A4',0);
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(270, 5, 'Generador de Reporte - Afrodita',0,0,'C');
