@@ -53,7 +53,7 @@
                 {!! Form::open(array('route' => 'reservacion.store','method'=>'POST', 'id' => 'create-reservacion')) !!}
                     <div class="cliente-1">
                         <div id="cliente-1-form" class="row clearfix">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <label for="searchCliente">CI Cliente:</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -67,7 +67,7 @@
 
                     <div class="cliente-2">
                         <div id="cliente-2-form" class="row clearfix">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <label for="searchCliente2">CI Cliente</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -82,7 +82,7 @@
 
                     <div class="auto-vehiculo">
                         <div id="auto-form" class="row clearfix">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <label for="searchAuto">Placa:</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -182,7 +182,7 @@
                     } else {
                         inputFeedBack.text('La cédula no concuerda, registre el cliente')
                         cliente1Form.append(`
-                            <div class="col-sm-3 cliente-1-inputs">
+                            <div class="col-sm-2 cliente-1-inputs">
                                 <label for="nombre-cliente">Nombre:</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -190,7 +190,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 cliente-1-inputs">
+                            <div class="col-sm-2 cliente-1-inputs">
                                 <label for="nacionalidad-cliente">Nacionalidad:</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -198,7 +198,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 cliente-1-inputs">
+                            <div class="col-md-2 cliente-1-inputs">
+                                <label>Fecha de nacimiento:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="date" id="fecha-cliente" class="form-control" value="{{ date('Y-m-d') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 cliente-1-inputs">
                                 <button id="registrar-cliente-1" type="button" class="btn btn-link waves-effect">REGISTRAR CLIENTE</button>
                             </div>
                         `);
@@ -212,14 +220,16 @@
             const cedulaCliente = searchField.val();
             const nombreCliente = $('#nombre-cliente').val();
             const nacionalidadCliente = $('#nacionalidad-cliente').val();
+            const fechaNacimientoCliente = $('#fecha-cliente').val();
 
             $.ajax({
                 type: 'POST',
                 url: '{{ URL::to('create-cliente') }}',
-                data: { 
+                data: {
                     'ci': cedulaCliente,
                     'nombre': nombreCliente,
-                    'nacionalidad': nacionalidadCliente
+                    'nacionalidad': nacionalidadCliente,
+                    'fecha_nac': fechaNacimientoCliente
                 },
                 dataType: 'json',
                 success:function(data){
@@ -268,6 +278,7 @@
             const cedulaCliente = searchField2.val();
             const nombreCliente = $('#nombre-cliente2').val();
             const nacionalidadCliente = $('#nacionalidad-cliente2').val();
+            const fechaNacimientoCliente = $('#fecha-cliente2').val();
 
             $.ajax({
                 type: 'POST',
@@ -275,7 +286,8 @@
                 data: { 
                     'ci': cedulaCliente,
                     'nombre': nombreCliente,
-                    'nacionalidad': nacionalidadCliente
+                    'nacionalidad': nacionalidadCliente,
+                    'fecha_nac': fechaNacimientoCliente
                 },
                 dataType: 'json',
                 success:function(data){
@@ -306,7 +318,7 @@
                         inputFeedBack2.text('La cédula no concuerda, registre el cliente')
 
                         cliente2Form.append(`
-                            <div class="col-sm-3 cliente-2-inputs">
+                            <div class="col-sm-2 cliente-2-inputs">
                                 <label for="nombre-cliente2">Nombre</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -314,7 +326,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 cliente-2-inputs">
+                            <div class="col-sm-2 cliente-2-inputs">
                                 <label for="nacionalidad-cliente">Nacionalidad</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -322,7 +334,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 cliente-2-inputs">
+                            <div class="col-md-2 cliente-2-inputs">
+                                <label>Fecha de nacimiento:</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="date" id="fecha-cliente2" class="form-control" value="{{ date('Y-m-d') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 cliente-2-inputs">
                                 <button id="registrar-cliente-2" type="button" class="btn btn-link waves-effect">REGISTRAR CLIENTE</button>
                             </div>
                         `);
@@ -408,7 +428,7 @@
                         inputFeedBack3.text('La placa no concuerda, registre el auto')
 
                         autoForm.append(`
-                            <div class="col-sm-3 auto-inputs">
+                            <div class="col-sm-2 auto-inputs">
                                 <label for="modelo-auto">Modelo:</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -416,7 +436,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 auto-inputs">
+                            <div class="col-sm-2 auto-inputs">
                                 <label for="color-auto">Color</label>
                                 <div class="form-group">
                                     <div class="form-line">
@@ -424,7 +444,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 auto-inputs">
+                            <div class="col-sm-2 auto-inputs">
                                 <button id="registrar-auto" type="button" class="btn btn-link waves-effect">REGISTRAR AUTO</button>
                             </div>
                         `);

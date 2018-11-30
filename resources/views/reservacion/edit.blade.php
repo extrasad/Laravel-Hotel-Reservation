@@ -62,7 +62,12 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <strong class="font-bold col-orange">Placa auto:</strong> {{ $reservacion->auto->placa }}
+                                <strong class="font-bold col-orange">Placa auto:</strong> 
+                                @if($reservacion->auto)
+                                {{ $reservacion->auto->placa }}
+                                @else
+                                {{ 'Sin carro' }}
+                                @endif
                             </div>
                             <div class="col-md-4">
                                 <strong class="font-bold col-orange">Tipo hab:</strong> {{ $reservacion->habitacion->tipo }}

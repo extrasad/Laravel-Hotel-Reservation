@@ -165,7 +165,7 @@ class ReservacionController extends Controller
             return redirect()->route('home')
                         ->with('error','El cliente es menor de edad.');
         }
-        if(!isset($age2)){
+        if(isset($age2)){
             if($age2 < 18){
                 return redirect()->route('home')
                             ->with('error','El acompañante es menor de edad.');
@@ -579,7 +579,9 @@ class ReservacionController extends Controller
 
             'nombre' => 'required',
 
-            'nacionalidad' => 'required'
+            'nacionalidad' => 'required',
+
+            'fecha_nac' => 'required'
 
         ]);
 
@@ -602,7 +604,9 @@ class ReservacionController extends Controller
 
             'observacion' => $observacion,
 
-            'estado' => $estado
+            'estado' => $estado,
+
+            'fecha_nac' => $request->input('fecha_nac'),
             
             ]);
         
