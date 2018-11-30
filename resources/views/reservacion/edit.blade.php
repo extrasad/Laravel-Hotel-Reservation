@@ -4,6 +4,16 @@
 @section('content')
 
 
+@if ($message = Session::get('success'))
+
+                    <div class="alert alert-success">
+            
+                        <p>{{ $message }}</p>
+            
+                    </div>
+            
+                @endif
+
     @if(auth()->user()->isRecepcionista())
 
         <div class="row clearfix">
@@ -77,8 +87,7 @@
                     </div>
                 </div>
             </div>
-            {{-- {{ dump($consumo) }}
-            {{ dump($productos_consumo) }} --}}
+
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
@@ -108,16 +117,68 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <button id="create-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
+
                         </div>
                     </div>
                 </div>
             </div>
 
+            @if(count($consumo) > 1)
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Tabla de consumo registrado
+                                <small>Esta sección permite observar los consumos registrados de la habitacion.</small>
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Estado</th>
+                                        <th>Subtotal</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table__body tabla-body-consumo">
+                                    @foreach($consumo as $unidad)
+                                    <tr>
+                                        <td>{{ $unidad->nombre_producto }}</td>
+                                        <td>{{ $unidad->cantidad }}</td>
+                                        <td>{{ $unidad->costo_producto }}</td>
+                                        <td>{{ $unidad->estado }}</td>
+                                        <td>{{ $unidad->costo_total }}</td>
+                                        <td>
+                                            @if($unidad->estado !== 'Cancelado')
+                                            <button type="button" data-toggle="modal" data-selector="#form-{{ $unidad->id }}" data-target="#pagarModal" class="pagar-btn-modal btn btn-default waves-effect m-r-20">PAGAR</button>
+                                            <form id="form-{{ $unidad->id }}" action="{{ route('reservacion.pagar_consumo', $unidad->id )}}" method="POST">
+                                                @csrf
+                                                <input type="text" name="consumo_id" id="consumo-{{ $unidad->id }}" hidden>
+                                            </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+
             <div class="row clearfix m-b-20">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cerrarModal">CERRAR HABITACION</button>
-                    <button id="create-consumo" data-reservacion="{{ $reservacion->id }}" type="button" class="btn btn-default waves-effect m-r-20">REGISTRAR CONSUMO</button>
                     <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#cancelarModal">CANCELAR RESERVACION</button>
+                    <a href="{{ route('reservacion.pdf',$reservacion->id) }}" target="_blank" class="btn btn-sm btn-primary">Descargar Factura en PDF</a>
                     
                     <div class="modal fade" id="cerrarModal" tabindex="-1" role="dialog" style="display: none;">
                         <div class="modal-dialog" role="document">
@@ -191,9 +252,7 @@
                         <h4 class="modal-title" id="defaultModalLabel">¿Desea pagar el consumo?</h4>
                     </div>
                     <div class="modal-footer">
-                        @if($reservacion->consumo)
                         <button id="pagar-consumo" type="button" data-consumo="{{ $reservacion->id }}" data-selector="#reservacionForm" class="btn btn-link waves-effect">CONFIRMAR</button>
-                        @endif
                         <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
                     </div>
                 </div>
@@ -212,8 +271,10 @@
             const submitBtn = $('#submit-form');
             const consumoBtn = $('#create-consumo')
             const consumoEditBtn = $('#edit-consumo');
-            const pagarBtn = $('#pagar-consumo');
+            const pagarBtn = $('.pagar-btn-modal');
+            const confirmarPago = $('#pagar-consumo')
             const cancelarBtn = $('#submit-cancelar');
+            let pagarformSelector = null;
             let previousSelected;
 
             // Events
@@ -227,6 +288,7 @@
             consumoEditBtn.on('click', editConsumoForm);
             cancelarBtn.on('click', cancelarReservacion);
             pagarBtn.on('click', pagarConsumo);
+            confirmarPago.on('click', confirmPago);
 
             function addRequisito() {
                 if (tableBody.children().hasClass('form__table-no-element')) {
@@ -259,9 +321,9 @@
                             <td class="product-quantity" data-price="${costoProducto}">${costoProducto}</td>
 
                             <td class="producto-remove">
-                                <span class="btn-remove-requisito" data-delete="#producto-${valProducto}">
+                                <button class="btn-remove-requisito" data-delete="#producto-${valProducto}">
                                     x
-                                </span>
+                                </button>
                             </td>
                         </tr>
                     `);
@@ -272,30 +334,13 @@
                 
             }
 
+            function confirmPago() {
+                $(pagarformSelector).submit();
+            }
+
             function pagarConsumo() {
                 const thisEl = $(this);
-                const table = $('.table-responsive');
-                const consumoId = thisEl.data('consumo');
-                thisEl.prop('disabled',true);
-                
-
-                $.ajax({ 
-                    type : 'POST',
-                    url : APP_URL + '/pagar-consumo/' + consumoId,
-                    data: {},
-                    success:function(data){
-                        thisEl.prop('disabled',false);
-                        window.location.reload();
-                    },
-                    error: function( jqXHR ,  textStatus,  errorThrown ) {
-                        table.append(`
-                            <div class="alert bg-pink alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                No hay productos para consumir
-                            </div>
-                        `);
-                    }
-                });
+                pagarformSelector = thisEl.data('selector');                
             }
 
             function editConsumoForm() {
@@ -342,6 +387,7 @@
             function sendConsumoForm() {
                 const thisEl = $(this);
                 const table = $('.table-responsive');
+                const tableConsumo = $('.tabla-body-consumo');
                 const inputsProduct = $('.producto-table-row');
                 const reservacionId = $(this).data('reservacion');
                 let productosArr = [];
@@ -369,8 +415,10 @@
                     },
                     success:function(data){
                         thisEl.prop('disabled',false);
+                        window.location.reload();
                     },
                     error: function( jqXHR ,  textStatus,  errorThrown) {
+                        thisEl.prop('disabled',false);
                         table.append(`
                             <div class="alert bg-pink alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>

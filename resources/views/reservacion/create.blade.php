@@ -13,7 +13,7 @@
 
         <div class="pull-right">
             
-            <a class="btn btn-primary" href="{{ route('reservacion.index') }}"> Atras</a>
+            <a class="btn btn-primary" href="{{ route('home') }}"> Atras</a>
         
         </div>
 

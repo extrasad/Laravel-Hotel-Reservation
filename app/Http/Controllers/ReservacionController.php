@@ -228,6 +228,8 @@ class ReservacionController extends Controller
     {        
         $reservacion = Reservacion::findOrFail($reservacion);
         $consumo_costo = Consumo::where('reservacion_id', $reservacion->id)->sum('costo_total');
+        $consumo = $reservacion->consumo;
+
         $pdf = new FPDF;
         $pdf->AliasNbPages();
         $pdf->AddPage('L','A4',0);
@@ -236,30 +238,49 @@ class ReservacionController extends Controller
         $pdf->Ln();
         $pdf->SetFont('Times', '', 12);
         $pdf->Cell(270,10,'STREET ADRESS OFF',0,0,'C');
-        $pdf->Ln(20);
+        $pdf->Ln(50);
 
         $pdf->SetFont('Times', 'B',12);
-        $pdf->SetX(26.5);
-        $pdf->Cell(30,10,'Habitacion',1,0,'C');
-        $pdf->Cell(40,10,'Cliente',1,0,'C');
-        $pdf->Cell(40,10,'Cliente 2',1,0,'C');
-        $pdf->Cell(60,10,'Costo de la habitacion',1,0,'C');
-        $pdf->Cell(60,10,'Costo del consumo',1,0,'C');
-        $pdf->Cell(60,10,'Costo total',1,0,'C');
-        $pdf->Cell(36,10,'Observacion',1,0,'C');
-        $pdf->Cell(36,10,'Estado',1,0,'C');
+        $pdf->SetX(75);
+        $pdf->Cell(30,10,'Producto',1,0,'C');
+        $pdf->Cell(40,10,'Costo unitario',1,0,'C');
+        $pdf->Cell(40,10,'Cantidad',1,0,'C');
+        $pdf->Cell(40,10,'Subtotal',1,0,'C');
         $pdf->Ln();
 
+        $pdf->SetFont('Times', 'B',12);
+        $pdf->SetX(75);
+        $pdf->Cell(30,10,'Producto',1,0,'C');
+        $pdf->Cell(40,10,'Costo unitario',1,0,'C');
+        $pdf->Cell(40,10,'Cantidad',1,0,'C');
+        $pdf->Cell(40,10,'Subtotal',1,0,'C');
+        $pdf->Ln();
+
+        $total = 0;
         $pdf->SetFont('Times','',12);
-        $pdf->SetX(26.5);
-        $pdf->Cell(30,10,$reservacion->habitacion->habitacion,1,0,'C');
-        $pdf->Cell(40,10,$reservacion->cliente1->nombre,1,0,'C');
-        $pdf->Cell(40,10,$reservacion->cliente2->nombre,1,0,'C');
-        $pdf->Cell(60,10,$reservacion->costo_hab,1,0,'C');
-        $pdf->Cell(60,10,$reservacion->consumo_costo,1,0,'C');
-        $pdf->Cell(60,10,$reservacion->costo,1,0,'C');
-        $pdf->Cell(36,10,$reservacion->observacion,1,0,'C');
-        $pdf->Cell(36,10,$reservacion->estado,1,0,'C');
+        foreach($consumo as $unidad) {
+            $pdf->SetX(75);
+            $pdf->Cell(30,10,$unidad->nombre_producto,1,0,'C');
+            $pdf->Cell(40,10,$unidad->costo_producto,1,0,'C');
+            $pdf->Cell(40,10,$unidad->cantidad,1,0,'C');
+            $pdf->Cell(40,10,$unidad->costo_total,1,0,'C');
+            $pdf->Ln();
+            $total+= $unidad->costo_total;
+        }
+        $pdf->SetFont('Times','B',12);
+        $pdf->SetX(75);
+        $pdf->Cell(75,10,'Total',1,0,'C');
+        $pdf->SetFont('Times','',12);
+        $pdf->Cell(75,10,$total,1,0,'C');
+
+        // $pdf->Cell(30,10,$reservacion->habitacion->habitacion,1,0,'C');
+        // $pdf->Cell(40,10,$reservacion->cliente1->nombre,1,0,'C');
+        // $pdf->Cell(40,10,$reservacion->cliente2->nombre,1,0,'C');
+        // $pdf->Cell(60,10,$reservacion->costo_hab,1,0,'C');
+        // $pdf->Cell(60,10,$reservacion->consumo_costo,1,0,'C');
+        // $pdf->Cell(60,10,$reservacion->costo,1,0,'C');
+        // $pdf->Cell(36,10,$reservacion->observacion,1,0,'C');
+        // $pdf->Cell(36,10,$reservacion->estado,1,0,'C');
 
         $pdf->Output();
 
@@ -429,11 +450,15 @@ class ReservacionController extends Controller
 
                     'costo_producto' => $producto_costo,
     
-                    'estado' => 'Pendiente por pagar'
+                    'estado' => 'Pendiente por pagar',
+
+                    'nombre_producto' => $producto['nombre'],
                 ]
             );
             $consumo->reservacion()->associate($reservacion->id);
-            $consumo->producto()->associate($producto_id);
+            $consumo->update([
+                'producto_id' => $producto_id
+            ]);
             $consumo->save();
         }
         $consumo_costo = Consumo::where('reservacion_id', $reservacion->id)->sum('costo_total');
@@ -506,13 +531,13 @@ class ReservacionController extends Controller
         ]);
         return redirect()->route('home')->with('success','Reservacion cancelada satisfactoriamente');
     }
-    public function consumo_cancelado(Request $request, $reservacion){
-        $reservacion = Reservacion::findOrFail($reservacion);
-        $consumo = Consumo::findOrFail($reservacion->consumo->id);
+    public function consumo_cancelado($consumo){
+        $consumo = Consumo::findOrFail($consumo);
         $consumo->update([
             'estado' => 'Cancelado'
             ]);
-    }
+        return redirect()->back()->with('success','Consumo cancelado satisfactoriamente');
+        }
     /**
 
      * Show the form for editing the specified resource.
@@ -608,22 +633,14 @@ class ReservacionController extends Controller
         $get_reservacion = Reservacion::where('habitacion_id', $habitacion)->where('estado', 'Activa')->value('id');
         $reservacion = Reservacion::findOrFail($get_reservacion);
         $productos = Producto::all();
-        $productos_consumo = array();
-        $consumo = Consumo::where('reservacion_id', $reservacion->id);
-        if($consumo){
-            foreach($consumo as $producto){
-                    $producto_find = Producto::findOrFail($producto->producto_id);
-                    $productos_consumo[$producto->cantidad] = $producto_find;
-            }
-        }
+        $consumo = $reservacion->consumo;
 
         
         return view('reservacion.edit',compact(
             'reservacion',
             'habitaciones',
             'consumo',
-            'productos',
-            'productos_consumo'
+            'productos'
         ));
 
     }

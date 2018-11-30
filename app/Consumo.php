@@ -17,7 +17,7 @@ class Consumo extends Model
      * @var array
      */
     protected $fillable = [
-        'costo', 'estado'
+        'costo_total', 'estado', 'cantidad', 'costo_producto', 'producto_id', 'nombre_producto'
     ];
     public function producto(){
     	return $this->hasOne(Producto::class);

@@ -18,6 +18,7 @@ class CreateConsumoTable extends Migration
             $table->float('costo_total');
             $table->float('costo_producto');
             $table->integer('reservacion_id')->nullable();
+            $table->string('nombre_producto');
             $table->integer('producto_id')->nullable();
             $table->enum('estado', array('Pendiente por pagar', 'Cancelado'));
             $table->integer('cantidad');
