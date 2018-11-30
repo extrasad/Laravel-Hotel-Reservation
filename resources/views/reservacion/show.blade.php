@@ -1,0 +1,182 @@
+@extends('layouts.app')
+
+
+@section('content')
+
+    <div class="row">
+
+        <div class="col-lg-12 margin-tb">
+
+            <div class="pull-left">
+
+                <h2> Mostrar reservacion</h2>
+
+            </div>
+
+            <div class="pull-right">
+
+                <a class="btn btn-primary" href="{{ route('reservacion.index') }}"> Atras</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>ID:</strong>
+
+                {{ $reservacion->id }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Fecha de entrada:</strong>
+
+                {{ $reservacion->created_at->format('d/m/Y') }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Hora de entrada:</strong>
+
+                {{ $reservacion->created_at->format('H:i:s') }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Fecha de salida:</strong>
+                @if($reservacion->fecha_salida)
+                {{ $reservacion->fecha_salida->format('d/m/Y') }}
+                @endif
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Hora de salida:</strong>
+                @if($reservacion->fecha_salida)
+                {{ $reservacion->fecha_salida->format('H:i:s') }}
+                @endif
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Estado:</strong>
+
+                {{ $reservacion->estado }}
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Cliente:</strong>
+                    @if(!empty($reservacion->cliente1->ci))
+                        {{ $reservacion->cliente1->ci }}
+                    @endif
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Acompañante:</strong>
+                    @if(!empty($reservacion->cliente2->ci))
+                    {{ $reservacion->cliente2->ci  }}
+                    @endif
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Auto:</strong>
+
+                {{ $reservacion->auto->placa }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Habitacion:</strong>
+
+                {{ $reservacion->habitacion->habitacion }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong> Costo Consumo:</strong>
+                @if(!empty($reservacion->consumo->costo))
+                {{ $reservacion->consumo->costo }}
+                @endif
+
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong> Costo Habitacion:</strong>
+                {{ $reservacion->costo_hab}}
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong> Costo Total:</strong>
+
+                {{ $reservacion->costo }}
+
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+@endsection
