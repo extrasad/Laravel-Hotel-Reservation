@@ -211,6 +211,21 @@ class HabitacionController extends Controller
 
     }
 
+    public function search_promo(Request $request)
+    {
+
+        if($request->ajax())
+    
+            {
+    
+                $promo=DB::table('promo')->where('tipo',$request->search)->get();
+    
+                if($promo){
+                    return response()->json($promo);
+                }
+            }
+    }
+
 
     /**
 

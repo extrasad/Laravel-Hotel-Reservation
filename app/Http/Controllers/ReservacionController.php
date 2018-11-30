@@ -234,10 +234,10 @@ class ReservacionController extends Controller
         $pdf->AliasNbPages();
         $pdf->AddPage('L','A4',0);
         $pdf->SetFont('Arial', 'B', 14);
-        $pdf->Cell(270, 5, 'TITULO',0,0,'C');
+        $pdf->Cell(270, 5, 'Afrodita',0,0,'C');
         $pdf->Ln();
         $pdf->SetFont('Times', '', 12);
-        $pdf->Cell(270,10,'STREET ADRESS OFF',0,0,'C');
+        $pdf->Cell(270,10,'Factura',0,0,'C');
         $pdf->Ln(50);
 
         $pdf->SetFont('Times', 'B',12);
@@ -473,52 +473,6 @@ class ReservacionController extends Controller
     return response()->json($data);
     }
 
-    public function editar_consumo(Request $request, $reservacion)
-    {        
-        $reservacion = Reservacion::findOrFail($reservacion);
-        $productos = $request->input('productos');
-        $costo = array();
-        $product_list = array();
-        foreach($productos as $producto){
-            $producto_id = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
-            $producto_costo = DB::table('productos')->where('descripcion',$producto['nombre'])->value('costo');
-            $cantidad = $producto['cantidad'];
-            $costo_total = $producto_costo * $cantidad;
-            array_push($costo, $costo_total);
-            array_push($product_list, $producto_id);
-        }
-        $total = array_sum($costo);
-        $consumo = Consumo::findOrFail($reservacion->consumo->id);
-        $consumo->update(
-            [
-                'costo' => $total
-            ]
-        );
-        $producto_find = Producto::find($product_list);
-        $consumo->producto()->detach();
-        $consumo->reservacion()->dissociate();
-        $consumo->save();
-        $consumo->reservacion()->associate($reservacion->id);
-        $consumo->producto()->attach($producto_find);
-        foreach($productos as $producto){
-            $producto_id_find = DB::table('productos')->where('descripcion',$producto['nombre'])->value('id');
-            DB::table('consumo_producto')->where('consumo_id',$consumo->id)
-            ->where('producto_id', $producto_id_find)
-            ->update([
-                'cantidad' => $producto['cantidad']
-            ]);
-        }
-        $consumo->save();
-        $precio = $reservacion->costo_hab + $consumo->costo;
-        $reservacion->update([
-            'costo' => $precio
-        ]);
-        $data = [
-            "Success" => "Consumo editado exitosamente"
-        ];  
-    return response()->json($data);
-    }
-
     public function cancelar_reservacion(Request $request, $reservacion){
         $reservacion = Reservacion::findOrFail($reservacion);
         $habitacion = Habitacion::findOrFail($reservacion->habitacion->id);
@@ -625,6 +579,7 @@ class ReservacionController extends Controller
         return response()->json($auto);
         
     }
+
 
     public function edit($habitacion)
 
