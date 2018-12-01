@@ -59,6 +59,7 @@ class HomeController extends Controller
         $pdf->Cell(270,10,'Reporte rapido',0,0,'C');
         $pdf->Ln(20);
 
+        
         $pdf->SetFont('Times', 'B',12);
         $pdf->SetX(32);
         $pdf->Cell(30,10,'Habitacion',1,0,'C');

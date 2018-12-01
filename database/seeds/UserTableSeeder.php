@@ -19,5 +19,12 @@ class UserTableSeeder extends Seeder
         $user->password = bcrypt('Admin_root_123');
         $user->save();
         $user->assignRole('Admin Root');
+
+        $recepcionista = new User();
+        $recepcionista->name = 'Jon Snow';
+        $recepcionista->username = 'recep';
+        $recepcionista->password = bcrypt('1234');
+        $recepcionista->save();
+        $recepcionista->assignRole('Recepcionista');
     }
 }

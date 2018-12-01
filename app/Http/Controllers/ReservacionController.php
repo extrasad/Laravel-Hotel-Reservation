@@ -499,6 +499,16 @@ class ReservacionController extends Controller
         ->with('success','Reservacion cerrada satisfactoriamente');
     }
     
+    public function pagar_consumos($consumos){
+        foreach ($consumos as $consumo) {
+            $consumo = Consumo::findOrFail($consumo);
+            $consumo->update([
+            'estado' => 'Cancelado'
+            ]);
+        }
+        return redirect()->back()->with('success','Todos los consumos fueron cancelados satisfactoriamente');
+    }
+
     public function agregar_consumo(Request $request, $reservacion)
     {        
         $reservacion = Reservacion::findOrFail($reservacion);

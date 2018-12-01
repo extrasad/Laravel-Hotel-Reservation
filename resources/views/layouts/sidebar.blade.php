@@ -35,38 +35,37 @@
                     </a>
                 </li>
                 @if(Request::is('habitacion/*') )
-                    @if(isset($habitacion))
-                    <li>
-                        <a href="#">
-                            <i class="material-icons">hotel</i>
-                            <span>{{ $habitacion->habitacion }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons">verified_user</i>
-                            <span>{{ $habitacion->estado }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons">attach_money</i>
-                            <span>{{ $habitacion->costo }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons">report</i>
-                            <span>{{ $habitacion->observacion }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons">format_list_numbered</i>
-                            <span>{{ $habitacion->caracteristicas }}</span>
-                        </a>
-                    </li>
-                    @endif
+                @if(isset($habitacion))
+                <li>
+                    <a href="#">
+                        <i class="material-icons">hotel</i>
+                        <span>{{ $habitacion->habitacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">verified_user</i>
+                        <span>{{ $habitacion->estado }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">attach_money</i>
+                        <span>{{ $habitacion->costo }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">report</i>
+                        <span>{{ $habitacion->observacion }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons">format_list_numbered</i>
+                        <span>{{ $habitacion->caracteristicas }}</span>
+                    </a>
+                </li>
                 @elseif(Request::is('reservacion-custom-create/*'))
                 <li>
                     <a href="#">
@@ -98,6 +97,8 @@
                         <span>{{ $habitacion_find->caracteristicas }}</span>
                     </a>
                 </li>
+                @endif
+                
                 @elseif(Request::is('reservacion/*'))
                 <li>
                     <a href="#">
@@ -134,79 +135,79 @@
 
                 <li {{ Request::is( 'users', 'users/*') ? 'class=active' : '' }}>
                     <a href="{{ route('users.index') }}">
-                        <i class="material-icons">text_fields</i>
+                        <i class="material-icons">account_box</i>
                         <span>Usuarios</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'roles', 'roles/*') ? 'class=active' : '' }}>
                     <a href="{{ route('roles.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">supervisor_account</i>
                         <span>Roles</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'autos', 'autos/*') ? 'class=active' : '' }}>
                     <a href="{{ route('autos.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">directions_car</i>
                         <span>Autos</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'clientes', 'clientes/*') ? 'class=active' : '' }}>
                     <a href="{{ route('clientes.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">accessibility</i>
                         <span>Clientes</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'consumos', 'consumos/*') ? 'class=active' : '' }}>
                     <a href="{{ route('consumos.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">add_shopping_cart</i>
                         <span>Consumos</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'empleados', 'empleados/*') ? 'class=active' : '' }}>
                     <a href="{{ route('empleados.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">assignment_ind</i>
                         <span>Empleados</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'habitacion', 'habitacion/*') ? 'class=active' : '' }}>
                     <a href="{{ route('habitacion.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">hotel</i>
                         <span>Habitaciones</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'productos', 'productos/*') ? 'class=active' : '' }}>
                     <a href="{{ route('productos.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">shopping_cart</i>
                         <span>Productos</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'turnos', 'turnos/*') ? 'class=active' : '' }}>
                     <a href="{{ route('turnos.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">schedule</i>
                         <span>Turnos</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'tarifarios', 'tarifarios/*') ? 'class=active' : '' }}>
                     <a href="{{ route('tarifarios.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">assignment</i>
                         <span>Tarifarios</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'reservacion', 'reservacion/*') ? 'class=active' : '' }}>
                     <a href="{{ route('reservacion.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">book</i>
                         <span>Reservación</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'promos', 'promos/*') ? 'class=active' : '' }}>
                     <a href="{{ route('promos.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">card_giftcard</i>
                         <span>Promos</span>
                     </a>
                 </li>
                 <li {{ Request::is( 'diex', 'diex/*') ? 'class=active' : '' }}>
                     <a href="{{ route('diex.index') }}">
-                        <i class="material-icons">layers</i>
+                        <i class="material-icons">block</i>
                         <span>Diex</span>
                     </a>
                 </li>

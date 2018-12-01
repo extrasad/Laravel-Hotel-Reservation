@@ -51,13 +51,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <strong class="font-bold col-orange">Ci acompañante:</strong> {{ $reservacion->cliente2->ci }}
+                                <strong class="font-bold col-orange">Ci acompañante:</strong> @if($reservacion->cliente2) {{ $reservacion->cliente2->ci }} @endif
                             </div>
                             <div class="col-md-4">
-                                <strong class="font-bold col-orange">Nombre acompañante:</strong> {{ $reservacion->cliente2->nombre }}
+                                <strong class="font-bold col-orange">Nombre acompañante:</strong> @if($reservacion->cliente2) {{ $reservacion->cliente2->nombre }} @endif
                             </div>
                             <div class="col-md-4">
-                                <strong class="font-bold col-orange">Nacionalidad acompañante:</strong> {{ $reservacion->cliente2->nacionalidad }}
+                                <strong class="font-bold col-orange">Nacionalidad acompañante:</strong> @if($reservacion->cliente2) {{ $reservacion->cliente2->nacionalidad }} @endif
                             </div>
                         </div>
                         <div class="row">

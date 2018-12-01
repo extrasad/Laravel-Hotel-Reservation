@@ -18644,11 +18644,16 @@ fieldset[disabled] .form-control {
 /* Login Page ================================== */
 
 .login-page {
-  background-color: #00BCD4;
+  background-image: url(../images/recepcion-hotel-jaizkibel1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;
   overflow-x: hidden;
+  width: 100vw;
+  height: 90vh;
+  background-position: center;
 }
 
 .login-page .login-box .msg {

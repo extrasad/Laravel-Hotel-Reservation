@@ -34,21 +34,21 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Admin<b>BSB</b></a>
-            <small>Admin BootStrap Based - Material Design</small>
+            <a href="javascript:void(0);">Afrodita</a>
+            <small>Afrodita - Hoteles</small>
         </div>
         <div class="card">
             <div class="body">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     
-                    <div class="msg">Sign in to start your session</div>
+                    <div class="msg">Iniciar sesión</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            <input type="text" id="email" placeholder="Nombre de usuario" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                         </div>
                         @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
@@ -61,7 +61,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            <input id="password" type="password" placeholder="Contraseña" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                         </div>
                         @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
@@ -72,7 +72,7 @@
                     <div class="row">
                         <div class="col-xs-8 p-t-5">
                             <input class="filled-in chk-col-pink" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label for="remember">Remember Me</label>
+                            <label for="remember">Recuérdame</label>
                         </div>
                         <div class="col-xs-4">
                             <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
@@ -80,10 +80,7 @@
                     </div>
                     <div class="row m-t-15 m-b--20">
                         <div class="col-xs-6">
-                            <a href="{{ route('register') }}">Register Now!</a>
-                        </div>
-                        <div class="col-xs-6 align-right">
-                            <a href="{{ route('password.request') }}">Forgot Password?</a>
+                            <a href="{{ route('register') }}">Registro</a>
                         </div>
                     </div>
                 </form>
