@@ -499,7 +499,8 @@ class ReservacionController extends Controller
         ->with('success','Reservacion cerrada satisfactoriamente');
     }
     
-    public function pagar_consumos($consumos){
+    public function pagar_consumos(Request $request){
+        $consumos = $request->input('consumos');
         foreach ($consumos as $consumo) {
             $consumo = Consumo::findOrFail($consumo);
             $consumo->update([

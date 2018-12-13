@@ -79,7 +79,7 @@ Route::get('/reservacion-custom-create/{id}', 'ReservacionController@custom_crea
 Route::post('/cerrar-reservacion/{id}', 'ReservacionController@cerrar')->name('reservacion.cerrar');
 
 //Ruta pagar todos los consumos
-Route::post('pagar-consumos/{id}', 'ReservacionController@pagar_consumos')->name('reservacion.pagar_consumos');
+Route::post('pagar-consumos', 'ReservacionController@pagar_consumos')->name('reservacion.pagar_consumos');
 
 Route::group(['middleware' => ['auth']], function() {
 
