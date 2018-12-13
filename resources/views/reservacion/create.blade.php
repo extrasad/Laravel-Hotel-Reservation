@@ -100,7 +100,8 @@
                             <label>Habitación</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {!! Form::select('habitacion', $habitaciones, $habitacion_find->habitacion, array('class' => 'form-control')); !!}
+                                    <label for="habitacion">{{ $habitacion_find->habitacion }}</label>
+                                    <input type="text" id="habitacion" name="habitacion" class="form-control placa-auto d-none" value="{{ $habitacion_find->habitacion }}"></input>
                                 </div>
                             </div>
                         </div>
@@ -179,6 +180,26 @@
                     if (data.length > 0) {
                         console.log(data);
                         inputFeedBack.text(data[0].nombre + ' está registrado');
+                        cliente1Form.append(`
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <label for="nombre-cliente">Nombre:</label>
+                                <div class="form-group">
+                                    <span>${data[0].nombre}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <label for="nacionalidad-cliente">Nacionalidad:</label>
+                                <div class="form-group">
+                                    <span>${data[0].nacionalidad}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 cliente-1-inputs">
+                                <label>Fecha de nacimiento:</label>
+                                <div class="form-group">
+                                    <span>${data[0].fecha_nac}</span>
+                                </div>
+                            </div>
+                        `);
                     } else {
                         inputFeedBack.text('La cédula no concuerda, registre el cliente')
                         cliente1Form.append(`
@@ -313,7 +334,26 @@
                     if (data.length > 0) {
                         console.log(data);
                         inputFeedBack2.text(data[0].nombre + ' está registrado');
-
+                        cliente2Form.append(`
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <label for="nombre-cliente">Nombre:</label>
+                                <div class="form-group">
+                                    <span>${data[0].nombre}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 cliente-1-inputs">
+                                <label for="nacionalidad-cliente">Nacionalidad:</label>
+                                <div class="form-group">
+                                    <span>${data[0].nacionalidad}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 cliente-1-inputs">
+                                <label>Fecha de nacimiento:</label>
+                                <div class="form-group">
+                                    <span>${data[0].fecha_nac}</span>
+                                </div>
+                            </div>
+                        `);
                     } else {
                         inputFeedBack2.text('La cédula no concuerda, registre el cliente')
 
@@ -423,7 +463,20 @@
                     if (data.length > 0) {
                         console.log(data);
                         inputFeedBack3.text(data[0].placa + ' está registrada');
-
+                        autoForm.append(`
+                            <div class="col-sm-3 auto-inputs">
+                                <label for="modelo-auto">Modelo:</label>
+                                <div class="form-group">
+                                    <span>${data[0].modelo}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 auto-inputs">
+                                <label for="color-auto">Color</label>
+                                <div class="form-group">
+                                    <span>${data[0].color}</span>
+                                </div>
+                            </div>
+                        `);
                     } else {
                         inputFeedBack3.text('La placa no concuerda, registre el auto')
 
