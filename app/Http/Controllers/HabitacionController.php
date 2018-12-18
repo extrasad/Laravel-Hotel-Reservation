@@ -91,6 +91,37 @@ class HabitacionController extends Controller
 
     }
 
+    public function getPromoDescription(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $promo_tipo=DB::table('promo')->where('tipo',$request->tipo_hab)->get();
+
+            if($promo_tipo){
+                return response()->json($promo_tipo);
+            }
+        }
+    }
+
+    public function getPromoPrecio(Request $request)
+
+    {
+
+    if($request->ajax())
+
+        {
+
+            $promo_precio=DB::table('promo')->where('descripcion',$request->descripcion)->get();
+
+            if($promo_precio){
+                return response()->json($promo_precio);
+            }
+        }
+    }
 
     /**
 
@@ -122,7 +153,9 @@ class HabitacionController extends Controller
 
         ]);
 
-        $costo_hab = Promo::where('tipo', $request->input('tipo'))->value('costo');
+        $costo_hab = Promo::where('tipo', $request->input('tipo'))
+        ->where('descripcion', $request->input('descripcion'))
+        ->value('costo');
 
         $habitacion = Habitacion::create(
             [

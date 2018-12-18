@@ -81,6 +81,10 @@ Route::post('/cerrar-reservacion/{id}', 'ReservacionController@cerrar')->name('r
 //Ruta pagar todos los consumos
 Route::post('pagar-consumos', 'ReservacionController@pagar_consumos')->name('reservacion.pagar_consumos');
 
+Route::post('promo-descripcion', 'HabitacionController@promo_descripcion')->name('habitacion.promo_descripcion');
+
+Route::post('promo-precio', 'HabitacionController@promo_precio')->name('reservacion.promo_precio');
+
 Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('roles','RoleController');
