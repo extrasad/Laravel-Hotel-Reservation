@@ -83,7 +83,7 @@ Route::post('pagar-consumos', 'ReservacionController@pagar_consumos')->name('res
 
 Route::post('/promo-descripcion', 'HabitacionController@getPromoDescription')->name('habitacion.promo_descripcion');
 
-Route::post('promo-precio', 'HabitacionController@getPromoPrecio')->name('reservacion.promo_precio');
+Route::post('/promo-precio', 'HabitacionController@getPromoPrecio')->name('reservacion.promo_precio');
 
 Route::group(['middleware' => ['auth']], function() {
 
