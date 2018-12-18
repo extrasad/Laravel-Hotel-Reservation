@@ -99,7 +99,7 @@ class HabitacionController extends Controller
 
         {
 
-            $promo_tipo=DB::table('promo')->where('tipo',$request->tipo_hab)->get();
+            $promo_tipo=DB::table('promo')->where('tipo',$request->tipo)->get();
 
             if($promo_tipo){
                 return response()->json($promo_tipo);
