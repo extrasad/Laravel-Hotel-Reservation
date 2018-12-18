@@ -77,7 +77,7 @@
                     </div>
                     <label>Tipo de habitacion</label>
                     <div class="form-group">
-                        {!! Form::select('tipo', $tipo); !!}
+                        {!! Form::select('tipo', [null=>''] + $tipo,'',array('id' => 'tipo')); !!}
                     </div>
                     <br>
                     <div class="form-group">
@@ -88,5 +88,33 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        const tipoInput = $('#tipo');
 
+
+        // events
+        tipoInput.on('change', getTipo);
+
+        function getTipo() {
+            const val = $(this).val();
+
+            $.ajax({ 
+                type : 'POST',
+                url : APP_URL + '/promo-descripcion',
+                dataType: 'json',
+                data: {
+                    tipo: val
+                },
+                success:function(data){
+                    console.log(data);
+                },
+                error: function( jqXHR ,  textStatus,  errorThrown ) {
+                    console.log(jqXHR);
+                }
+            });
+        }
+    });
+
+</script>
 @endsection

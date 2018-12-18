@@ -81,7 +81,7 @@ Route::post('/cerrar-reservacion/{id}', 'ReservacionController@cerrar')->name('r
 //Ruta pagar todos los consumos
 Route::post('pagar-consumos', 'ReservacionController@pagar_consumos')->name('reservacion.pagar_consumos');
 
-Route::post('promo-descripcion', 'HabitacionController@getPromoDescription')->name('habitacion.promo_descripcion');
+Route::post('/promo-descripcion', 'HabitacionController@getPromoDescription')->name('habitacion.promo_descripcion');
 
 Route::post('promo-precio', 'HabitacionController@getPromoPrecio')->name('reservacion.promo_precio');
 
