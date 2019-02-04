@@ -40,7 +40,7 @@
     </script>
     
 </head>
-    <body class="theme-red">
+    <body class="theme-blue">
 
         @include('layouts.header')
 

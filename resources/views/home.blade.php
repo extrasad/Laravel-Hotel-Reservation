@@ -129,7 +129,7 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-teal hover-expand-effect">
+        <div class="info-box bg-blue hover-expand-effect">
             <div class="icon">
                 <i class="material-icons">equalizer</i>
             </div>
@@ -140,9 +140,9 @@
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-green hover-expand-effect">
+        <div class="info-box bg-light-blue hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">flight_takeoff</i>
+                <i class="material-icons">people</i>
             </div>
             <div class="content">
                 <div class="text">HAB. OCUPADAS</div>
@@ -151,9 +151,9 @@
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-light-green hover-expand-effect">
+        <div class="info-box bg-cyan hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">battery_charging_full</i>
+                <i class="material-icons">hotel</i>
             </div>
             <div class="content">
                 <div class="text">HABITACIONES</div>
@@ -162,9 +162,9 @@
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-lime hover-expand-effect">
+        <div class="info-box bg-teal hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">brightness_low</i>
+                <i class="material-icons">people_outline</i>
             </div>
             <div class="content">
                 <div class="text">CLIENTES</div>
